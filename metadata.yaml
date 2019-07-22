@@ -1,0 +1,26 @@
+---
+image_name: foo
+version: ''
+maintainers:
+  - jesse@weisner.ca
+registry: localhost:5000
+org_name: barbaz
+versions:
+  '1.0':
+    files: []
+    tags: []
+  '1.1':
+    files: []
+    tags:
+      - latest
+variants:
+  '':
+    files: []
+  supervisord:
+    files:
+      - supervisor.conf
+tags:
+  - latest
+tini_version: '0.18.0'
+de_version: '1.5'
+dockerize_version: '0.6.0'
