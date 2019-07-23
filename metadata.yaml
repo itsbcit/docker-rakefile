@@ -7,10 +7,7 @@ registry: localhost:5000
 org_name: barbaz
 versions:
   '1.0':
-    files: []
-    tags: []
   '1.1':
-    files: []
     tags:
       - latest
 variants:
@@ -21,6 +18,7 @@ variants:
       - supervisor.conf
 tags:
   - latest
-tini_version: '0.18.0'
-de_version: '1.5'
-dockerize_version: '0.6.0'
+vendor_versions:
+  tini: '0.18.0'
+  docker_entrypoint: '1.5'
+  dockerize: '0.6.0'
