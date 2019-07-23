@@ -1,7 +1,7 @@
 class DockerImage
-    attr_accessor :name, :tags, :variant, :version, :build_id, :registries,
-                  :org_name, :maintainer, :vars
     attr_writer   :tags
+    attr_accessor :image_name, :tags, :variant, :version, :build_id, :registries,
+                  :org_name, :maintainer, :labels, :vars, :files
     def initialize(
         image_name:,
         org_name:,
@@ -10,8 +10,9 @@ class DockerImage
         version:    '',
         variant:    '',
         registries: [],
-        labels:     [],
-        vars:       {}
+        labels:     {},
+        vars:       {},
+        files:      {}
     )
         @image_name = image_name
         @org_name   = org_name
@@ -20,8 +21,9 @@ class DockerImage
         @version    = version
         @variant    = variant
         @registries = registries
-        @labels     = labels
+        @labels     = { "build_id" => build_id }.merge(labels)
         @vars       = vars
+        @files      = files
     end
 
     def dir
