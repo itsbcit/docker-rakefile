@@ -1,23 +1,25 @@
 ---
 image_name: foo
-version:
-maintainers:
-  - jesse@weisner.ca
-registry: localhost:5000
+labels:
+  - maintainer: jesse@weisner.ca
 org_name: barbaz
 versions:
+  '1.2.3':
   '1.0':
-  '1.1':
-    tags:
-      - latest
+  # '1.1':
+  #   tags:
+  #     - latest
 variants:
   '':
+  bar:
   supervisord:
     files:
       - supervisor.conf
 tags:
   - latest
-vendor_versions:
-  tini: '0.18.0'
-  docker_entrypoint: '1.5'
-  dockerize: '0.6.0'
+registries:
+  - 'localhost:5000'
+vars:
+  tini_version: '0.18.0'
+  de_version: '1.5'
+  dockerize_version: '0.6.0'
