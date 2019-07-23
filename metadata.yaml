@@ -1,6 +1,6 @@
 ---
 image_name: foo
-version: ''
+version:
 maintainers:
   - jesse@weisner.ca
 registry: localhost:5000
@@ -12,7 +12,6 @@ versions:
       - latest
 variants:
   '':
-    files: []
   supervisord:
     files:
       - supervisor.conf
