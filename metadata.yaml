@@ -1,14 +1,15 @@
 ---
 image_name: foo
 labels:
-  - maintainer: jesse@weisner.ca
+  maintainer: jesse@weisner.ca
 org_name: barbaz
 versions:
   '1.2.3':
+    tags:
+      - '1.2-latest'
+      - latest
   '1.0':
-  # '1.1':
-  #   tags:
-  #     - latest
+  '1.1':
 variants:
   '':
   bar:
@@ -16,10 +17,10 @@ variants:
     files:
       - supervisor.conf
 tags:
-  - latest
 registries:
   - 'localhost:5000'
 vars:
   tini_version: '0.18.0'
   de_version: '1.5'
   dockerize_version: '0.6.0'
+files:
