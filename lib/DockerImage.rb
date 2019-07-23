@@ -1,4 +1,4 @@
-class BuildImage
+class DockerImage
     def initialize()
         @name = ''
         @tags = []

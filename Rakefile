@@ -4,7 +4,7 @@ require 'yaml'
 
 load File.expand_path('../lib/colorize.rb', __FILE__)
 load File.expand_path('../lib/render_template.rb', __FILE__)
-load File.expand_path('../lib/BuildImage.rb', __FILE__)
+load File.expand_path('../lib/DockerImage.rb', __FILE__)
 
 metadata = YAML.load(File.read('metadata.yaml'))
 
