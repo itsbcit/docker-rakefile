@@ -11,7 +11,7 @@ def build_objects_array(metadata_hash, build_id)
     versions.keys.each do |version|
         variants.keys.each do |variant|
             objects_array << DockerImage.new(
-                name: metadata_hash['image_name'],
+                image_name: metadata_hash['image_name'],
                 org_name: metadata_hash['org_name'],
                 build_id: build_id,
                 tags: tags,

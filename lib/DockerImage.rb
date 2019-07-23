@@ -3,7 +3,7 @@ class DockerImage
                   :org_name, :maintainer, :vars
     attr_writer   :tags
     def initialize(
-        name:,
+        image_name:,
         org_name:,
         build_id:   '',
         tags:       [],
@@ -13,7 +13,7 @@ class DockerImage
         labels:     [],
         vars:       {}
     )
-        @name       = name
+        @image_name = image_name
         @org_name   = org_name
         @build_id   = build_id
         @tags       = tags
