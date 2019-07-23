@@ -1,6 +1,7 @@
 class DockerImage
     attr_accessor :name, :tags, :variant, :version, :build_id, :registries,
                   :org_name, :maintainer, :vars
+    attr_writer   :tags
     def initialize(
         name:,
         org_name:,
@@ -32,5 +33,9 @@ class DockerImage
             dir = "#{version}#{dash}#{variant}"
         end
         return dir
+    end
+
+    def tags=(tags)
+        @tags = tags.uniq
     end
 end
