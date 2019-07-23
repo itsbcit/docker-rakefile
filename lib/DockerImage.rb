@@ -26,7 +26,7 @@ class DockerImage
 
     def dir
         if self.variant.empty? and self.version.empty?
-            dir = './'
+            dir = nil
         else
             # format directory or './' based on version,variant
             dash = variant.empty? ? '' : '-'
