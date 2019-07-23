@@ -8,8 +8,7 @@ def build_objects_array(metadata_hash, build_id)
     labels      = metadata_hash['labels'].nil?      ? []         : metadata_hash['labels']
     vars        = metadata_hash['vars'].nil?        ? {}         : metadata_hash['vars']
 
-    versions.keys.each do |version|
-        variants.keys.each do |variant|
+    versions.each do |version, version_params|
             objects_array << DockerImage.new(
                 image_name: metadata_hash['image_name'],
                 org_name: metadata_hash['org_name'],
