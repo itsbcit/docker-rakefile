@@ -21,7 +21,7 @@ class DockerImage
         @version    = version
         @variant    = variant
         @registries = registries
-        @labels     = { "build_id" => build_id }.merge(labels)
+        @labels     = labels.merge( { "build_id" => build_id } )
         @vars       = vars
         @files      = files
     end
