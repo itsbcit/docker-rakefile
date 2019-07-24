@@ -1,6 +1,6 @@
 class DockerImage
     attr_writer   :suffixes
-    attr_accessor :image_name, :suffixes, :variant, :version, :build_id,
+    attr_accessor :image_name, :variant, :version, :build_id,
                   :registries, :org_name, :maintainer, :labels, :vars, :files
     def initialize(
         image_name:,
