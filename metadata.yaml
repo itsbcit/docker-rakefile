@@ -5,7 +5,7 @@ labels:
 org_name: barbaz
 versions:
   '1.2.3':
-    tags:
+    suffixes:
       - '1.2-latest'
       - latest
   '1.0':
@@ -16,7 +16,7 @@ variants:
   supervisord:
     files:
       - supervisor.conf
-tags:
+suffixes:
 registries:
   - 'localhost:5000'
 vars:

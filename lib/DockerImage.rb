@@ -1,12 +1,12 @@
 class DockerImage
-    attr_writer   :tags
-    attr_accessor :image_name, :tags, :variant, :version, :build_id, :registries,
-                  :org_name, :maintainer, :labels, :vars, :files
+    attr_writer   :suffixes
+    attr_accessor :image_name, :suffixes, :variant, :version, :build_id,
+                  :registries, :org_name, :maintainer, :labels, :vars, :files
     def initialize(
         image_name:,
         org_name:,
         build_id:   '',
-        tags:       [],
+        suffixes:   [''],
         version:    '',
         variant:    '',
         registries: [],
@@ -17,7 +17,7 @@ class DockerImage
         @image_name = image_name
         @org_name   = org_name
         @build_id   = build_id
-        @tags       = tags
+        @suffixes   = suffixes
         @version    = version
         @variant    = variant
         @registries = registries
@@ -37,7 +37,19 @@ class DockerImage
         return dir
     end
 
-    def tags=(tags)
-        @tags = tags.uniq
+    def suffixes=(suffixes)
+        @suffixes = suffixes.uniq
+    end
+
+    def tag_string()
+        if    self.variant.empty? and self.version.empty?
+            return nil
+        elsif self.variant.empty?
+            return self.version
+        elsif self.version.empty?
+            return self.variant
+        else
+            return "#{version}-#{variant}"
+        end
     end
 end

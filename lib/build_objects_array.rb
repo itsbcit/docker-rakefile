@@ -1,7 +1,7 @@
 def build_objects_array(metadata_hash, build_id)
     objects_array = []
 
-    tags        = metadata_hash['tags'].nil?        ? []         : metadata_hash['tags']
+    suffixes    = metadata_hash['suffixes'].nil?    ? []         : metadata_hash['suffixes']
     versions    = metadata_hash['versions'].nil?    ? {'' => {}} : metadata_hash['versions']
     variants    = metadata_hash['variants'].nil?    ? {'' => {}} : metadata_hash['variants']
     registries  = metadata_hash['registries'].nil?  ? []         : metadata_hash['registries']
@@ -11,26 +11,26 @@ def build_objects_array(metadata_hash, build_id)
 
     versions.each do |version, version_params|
         version_params = version_params.nil?           ? {} : version_params
-        version_tags   = version_params['tags'].nil?   ? [] : version_params['tags']
+        version_suffixes   = version_params['extra_suffixes'].nil?   ? [] : version_params['suffixes']
         version_files  = version_params['files'].nil?  ? [] : version_params['files']
         version_labels = version_params['labels'].nil? ? {} : version_params['labels']
         version_vars   = version_params['vars'].nil?   ? {} : version_params['vars']
         variants.each do |variant, variant_params|
-            variant_params = variant_params.nil?           ? {} : variant_params
-            variant_tags   = variant_params['tags'].nil?   ? [] : variant_params['tags']
-            variant_files  = variant_params['files'].nil?  ? [] : variant_params['files']
-            variant_labels = variant_params['labels'].nil? ? {} : variant_params['labels']
-            variant_vars   = variant_params['vars'].nil?   ? {} : variant_params['vars']
+            variant_params   = variant_params.nil?             ? {} : variant_params
+            variant_files    = variant_params['files'].nil?    ? [] : variant_params['files']
+            variant_labels   = variant_params['labels'].nil?   ? {} : variant_params['labels']
+            variant_vars     = variant_params['vars'].nil?     ? {} : variant_params['vars']
+            variant_suffixes = variant_params['suffixes'].nil? ? [] : variant_params['suffixes']
             objects_array << DockerImage.new(
                 image_name: metadata_hash['image_name'],
                 org_name: metadata_hash['org_name'],
                 build_id: build_id,
-                tags: tags + version_tags + variant_tags,
+                suffixes: suffixes + version_suffixes + variant_suffixes,
                 version: version,
                 variant: variant,
                 registries: registries,
                 labels: labels.merge(version_labels).merge(variant_labels),
-                vars: vars.merge(,
+                vars: vars,
                 files: files,
             )
         end
