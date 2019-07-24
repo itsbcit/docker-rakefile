@@ -1,4 +1,7 @@
-def build_objects_array(metadata, build_id)
+def build_objects_array(options = {})
+    metadata = options.fetch(:metadata)
+    build_id = options.fetch(:build_id)
+
     objects_array = []
 
     suffixes    = metadata['suffixes'].nil?    ? []         : metadata['suffixes']

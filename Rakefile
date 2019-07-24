@@ -4,7 +4,10 @@ require 'yaml'
 
 Dir.glob('lib/*.rb').each { |l| load l }
 
-metadata = YAML.load(File.read('metadata.yaml'))
+images    = build_objects_array(
+              metadata: YAML.load(File.read('metadata.yaml')),
+              build_id: build_timestamp()
+            )
 
 maintainer        = metadata['maintainers'].join(', ')
 registry          = metadata['registry']
