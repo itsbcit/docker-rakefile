@@ -1,13 +1,13 @@
-def build_objects_array(metadata_hash, build_id)
+def build_objects_array(metadata, build_id)
     objects_array = []
 
-    suffixes    = metadata_hash['suffixes'].nil?    ? []         : metadata_hash['suffixes']
-    versions    = metadata_hash['versions'].nil?    ? {'' => {}} : metadata_hash['versions']
-    variants    = metadata_hash['variants'].nil?    ? {'' => {}} : metadata_hash['variants']
-    registries  = metadata_hash['registries'].nil?  ? []         : metadata_hash['registries']
-    labels      = metadata_hash['labels'].nil?      ? []         : metadata_hash['labels']
-    vars        = metadata_hash['vars'].nil?        ? {}         : metadata_hash['vars']
-    files       = metadata_hash['files'].nil?       ? {}         : metadata_hash['files']
+    suffixes    = metadata['suffixes'].nil?    ? []         : metadata['suffixes']
+    versions    = metadata['versions'].nil?    ? {'' => {}} : metadata['versions']
+    variants    = metadata['variants'].nil?    ? {'' => {}} : metadata['variants']
+    registries  = metadata['registries'].nil?  ? []         : metadata['registries']
+    labels      = metadata['labels'].nil?      ? []         : metadata['labels']
+    vars        = metadata['vars'].nil?        ? {}         : metadata['vars']
+    files       = metadata['files'].nil?       ? {}         : metadata['files']
 
     versions.each do |version, version_params|
         version_params = version_params.nil?           ? {} : version_params
@@ -22,8 +22,8 @@ def build_objects_array(metadata_hash, build_id)
             variant_vars     = variant_params['vars'].nil?     ? {} : variant_params['vars']
             variant_suffixes = variant_params['suffixes'].nil? ? [] : variant_params['suffixes']
             objects_array << DockerImage.new(
-                image_name: metadata_hash['image_name'],
-                org_name: metadata_hash['org_name'],
+                image_name: metadata['image_name'],
+                org_name: metadata['org_name'],
                 build_id: build_id,
                 suffixes: suffixes + version_suffixes + variant_suffixes,
                 version: version,
