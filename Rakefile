@@ -2,10 +2,7 @@ require 'erb'
 require 'fileutils'
 require 'yaml'
 
-load File.expand_path('../lib/colorize.rb', __FILE__)
-load File.expand_path('../lib/render_template.rb', __FILE__)
-load File.expand_path('../lib/DockerImage.rb', __FILE__)
-load File.expand_path('../lib/build_objects_array.rb', __FILE__)
+Dir.glob('lib/*.rb').each { |l| load l }
 
 metadata = YAML.load(File.read('metadata.yaml'))
 
