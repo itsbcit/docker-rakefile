@@ -41,15 +41,5 @@ class DockerImage
         @suffixes = suffixes.uniq
     end
 
-    def tag_string()
-        if    self.variant.empty? and self.version.empty?
-            return nil
-        elsif self.variant.empty?
-            return self.version
-        elsif self.version.empty?
-            return self.variant
-        else
-            return "#{version}-#{variant}"
-        end
     end
 end
