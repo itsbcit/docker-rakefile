@@ -27,19 +27,44 @@ class DockerImage
     end
 
     def dir
-        if self.variant.empty? and self.version.empty?
+        if    self.variant.empty? and self.version.empty?
             dir = nil
+        elsif self.variant.empty?
+            dir = self.version
+        elsif self.version.empty?
+            dir = self.variant
         else
-            # format directory based on version,variant
-            dash = variant.empty? ? '' : '-'
-            dir = "#{version}#{dash}#{variant}"
+            dir = "#{version}-#{variant}"
         end
+
         return dir
     end
 
     def suffixes=(suffixes)
-        @suffixes = suffixes.uniq
+        @suffixes += suffixes
+        @suffixes  = @suffixes.uniq
     end
 
+    def tags()
+        version  = self.version.empty? ? '' : "-#{self.version}"
+        variant  = self.variant.empty? ? '' : "-#{self.variant}"
+        tags     = []
+
+        base_tag = "#{self.image_name}#{version}#{variant}"
+        self.registries.each do |registry|
+            tag   = "#{registry}/#{self.org_name}/#{base_tag}"
+            tags << tag
+            tags << "#{tag}-b#{build_id}"
+            tags << "#{tag}-latest"
+
+            self.suffixes.each do |suffix|
+                suffix = suffix.empty? ? '' : "-#{suffix}"
+                tags << "#{tag}#{suffix}-b#{build_id}" unless suffix.include? 'latest'
+                tags << "#{tag}#{suffix}-latest"       unless suffix.include? 'latest'
+                tags << "#{tag}#{suffix}"
+            end
+        end
+
+        return tags.uniq
     end
 end
