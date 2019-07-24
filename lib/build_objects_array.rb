@@ -11,7 +11,7 @@ def build_objects_array(metadata, build_id)
 
     versions.each do |version, version_params|
         version_params = version_params.nil?           ? {} : version_params
-        version_suffixes   = version_params['extra_suffixes'].nil?   ? [] : version_params['suffixes']
+        version_suffixes   = version_params['suffixes'].nil?   ? [] : version_params['suffixes']
         version_files  = version_params['files'].nil?  ? [] : version_params['files']
         version_labels = version_params['labels'].nil? ? {} : version_params['labels']
         version_vars   = version_params['vars'].nil?   ? {} : version_params['vars']
