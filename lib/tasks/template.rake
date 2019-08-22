@@ -19,6 +19,6 @@ task :template do
       end
     end
     puts "Rendering #{dir}/Dockerfile"
-    #render_template("Dockerfile.erb", "#{dir}/Dockerfile", binding)
+    render_template("Dockerfile.erb", "#{dir}/Dockerfile", binding)
   end
 end
