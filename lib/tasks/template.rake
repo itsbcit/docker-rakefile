@@ -7,6 +7,6 @@ task :template do
       FileUtils.cp 'supervisor.conf',"#{dir}/supervisor.conf"
     end
     puts "Rendering #{dir}/Dockerfile"
-    render_template("Dockerfile.erb", "#{dir}/Dockerfile", binding)
+    #render_template("Dockerfile.erb", "#{dir}/Dockerfile", binding)
   end
 end
