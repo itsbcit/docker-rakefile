@@ -33,8 +33,8 @@ def build_objects_array(options = {})
                 variant: variant,
                 registries: registries,
                 labels: labels.merge(version_labels).merge(variant_labels),
-                vars: vars,
-                files: files,
+                vars: vars.merge(version_vars).merge(variant_vars),
+                files: files + version_files + variant_files,
             )
         end
     end
