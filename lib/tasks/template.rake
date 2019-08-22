@@ -6,13 +6,14 @@ task :template do
     FileUtils.mkdir_p dir unless image.dir.nil?
 
     image.files.each do |file|
-      # TODO: if the last four characters are '.erb'...
-      if file.include? '.erb'
       unless File.exist?(file)
         puts "WARNING: file not found: #{file}".red
         next
       end
+      # if this is an ERB template...
+      if file[-4..-1] == '.erb'
         #render the file without .erb extension
+        render_template(file,"#{dir}/#{file[0..-5]}", binding)
       else
         FileUtils.cp(file,dir)
       end
