@@ -10,7 +10,7 @@ def build_objects_array(options = {})
     registries  = metadata['registries'].nil?  ? []         : metadata['registries']
     labels      = metadata['labels'].nil?      ? []         : metadata['labels']
     vars        = metadata['vars'].nil?        ? {}         : metadata['vars']
-    files       = metadata['files'].nil?       ? {}         : metadata['files']
+    files       = metadata['files'].nil?       ? []         : metadata['files']
 
     versions.each do |version, version_params|
         version_params = version_params.nil?           ? {} : version_params
