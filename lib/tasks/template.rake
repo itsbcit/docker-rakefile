@@ -13,7 +13,9 @@ task :template do
       # if this is an ERB template...
       if file[-4..-1] == '.erb'
         #render the file without .erb extension
-        render_template(file,"#{dir}/#{file[0..-5]}", binding)
+        outfile = file[0..-5]
+        puts "Rendering #{dir}/#{outfile}"
+        render_template(file,"#{dir}/#{outfile}", binding)
       else
         FileUtils.cp(file,dir)
       end
