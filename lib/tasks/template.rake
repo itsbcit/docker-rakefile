@@ -8,6 +8,10 @@ task :template do
     image.files.each do |file|
       # TODO: if the last four characters are '.erb'...
       if file.include? '.erb'
+      unless File.exist?(file)
+        puts "WARNING: file not found: #{file}".red
+        next
+      end
         #render the file without .erb extension
       else
         FileUtils.cp(file,dir)
