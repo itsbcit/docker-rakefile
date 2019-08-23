@@ -38,6 +38,13 @@ class DockerImage
         return "#{prefix}#{self.version}#{variant}"
     end
 
+    def build_tag()
+        prefix="b"
+        unless self.base_tag.empty?
+            prefix = "-#{prefix}"
+        end
+
+        return "#{prefix}#{self.build_id}"
     end
 
     def dir
@@ -62,14 +69,12 @@ class DockerImage
     def tags()
         tags     = []
         self.registries.each do |registry|
-            tag   = "#{registry}/#{self.org_name}/#{self.base_tag}"
+            tag   = "#{registry}/#{self.org_name}/#{self.image_name}:#{self.base_tag}"
             tags << tag
-            tags << "#{tag}-b#{build_id}"
             tags << "#{tag}-latest"
 
             self.suffixes.each do |suffix|
                 suffix = suffix.empty? ? '' : "-#{suffix}"
-                tags << "#{tag}#{suffix}-b#{build_id}" unless suffix.include? 'latest'
                 tags << "#{tag}#{suffix}-latest"       unless suffix.include? 'latest'
                 tags << "#{tag}#{suffix}"
             end
