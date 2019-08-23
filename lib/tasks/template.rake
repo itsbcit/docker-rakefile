@@ -22,7 +22,10 @@ task :template do
         FileUtils.cp(file,dir)
       end
     end
-    puts "\tRendering #{dir}/Dockerfile"
-    render_template("Dockerfile.erb", "#{dir}/Dockerfile", binding)
+
+    if File.exists?("Dockerfile.erb")
+      puts "\tRendering #{dir}/Dockerfile"
+      render_template("Dockerfile.erb", "#{dir}/Dockerfile", binding)
+    end
   end
 end
