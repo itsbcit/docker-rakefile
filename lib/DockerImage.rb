@@ -26,6 +26,12 @@ class DockerImage
         @files      = files
     end
 
+    def base_tag()
+        version  = self.version.empty? ? '' : "-#{self.version}"
+        variant  = self.variant.empty? ? '' : "-#{self.variant}"
+        return "#{self.image_name}#{version}#{variant}"
+    end
+
     def dir
         if    self.variant.empty? and self.version.empty?
             dir = nil
@@ -46,13 +52,9 @@ class DockerImage
     end
 
     def tags()
-        version  = self.version.empty? ? '' : "-#{self.version}"
-        variant  = self.variant.empty? ? '' : "-#{self.variant}"
         tags     = []
-
-        base_tag = "#{self.image_name}#{version}#{variant}"
         self.registries.each do |registry|
-            tag   = "#{registry}/#{self.org_name}/#{base_tag}"
+            tag   = "#{registry}/#{self.org_name}/#{self.base_tag}"
             tags << tag
             tags << "#{tag}-b#{build_id}"
             tags << "#{tag}-latest"
