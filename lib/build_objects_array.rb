@@ -18,6 +18,7 @@ def build_objects_array(options = {})
         version_files  = version_params['files'].nil?  ? [] : version_params['files']
         version_labels = version_params['labels'].nil? ? {} : version_params['labels']
         version_vars   = version_params['vars'].nil?   ? {} : version_params['vars']
+        version_tags   = version_params['version_tags'].nil? ? [] : version_params['version_tags']
         variants.each do |variant, variant_params|
             variant_params   = variant_params.nil?             ? {} : variant_params
             variant_files    = variant_params['files'].nil?    ? [] : variant_params['files']
@@ -30,6 +31,7 @@ def build_objects_array(options = {})
                 build_id: build_id,
                 suffixes: suffixes + version_suffixes + variant_suffixes,
                 version: version,
+                version_tags: version_tags,
                 variant: variant,
                 registries: registries,
                 labels: labels.merge(version_labels).merge(variant_labels),

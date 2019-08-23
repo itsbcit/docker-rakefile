@@ -1,6 +1,6 @@
 class DockerImage
     attr_reader   :suffixes
-    attr_accessor :image_name, :variant, :version, :build_id,
+    attr_accessor :image_name, :variant, :version, :version_tags, :build_id,
                   :registries, :org_name, :maintainer, :labels, :vars, :files
     def initialize(
         image_name:,
@@ -8,6 +8,7 @@ class DockerImage
         build_id:   '',
         suffixes:   [''],
         version:    '',
+        version_tags: [],
         variant:    '',
         registries: [],
         labels:     {},
@@ -19,6 +20,7 @@ class DockerImage
         @build_id   = build_id
         @suffixes   = suffixes
         @version    = version
+        @version_tags = version_tags
         @variant    = variant
         @registries = registries
         @labels     = labels.merge( { "build_id" => build_id } )
@@ -26,25 +28,30 @@ class DockerImage
         @files      = files
     end
 
-    def base_tag()
-        if self.version.empty?
+    def base_tag(version)
+        if version.empty?
             variant = self.variant
         else
             variant = self.variant.empty? ? '' : "-#{self.variant}"
         end
 
-        prefix = "#{self.version}#{variant}".empty? ? '' : ':'
+        prefix = "#{version}#{variant}".empty? ? '' : ':'
 
-        return "#{prefix}#{self.version}#{variant}"
+        return "#{prefix}#{version}#{variant}"
     end
 
-    def build_tag()
+    def build_tag(version)
         prefix="b"
-        unless self.base_tag.empty?
+        unless self.base_tag(version).empty?
             prefix = "-#{prefix}"
         end
 
         return "#{prefix}#{self.build_id}"
+    end
+
+    def latest(version)
+        prefix = self.base_tag(version).empty? ? '' : '-'
+        return "#{prefix}latest"
     end
 
     def dir
@@ -68,16 +75,18 @@ class DockerImage
 
     def tags()
         tags     = []
-        self.registries.each do |registry|
-            tag   = "#{registry}/#{self.org_name}/#{self.image_name}:#{self.base_tag}"
-            tags << tag
-            tags << "#{tag}-latest"
+        tags << "#{self.base_tag(self.version)}#{self.build_tag(self.version)}"
+        tags << "#{self.base_tag(self.version)}#{self.latest(self.version)}"
 
-            self.suffixes.each do |suffix|
-                suffix = suffix.empty? ? '' : "-#{suffix}"
-                tags << "#{tag}#{suffix}-latest"       unless suffix.include? 'latest'
-                tags << "#{tag}#{suffix}"
-            end
+        self.suffixes.each do |suffix|
+            suffix = self.base_tag(self.version).empty? ? suffix : "-#{suffix}"
+            tags << "#{self.base_tag(self.version)}#{suffix}"
+        end
+
+        self.version_tags.each do |version_tag|
+            tags << "#{self.base_tag(version_tag)}"
+            tags << "#{self.base_tag(version_tag)}#{self.build_tag(self.version)}"
+            tags << "#{self.base_tag(version_tag)}#{self.latest(self.version)}"
         end
 
         return tags.uniq
