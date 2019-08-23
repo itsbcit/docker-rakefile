@@ -3,8 +3,8 @@ task :template do
   puts "*** Rendering templates ***".green
   $images.each do |image|
     puts "Image: #{image.image_name}:#{image.base_tag}"
-    dir = image.dir.nil? ? '.' : image.dir
-    FileUtils.mkdir_p dir unless image.dir.nil?
+    dir = image.dir
+    FileUtils.mkdir_p(image.dir) unless image.dir.nil? or Dir.exists?(image.dir)
 
     image.files.each do |file|
       unless File.exist?(file)
