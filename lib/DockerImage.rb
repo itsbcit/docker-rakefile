@@ -27,9 +27,17 @@ class DockerImage
     end
 
     def base_tag()
-        version  = self.version.empty? ? '' : "-#{self.version}"
-        variant  = self.variant.empty? ? '' : "-#{self.variant}"
-        return "#{self.image_name}#{version}#{variant}"
+        if self.version.empty?
+            variant = self.variant
+        else
+            variant = self.variant.empty? ? '' : "-#{self.variant}"
+        end
+
+        prefix = "#{self.version}#{variant}".empty? ? '' : ':'
+
+        return "#{prefix}#{self.version}#{variant}"
+    end
+
     end
 
     def dir
