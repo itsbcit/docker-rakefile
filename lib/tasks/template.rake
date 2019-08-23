@@ -12,7 +12,7 @@ task :template do
         next
       end
       # if this is an ERB template...
-      if file[-4..-1] == '.erb'
+      if (file.size > 4) and (file[-4..-1] == '.erb')
         #render the file without .erb extension
         outfile = file[0..-5]
         puts "\tRendering #{dir}/#{outfile}"
