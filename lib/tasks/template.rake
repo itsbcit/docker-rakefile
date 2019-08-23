@@ -2,6 +2,7 @@ desc "Update Dockerfile templates"
 task :template do
   puts "*** Rendering templates ***".green
   $images.each do |image|
+    puts "Image: #{image.image_name} Version: #{image.version} Variant: #{image.variant}"
     dir = image.dir.nil? ? '.' : image.dir
     FileUtils.mkdir_p dir unless image.dir.nil?
 
@@ -14,13 +15,14 @@ task :template do
       if file[-4..-1] == '.erb'
         #render the file without .erb extension
         outfile = file[0..-5]
-        puts "Rendering #{dir}/#{outfile}"
+        puts "\tRendering #{dir}/#{outfile}"
         render_template(file,"#{dir}/#{outfile}", binding)
       else
+        puts "\tCopying #{dir}/#{file}"
         FileUtils.cp(file,dir)
       end
     end
-    puts "Rendering #{dir}/Dockerfile"
+    puts "\tRendering #{dir}/Dockerfile"
     render_template("Dockerfile.erb", "#{dir}/Dockerfile", binding)
   end
 end
