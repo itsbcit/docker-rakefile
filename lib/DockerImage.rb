@@ -34,7 +34,7 @@ class DockerImage
 
     def dir
         if    self.variant.empty? and self.version.empty?
-            dir = nil
+            dir = '.'
         elsif self.variant.empty?
             dir = self.version
         elsif self.version.empty?
