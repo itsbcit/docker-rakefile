@@ -15,17 +15,17 @@ class DockerImage
         vars:         {},
         files:        {}
     )
-        @image_name = image_name
-        @org_name   = org_name
-        @build_id   = build_id
-        @suffixes   = suffixes
-        @version    = version
+        @image_name   = image_name
+        @org_name     = org_name
+        @build_id     = build_id
+        @suffixes     = suffixes
+        @version      = version
         @version_tags = version_tags
-        @variant    = variant
-        @registries = registries
-        @labels     = labels.merge( { "build_id" => build_id } )
-        @vars       = vars
-        @files      = files
+        @variant      = variant
+        @registries   = registries
+        @labels       = labels.merge( { "build_id" => build_id } )
+        @vars         = vars
+        @files        = files
     end
 
     def base_tag(version=self.version)
