@@ -15,16 +15,16 @@ def build_objects_array(options = {})
   versions    = metadata['versions'].nil?    ? { '' => {} } : metadata['versions']
 
   versions.each do |version, version_params|
+    version_params     = version_params.nil?                 ? {} : version_params
     version_files      = version_params['files'].nil?        ? [] : version_params['files']
     version_labels     = version_params['labels'].nil?       ? {} : version_params['labels']
-    version_params     = version_params.nil?                 ? {} : version_params
     version_suffixes   = version_params['suffixes'].nil?     ? [] : version_params['suffixes']
     version_tags       = version_params['version_tags'].nil? ? [] : version_params['version_tags']
     version_vars       = version_params['vars'].nil?         ? {} : version_params['vars']
     variants.each do |variant, variant_params|
+      variant_params   = variant_params.nil?             ? {} : variant_params
       variant_files    = variant_params['files'].nil?    ? [] : variant_params['files']
       variant_labels   = variant_params['labels'].nil?   ? {} : variant_params['labels']
-      variant_params   = variant_params.nil?             ? {} : variant_params
       variant_suffixes = variant_params['suffixes'].nil? ? [] : variant_params['suffixes']
       variant_vars     = variant_params['vars'].nil?     ? {} : variant_params['vars']
       objects_array << DockerImage.new(
