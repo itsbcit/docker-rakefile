@@ -1,6 +1,8 @@
-desc "Test docker images"
+# frozen_string_literal: true
+
+desc 'Test docker images'
 task :test do
-  puts "*** Testing images ***".green
+  puts '*** Testing images ***'.green
   tags.each do |tag|
     Dir.chdir(tag) do
       puts "Running tests on #{org_name}/#{image_name}:#{tag}"

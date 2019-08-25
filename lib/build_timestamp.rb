@@ -1,9 +1,11 @@
-def build_timestamp
-    if ENV['timestamp'].nil?
-      timestamp = Time.now.getutc.to_i
-    else
-      timestamp = ENV['timestamp']
-    end
+# frozen_string_literal: true
 
-    return timestamp
+def build_timestamp
+  timestamp = if ENV['timestamp'].nil?
+                Time.now.getutc.to_i
+              else
+                ENV['timestamp']
+              end
+
+  timestamp
 end

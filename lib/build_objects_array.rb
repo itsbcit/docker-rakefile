@@ -1,45 +1,47 @@
+# frozen_string_literal: true
+
 def build_objects_array(options = {})
-    metadata = options.fetch(:metadata)
-    build_id = options.fetch(:build_id)
+  build_id = options.fetch(:build_id)
+  metadata = options.fetch(:metadata)
 
-    objects_array = []
+  objects_array = []
 
-    suffixes    = metadata['suffixes'].nil?    ? []         : metadata['suffixes']
-    versions    = metadata['versions'].nil?    ? {'' => {}} : metadata['versions']
-    variants    = metadata['variants'].nil?    ? {'' => {}} : metadata['variants']
-    registries  = metadata['registries'].nil?  ? []         : metadata['registries']
-    labels      = metadata['labels'].nil?      ? []         : metadata['labels']
-    vars        = metadata['vars'].nil?        ? {}         : metadata['vars']
-    files       = metadata['files'].nil?       ? []         : metadata['files']
+  files       = metadata['files'].nil?       ? []           : metadata['files']
+  labels      = metadata['labels'].nil?      ? []           : metadata['labels']
+  registries  = metadata['registries'].nil?  ? []           : metadata['registries']
+  suffixes    = metadata['suffixes'].nil?    ? []           : metadata['suffixes']
+  variants    = metadata['variants'].nil?    ? { '' => {} } : metadata['variants']
+  vars        = metadata['vars'].nil?        ? {}           : metadata['vars']
+  versions    = metadata['versions'].nil?    ? { '' => {} } : metadata['versions']
 
-    versions.each do |version, version_params|
-        version_params = version_params.nil?           ? {} : version_params
-        version_suffixes   = version_params['suffixes'].nil?   ? [] : version_params['suffixes']
-        version_files  = version_params['files'].nil?  ? [] : version_params['files']
-        version_labels = version_params['labels'].nil? ? {} : version_params['labels']
-        version_vars   = version_params['vars'].nil?   ? {} : version_params['vars']
-        version_tags   = version_params['version_tags'].nil? ? [] : version_params['version_tags']
-        variants.each do |variant, variant_params|
-            variant_params   = variant_params.nil?             ? {} : variant_params
-            variant_files    = variant_params['files'].nil?    ? [] : variant_params['files']
-            variant_labels   = variant_params['labels'].nil?   ? {} : variant_params['labels']
-            variant_vars     = variant_params['vars'].nil?     ? {} : variant_params['vars']
-            variant_suffixes = variant_params['suffixes'].nil? ? [] : variant_params['suffixes']
-            objects_array << DockerImage.new(
-                image_name: metadata['image_name'],
-                org_name: metadata['org_name'],
-                build_id: build_id,
-                suffixes: suffixes + version_suffixes + variant_suffixes,
-                version: version,
-                version_tags: version_tags,
-                variant: variant,
-                registries: registries,
-                labels: labels.merge(version_labels).merge(variant_labels),
-                vars: vars.merge(version_vars).merge(variant_vars),
-                files: files + version_files + variant_files,
-            )
-        end
+  versions.each do |version, version_params|
+    version_files      = version_params['files'].nil?        ? [] : version_params['files']
+    version_labels     = version_params['labels'].nil?       ? {} : version_params['labels']
+    version_params     = version_params.nil?                 ? {} : version_params
+    version_suffixes   = version_params['suffixes'].nil?     ? [] : version_params['suffixes']
+    version_tags       = version_params['version_tags'].nil? ? [] : version_params['version_tags']
+    version_vars       = version_params['vars'].nil?         ? {} : version_params['vars']
+    variants.each do |variant, variant_params|
+      variant_files    = variant_params['files'].nil?    ? [] : variant_params['files']
+      variant_labels   = variant_params['labels'].nil?   ? {} : variant_params['labels']
+      variant_params   = variant_params.nil?             ? {} : variant_params
+      variant_suffixes = variant_params['suffixes'].nil? ? [] : variant_params['suffixes']
+      variant_vars     = variant_params['vars'].nil?     ? {} : variant_params['vars']
+      objects_array << DockerImage.new(
+        build_id: build_id,
+        files: files + version_files + variant_files,
+        image_name: metadata['image_name'],
+        labels: labels.merge(version_labels).merge(variant_labels),
+        org_name: metadata['org_name'],
+        registries: registries,
+        suffixes: suffixes + version_suffixes + variant_suffixes,
+        variant: variant,
+        vars: vars.merge(version_vars).merge(variant_vars),
+        version_tags: version_tags,
+        version: version
+      )
     end
+  end
 
-    return objects_array
+  objects_array
 end

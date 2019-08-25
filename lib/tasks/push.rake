@@ -1,4 +1,6 @@
-desc "Push to Registry"
+# frozen_string_literal: true
+
+desc 'Push to Registry'
 task :push do
   images.each do |image|
     puts "*** Pushing #{org_name}/#{image} to #{registry}".green

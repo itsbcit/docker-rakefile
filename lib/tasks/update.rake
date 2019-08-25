@@ -1,5 +1,7 @@
-desc "Update Rakefile"
+# frozen_string_literal: true
+
+desc 'Update Rakefile'
 task :update do
-  puts "Not implemented"
+  puts 'Not implemented'
   # TODO: download latest rakefile from Github
 end

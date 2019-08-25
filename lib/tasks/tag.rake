@@ -7,7 +7,7 @@ task :tag do
     image.registries.each do |registry|
       image.tags.each do |tag|
         puts tag.yellow
-        puts "docker tag #{registry}/#{image.org_name}/#{image.image_name}:#{image.base_tag}#{image.build_tag} #{registry}/#{image.org_name}/#{image.image_name}#{tag}".red
+        puts "docker tag #{registry}/#{image.org_name}/#{image.image_name}:#{image.base_tag}#{image.build_tag} #{registry}/#{image.org_name}/#{image.image_name}:#{tag}".red
       end
     end
   end
