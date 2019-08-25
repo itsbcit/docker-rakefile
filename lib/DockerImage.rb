@@ -28,7 +28,7 @@ class DockerImage
         @files      = files
     end
 
-    def base_tag(version)
+    def base_tag(version=self.version)
         if version.empty?
             variant = self.variant
         else
@@ -40,7 +40,7 @@ class DockerImage
         return "#{prefix}#{version}#{variant}"
     end
 
-    def build_tag(version)
+    def build_tag(version=self.version)
         prefix="b"
         unless self.base_tag(version).empty?
             prefix = "-#{prefix}"
@@ -49,7 +49,7 @@ class DockerImage
         return "#{prefix}#{self.build_id}"
     end
 
-    def latest(version)
+    def latest(version=self.version)
         prefix = self.base_tag(version).empty? ? '' : '-'
         return "#{prefix}latest"
     end
