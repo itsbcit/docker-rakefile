@@ -5,15 +5,15 @@ class DockerImage
     def initialize(
         image_name:,
         org_name:,
-        build_id:   '',
-        suffixes:   [''],
-        version:    '',
+        build_id:     '',
+        suffixes:     [''],
+        version:      '',
         version_tags: [],
-        variant:    '',
-        registries: [],
-        labels:     {},
-        vars:       {},
-        files:      {}
+        variant:      '',
+        registries:   [],
+        labels:       {},
+        vars:         {},
+        files:        {}
     )
         @image_name = image_name
         @org_name   = org_name
