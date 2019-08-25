@@ -75,12 +75,12 @@ class DockerImage
 
     def tags()
         tags     = []
-        tags << "#{self.base_tag(self.version)}#{self.build_tag(self.version)}"
-        tags << "#{self.base_tag(self.version)}#{self.latest(self.version)}"
+        tags << "#{self.base_tag}#{self.build_tag}"
+        tags << "#{self.base_tag}#{self.latest}"
 
         self.suffixes.each do |suffix|
-            suffix = self.base_tag(self.version).empty? ? suffix : "-#{suffix}"
-            tags << "#{self.base_tag(self.version)}#{suffix}"
+            suffix = self.base_tag.empty? ? suffix : "-#{suffix}"
+            tags << "#{self.base_tag}#{suffix}"
         end
 
         self.version_tags.each do |version_tag|
