@@ -1,6 +1,8 @@
-desc "Build Docker images"
+# frozen_string_literal: true
+
+desc 'Build Docker images'
 task :build do
-  puts "*** Building images ***".green
+  puts '*** Building images ***'.green
   $images.each do |image|
     image.registries.each do |registry|
       puts "Image: #{image.image_name}#{image.base_tag}"

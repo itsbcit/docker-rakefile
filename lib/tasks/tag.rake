@@ -1,7 +1,9 @@
-desc "Tag docker images"
+# frozen_string_literal: true
+
+desc 'Tag docker images'
 task :tag do
   # TODO: each registry should register an org name
-  puts "*** Tagging images ***".green
+  puts '*** Tagging images ***'.green
   $images.each do |image|
     puts "Image: #{image.image_name}:#{image.base_tag}"
     image.registries.each do |registry|
