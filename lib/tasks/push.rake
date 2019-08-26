@@ -8,7 +8,7 @@ task :push do
   end
   build_id = File.read('.build_id')
   $images.each do |image|
-    puts "Image: #{image.name_tag()}"
+    puts "Image: #{image.name_tag}"
     image.build_id = build_id
     image.registries.each do |registry|
       ron = image.registry_org_name(registry['url'], registry['org_name'])

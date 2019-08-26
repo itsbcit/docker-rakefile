@@ -4,9 +4,9 @@ desc 'Tag docker images'
 task :tag do
   puts '*** Tagging images ***'.green
   $images.each do |image|
-    puts "Image: #{image.name_tag()}"
+    puts "Image: #{image.name_tag}"
     image.build_id = File.read('.build_id') if File.exist? '.build_id'
-    File.open('.build_id', 'w') {|f| f.write(image.build_id) } unless File.exist? '.build_id'
+    File.open('.build_id', 'w') { |f| f.write(image.build_id) } unless File.exist? '.build_id'
     image.tags.each do |tag|
       sh "docker tag #{image.base_tag} #{image.name_tag(tag)}"
     end
