@@ -1,8 +1,1 @@
-/test.rb
-Dockerfile.erb
-Dockerfile
-metadata.yaml
-*.erb
-1.2.3*
-*.conf
 .build_id
