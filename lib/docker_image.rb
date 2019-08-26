@@ -31,7 +31,7 @@ class DockerImage
     @files        = files
   end
 
-  def base_tag(version = self.version)
+  def version_variant(version = self.version)
     variant = if version.empty?
                 self.variant
               else
@@ -41,16 +41,18 @@ class DockerImage
     "#{version}#{variant}"
   end
 
-  def build_tag(version = self.version)
-    prefix = 'b'
-    prefix = "-#{prefix}" unless base_tag(version).empty?
+  def version_variant_build(version = self.version)
+    vv = version_variant(version)
+    prefix = vv.empty? ? '' : '-'
 
-    "#{prefix}#{build_id}"
+    "#{vv}#{prefix}b#{build_id}"
   end
 
-  def latest(version = self.version)
-    prefix = base_tag(version).empty? ? '' : '-'
-    "#{prefix}latest"
+  def version_variant_latest(version = self.version)
+    vv = version_variant(version)
+    prefix = vv.empty? ? '' : '-'
+
+    "#{vv}#{prefix}latest"
   end
 
   def dir
@@ -74,18 +76,18 @@ class DockerImage
 
   def tags
     tags = []
-    tags << base_tag
-    tags << "#{base_tag}#{latest}"
+    tags << version_variant
+    tags << version_variant_latest
 
     suffixes.each do |suffix|
-      suffix = base_tag.empty? ? suffix : "-#{suffix}"
-      tags << "#{base_tag}#{suffix}"
+      suffix = version_variant.empty? ? suffix : "-#{suffix}"
+      tags << "#{version_variant}#{suffix}"
     end
 
     version_tags.each do |version_tag|
-      tags << base_tag(version_tag).to_s
-      tags << "#{base_tag(version_tag)}#{build_tag}"
-      tags << "#{base_tag(version_tag)}#{latest}"
+      tags << version_variant(version_tag)
+      tags << version_variant_build(version_tag)
+      tags << version_variant_latest(version_tag)
     end
 
     tags.uniq

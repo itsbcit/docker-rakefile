@@ -5,9 +5,9 @@ task :build do
   puts '*** Building images ***'.green
   $images.each do |image|
     image.registries.each do |registry|
-      puts "Image: #{image.image_name}#{image.base_tag}"
+      puts "Image: #{image.image_name}:#{image.version_variant}:".green
       Dir.chdir(image.dir) do
-        puts "docker build -t #{registry}/#{image.org_name}/#{image.image_name}:#{image.base_tag}#{image.build_tag} . --no-cache --pull"
+        sh "docker build -t #{registry}/#{image.org_name}/#{image.image_name}:#{image.version_variant_build} . --no-cache --pull"
       end
     end
   end

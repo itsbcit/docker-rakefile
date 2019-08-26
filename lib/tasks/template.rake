@@ -4,7 +4,7 @@ desc 'Update Dockerfile templates'
 task :template do
   puts '*** Rendering templates ***'.green
   $images.each do |image|
-    puts "Image: #{image.image_name}:#{image.base_tag}"
+    puts "Image: #{image.image_name}:#{image.version_variant}"
     dir = image.dir
     FileUtils.mkdir_p(image.dir) unless image.dir.nil? || Dir.exist?(image.dir)
 
