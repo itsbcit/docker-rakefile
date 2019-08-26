@@ -76,7 +76,7 @@ class DockerImage
 
   def tags
     tags = []
-    tags << version_variant
+    tags << version_variant_build
     tags << version_variant_latest
 
     suffixes.each do |suffix|
