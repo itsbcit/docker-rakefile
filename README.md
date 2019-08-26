@@ -8,26 +8,29 @@
 Sample metadata.yaml:
 ```
 ---
-image_name: foo
+image_name: weebly
+org_name: barbaz
 labels:
   maintainer: jesse@weisner.ca
-org_name: barbaz
 versions:
+  '':
   '1.2.3':
     suffixes:
-      - '1.2-latest'
-      - latest
-  '1.0':
-  '1.1':
+      - 'production'
+    version_tags:
+      - '1.2'
 variants:
   '':
   bar:
   supervisord:
+    vars:
+      bar: qux
     files:
       - supervisor.conf
 suffixes:
 registries:
-  - 'localhost:5000'
+  - url: 'localhost:5000'
+    org_name: barbaz
 vars:
   tini_version: '0.18.0'
   de_version: '1.5'
