@@ -31,14 +31,37 @@ class DockerImage
     @files        = files
   end
 
-  def version_variant(version = self.version)
-    variant = if version.empty?
-                self.variant
-              else
-                self.variant.empty? ? '' : "-#{self.variant}"
-              end
+  def base_tag(registry = '', org_name = self.org_name)
+    ron = registry_org_name(registry, org_name)
+    separator = ron.empty? ? '' : '/'
 
-    "#{version}#{variant}"
+    "#{ron}#{separator}#{name_tag}"
+  end
+
+  def registry_org_name(registry = '', org_name = self.org_name)
+    separator = if registry.empty?
+                  ''
+                else
+                  org_name.empty? ? '' : '/'
+                end
+
+    "#{registry}#{separator}#{org_name}"
+  end
+
+  def version_variant(version = self.version)
+    separator = if version.empty?
+                  ''
+                else
+                  variant.empty? ? '' : '-'
+                end
+
+    "#{version}#{separator}#{variant}"
+  end
+
+  def name_tag(tag = version_variant())
+    separator = tag.empty? ? '' : ':'
+
+    "#{image_name}#{separator}#{tag}"
   end
 
   def version_variant_build(version = self.version)
@@ -56,17 +79,7 @@ class DockerImage
   end
 
   def dir
-    dir = if variant.empty? && version.empty?
-            '.'
-          elsif variant.empty?
-            version
-          elsif version.empty?
-            variant
-          else
-            "#{version}-#{variant}"
-          end
-
-    dir
+    version_variant.empty? ? '.' : version_variant
   end
 
   def suffixes=(suffixes)

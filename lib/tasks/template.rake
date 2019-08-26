@@ -3,10 +3,11 @@
 desc 'Update Dockerfile templates'
 task :template do
   puts '*** Rendering templates ***'.green
+
   $images.each do |image|
-    puts "Image: #{image.image_name}:#{image.version_variant}"
+    puts "Image: #{image.name_tag}"
     dir = image.dir
-    FileUtils.mkdir_p(image.dir) unless image.dir.nil? || Dir.exist?(image.dir)
+    FileUtils.mkdir_p(dir) unless Dir.exist?(dir)
 
     image.files.each do |file|
       unless File.exist?(file)
@@ -20,6 +21,8 @@ task :template do
         puts "\tRendering #{dir}/#{outfile}"
         render_template(file, "#{dir}/#{outfile}", binding)
       else
+        next if dir == '.'
+
         puts "\tCopying #{dir}/#{file}"
         FileUtils.cp(file, dir)
       end
