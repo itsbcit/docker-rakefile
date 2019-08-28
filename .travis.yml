@@ -10,3 +10,4 @@ deploy:
     - lib.zip
   on:
     repo: itsbcit/docker-rakefile
+    tags: true
