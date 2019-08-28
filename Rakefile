@@ -16,5 +16,3 @@ if File.exist?('metadata.yaml')
 end
 
 Dir.glob('lib/tasks/*.rake').each { |r| load r } if Dir.exist?('lib/tasks')
-
-# initalize the project
