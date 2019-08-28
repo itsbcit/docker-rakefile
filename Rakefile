@@ -16,3 +16,9 @@ $images = build_objects_array(
 
 Dir.glob('lib/tasks/*.rake').each { |r| load r } if Dir.exist?('lib/tasks')
 Dir.glob('lib/tasks/*.rake').each { |r| load r } if Dir.exist?('local/tasks')
+
+desc 'Install Rakefile support files'
+task :install do
+  puts 'Not implemented'
+  # TODO: download lib code from GitHub
+end
