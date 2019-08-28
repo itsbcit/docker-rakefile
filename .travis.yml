@@ -8,6 +8,7 @@ deploy:
   file:
     - "lib.zip"
     - "Rakefile"
+  skip_cleanup: true
   on:
     repo: itsbcit/docker-rakefile
     tags: true
