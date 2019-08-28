@@ -1,17 +1,12 @@
 language: bash
-
 before_deploy:
-  - zip -r lib.zip lib
-
+- zip -r lib.zip lib
 deploy:
   provider: releases
   api_key:
-    secure: kWfipok2OWBMdUIUZsHn30kexqsLHPvsBetyLf+8hcGztR9LwBQ2CjDANHkDURZHZAtv+oK55CwyFt6amwUns3sDkzNoVQ0gLSnI1obx0WUvi3cGabiOWbaFw7xfqUPDDlDDPJTfH0301F1mYjHzGWVUs3+zVfG5XuV72l/dzxaXjLFT1asUwbJsJBE6ZYm428ogvUlGdfb8kHDlEkKBzzh9490Af4DJ67Ab4F85YJw+McmeH9fd1ek2C/PWQ3md5edenh4fomz2YqnSvrAHRt12xTuzz5wQF/KpyDHFssq85z9gmwPg7m9R0hCFX9UIO1H09i07NoAMoZiphCbxwcn7RJfBm0sgyfzeM1+j4kXkDhLAlLfNyznmBKAQoF3hGAEFhAvJGHpG7swSazEZU13duF5JHf3y+CT2TmMUuePszVGdnBHV7Xs2SN8B993K5IzUCnZsQ4jSlFAS1Fio2VHjG8uLEITFNGNhuzeOp0VebcHch/JdccSwcLC0bEP+NhrllZ82PptmlIyK1QZ1EX3RjTFi8M2nTqSPezW7yaG/s7R1kBFjAQIjGFJr9zH5DtnXzeYkLnwS2W5+Y7cWolKn1euFNzgNekFqK+V+WSmd88hLS7TXmGL4BPYjtSi45cKiBty5ufRsNqICDfC5XCQZtaDcql1Iy8mn7P8fJHU=
-  file:
-    - lib.zip
+    secure: cBBV/i3CYOKFNX1bV8oIOpKXm93jOOiyuffGxTUIxUw9jbiJ7r9YIp1RxGdukC7X7JdthCoTSGFHsqwcgVc4KK1XS9VK4suySN4/ISeBiyFwzUAVAb9qZq+PPn4F1L2hNyx9Ck3PaAbs1blSVZUM1t9Ifh5mTyDarRP6Yx9BAp4QpDBbUwxJ1nXs9GknCr6bg4gTgTYe/JOGOpRjTNBRww+udv5u1vItDe7x+u/yGjwxmR9JKwHF2t6r2qDbi8iggMS+eEfr9s7Ryt9Yl9ErZ7TsNigyQGquo0v8ZgUrUosM/qrrRelb8EmxnTW4eEuANfQgetX02SU17NuMaz6moRdoE8J8F2azWR+O02tPTCxThTPNXoN3tdI7O8FwYNhic2nxS1Cfgvyb587GKrCyvwx5E/OyfR0YhJGHKfQSsSDf8vaCfSygfb6/vt1lWih00ozJBgyL9Ud/xbnfuPa5Wgv4iHdpqs6VSK3cHmEcSFN57/Rrg/l8fU2NagN8USpePWFdyPHCbu8lGbAqVc6ZL0Ql6Cqg8H9tJqoIRLFrIxn1VVGI4ty+Fbh3RavuzP87vJINGZ3ymCvRD1U4pFK4+MXTNJtm8arVuKQKbFHbQmlxH5g1U6ypfBCX7urV/o2n10gb+NiNuci9FFJTMt580xsLfgjKToJLSxn/oA1jexg=
+  file: 
     - Rakefile
-  skip_cleanup: true
+    - lib.zip
   on:
-    branch: master
     repo: itsbcit/docker-rakefile
-    tags: true
