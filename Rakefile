@@ -7,6 +7,7 @@ require 'yaml'
 $images = []
 
 Dir.glob('lib/*.rb').each { |l| load l } if Dir.exist?('lib')
+Dir.glob('lib/*.rb').each { |l| load l } if Dir.exist?('local')
 
 if File.exist?('metadata.yaml')
   $images = build_objects_array(
@@ -16,3 +17,4 @@ if File.exist?('metadata.yaml')
 end
 
 Dir.glob('lib/tasks/*.rake').each { |r| load r } if Dir.exist?('lib/tasks')
+Dir.glob('lib/tasks/*.rake').each { |r| load r } if Dir.exist?('local/tasks')
