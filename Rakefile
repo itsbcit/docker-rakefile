@@ -9,7 +9,7 @@ require 'open-uri'
 Dir.glob('lib/*.rb').each { |l| load l } if Dir.exist?('lib')
 Dir.glob('lib/*.rb').each { |l| load l } if Dir.exist?('local')
 
-puts("WARNING: metadata.yaml not found.") unless File.exist?('metadata.yaml')
+puts('WARNING: metadata.yaml not found.') unless File.exist?('metadata.yaml')
 
 if File.exist?('metadata.yaml')
   $metadata = YAML.safe_load(File.read('metadata.yaml'))
