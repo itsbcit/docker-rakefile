@@ -21,7 +21,7 @@ end
 
 desc 'Install Rakefile support files'
 task :install do
-  open('https://github.com/itsbcit/docker-template/releases/latest/download/lib.zip') do |archive|
+  open('https://github.com/itsbcit/docker-rakefile/releases/latest/download/lib.zip') do |archive|
     FileUtils.remove_entry('lib') if File.exist?('lib')
     tempfile = Tempfile.new(['lib', '.zip'])
     File.open(tempfile.path, 'wb') do |f|
