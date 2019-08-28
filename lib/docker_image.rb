@@ -7,7 +7,7 @@ class DockerImage
                 :registries, :org_name, :maintainer, :labels, :vars, :files
   def initialize(
     image_name:,
-    org_name:,
+    org_name:     '',
     build_id:     '',
     suffixes:     [''],
     version:      '',
