@@ -10,8 +10,9 @@ Dir.glob('lib/*.rb').each { |l| load l } if Dir.exist?('lib')
 Dir.glob('lib/*.rb').each { |l| load l } if Dir.exist?('local')
 
 puts('WARNING: metadata.yaml not found.') unless File.exist?('metadata.yaml')
+puts('WARNING: Rakefile library not found.') unless File.exist?('lib')
 
-if File.exist?('metadata.yaml')
+if File.exist?('metadata.yaml') && File.exist?('lib')
   $metadata = YAML.safe_load(File.read('metadata.yaml'))
   $images = build_objects_array(
     metadata: $metadata,
