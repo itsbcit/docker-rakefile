@@ -5,7 +5,7 @@ deploy:
   provider: releases
   api_key:
     secure: cBBV/i3CYOKFNX1bV8oIOpKXm93jOOiyuffGxTUIxUw9jbiJ7r9YIp1RxGdukC7X7JdthCoTSGFHsqwcgVc4KK1XS9VK4suySN4/ISeBiyFwzUAVAb9qZq+PPn4F1L2hNyx9Ck3PaAbs1blSVZUM1t9Ifh5mTyDarRP6Yx9BAp4QpDBbUwxJ1nXs9GknCr6bg4gTgTYe/JOGOpRjTNBRww+udv5u1vItDe7x+u/yGjwxmR9JKwHF2t6r2qDbi8iggMS+eEfr9s7Ryt9Yl9ErZ7TsNigyQGquo0v8ZgUrUosM/qrrRelb8EmxnTW4eEuANfQgetX02SU17NuMaz6moRdoE8J8F2azWR+O02tPTCxThTPNXoN3tdI7O8FwYNhic2nxS1Cfgvyb587GKrCyvwx5E/OyfR0YhJGHKfQSsSDf8vaCfSygfb6/vt1lWih00ozJBgyL9Ud/xbnfuPa5Wgv4iHdpqs6VSK3cHmEcSFN57/Rrg/l8fU2NagN8USpePWFdyPHCbu8lGbAqVc6ZL0Ql6Cqg8H9tJqoIRLFrIxn1VVGI4ty+Fbh3RavuzP87vJINGZ3ymCvRD1U4pFK4+MXTNJtm8arVuKQKbFHbQmlxH5g1U6ypfBCX7urV/o2n10gb+NiNuci9FFJTMt580xsLfgjKToJLSxn/oA1jexg=
-  file: 
+  file:
     - Rakefile
     - lib.zip
   on:
