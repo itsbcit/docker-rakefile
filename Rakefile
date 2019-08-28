@@ -9,8 +9,9 @@ Dir.glob('lib/*.rb').each { |l| load l } if Dir.exist?('local')
 
 abort("ERROR: metadata.yaml not found.") unless File.exist?('metadata.yaml')
 
+$metadata = YAML.safe_load(File.read('metadata.yaml'))
 $images = build_objects_array(
-  metadata: YAML.safe_load(File.read('metadata.yaml')),
+  metadata: $metadata,
   build_id: build_timestamp
 )
 
