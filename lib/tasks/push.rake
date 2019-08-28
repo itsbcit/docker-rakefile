@@ -3,7 +3,7 @@
 desc 'Push to Registry'
 task :push do
   unless File.exist? '.build_id'
-    puts "Build and tag images first".red
+    puts 'Build and tag images first'.red
     exit(1)
   end
   build_id = File.read('.build_id')
