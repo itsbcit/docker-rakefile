@@ -29,6 +29,8 @@ class DockerImage
     @labels       = labels.merge('build_id' => build_id)
     @vars         = vars
     @files        = files
+
+    @registries += [{ 'url' => '', 'org_name' => org_name }] unless org_name.empty?
   end
 
   def base_tag(registry = '', org_name = self.org_name)
