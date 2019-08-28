@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
-desc 'Update Rakefile'
+desc 'Update Rakefile to latest release version'
 task :update do
-  puts 'Not implemented'
-  # TODO: download latest rakefile from Github
+  open('https://github.com/itsbcit/docker-template/releases/latest/download/Rakefile') do |rakefile|
+    File.open('Rakefile', 'wb') do |f|
+      f.write(rakefile.read)
+    end
+  end
 end
