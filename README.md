@@ -53,7 +53,7 @@ Inside ERB templated files, these parameters are available as eg. `metadata['var
 2. `rake template` to update or create `Dockerfile`s, version and variant directories, templated files, etc.
 3. `rake build`
 4. `rake tag`
-5. `rake push` to push to Docker Hub (or other repos defined in [`metadata.yaml`](#create-metadatayaml`)
+5. `rake push` to push to Docker Hub (or other repos defined in [`metadata.yaml`](#create-metadatayaml)
 
 ## Rake tasks
 ### install
