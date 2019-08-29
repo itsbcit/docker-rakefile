@@ -5,10 +5,10 @@ Rakefile and libraries for managing Docker images
 
 ## How to use
 ### New Docker image repositories
-Click "Use this template" (green button) in [the docker-template GitHub repository](https://github.com/itsbcit/docker-template) to create a new templated GitHub repository. You must be logged-in to GitHub to see this option.
+Click "Use this template" (green button) in the [docker-template](https://github.com/itsbcit/docker-template) GitHub repository to create a new templated GitHub repository. You must be logged-in to GitHub to see this option.
 
 ### Existing Docker image repositories
-Download and overwrite the Rakefile in the existing code with [the latest release Rakefile](https://github.com/itsbcit/docker-rakefile/releases/latest/download/Rakefile).
+Download and overwrite the Rakefile in the existing code with the [latest release Rakefile](https://github.com/itsbcit/docker-rakefile/releases/latest/download/Rakefile).
 
 ### Exclude support files
 Update `.gitignore` to exclude the Rakefile library and `.build_id` marker file.
@@ -18,7 +18,7 @@ Update `.gitignore` to exclude the Rakefile library and `.build_id` marker file.
 .build_id
 lib
 ```
-Or download [from the template git repository](https://github.com/itsbcit/docker-template/raw/master/.gitignore).
+Or download from the [docker-template](https://github.com/itsbcit/docker-template/raw/master/.gitignore) git repository.
 
 ### Install Rakefile support files
 `Rakefile` can be updated to the latest release version with [`rake update`](#update).
@@ -62,7 +62,7 @@ Install the Rakefile support files from the [latest release](https://github.com/
 `rake install`
 
 ### update
-`Rakefile` self-update. Download and overwrites `Rakefile` with [the latest release](https://github.com/itsbcit/docker-rakefile/releases/latest/download/Rakefile)
+`Rakefile` self-update. Download and overwrite the `Rakefile` with the [latest release](https://github.com/itsbcit/docker-rakefile/releases/latest/download/Rakefile)
 
 `rake update`
 
