@@ -12,14 +12,16 @@ Dir.glob('lib/*.rb').each { |l| load l } if Dir.exist?('local')
 if File.exist?('metadata.yaml')
   local_metadata = YAML.safe_load(File.read('metadata.yaml'))
 else
-  puts('WARNING: metadata.yaml not found.') unless File.exist?('metadata.yaml')
+  puts('WARNING: metadata.yaml not found.')
   local_metadata = {}
 end
 
-if File.exist?('lib')
+puts('WARNING: Rakefile library not found.') unless File.exist?('lib')
+
+if File.exist?('lib/metadata-defaults.yaml')
   default_metadata = YAML.safe_load(File.read('lib/metadata-defaults.yaml'))
 else
-  puts('WARNING: Rakefile library not found.') unless File.exist?('lib')
+  puts('WARNING: metadata defaults not found.')
   default_metadata = {}
 end
 
