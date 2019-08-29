@@ -7,7 +7,7 @@ require 'yaml'
 require 'open-uri'
 
 Dir.glob('lib/*.rb').each { |l| load l } if Dir.exist?('lib')
-Dir.glob('lib/*.rb').each { |l| load l } if Dir.exist?('local')
+Dir.glob('local/*.rb').each { |l| load l } if Dir.exist?('local')
 
 if File.exist?('metadata.yaml')
   local_metadata = YAML.safe_load(File.read('metadata.yaml'))
@@ -57,4 +57,4 @@ task :update do
 end
 
 Dir.glob('lib/tasks/*.rake').each { |r| load r } if Dir.exist?('lib/tasks')
-Dir.glob('lib/tasks/*.rake').each { |r| load r } if Dir.exist?('local/tasks')
+Dir.glob('local/tasks/*.rake').each { |r| load r } if Dir.exist?('local/tasks')
