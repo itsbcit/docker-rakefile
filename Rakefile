@@ -6,7 +6,7 @@ require 'tempfile'
 require 'yaml'
 require 'open-uri'
 
-Dir.glob('lib/*.rb').each { |l| load l } if Dir.exist?('lib')
+Dir.glob('lib/*.rb').each { |l| load l unless File.exist?("local/#{l[4..-1]}") } if Dir.exist?('lib')
 Dir.glob('local/*.rb').each { |l| load l } if Dir.exist?('local')
 
 if File.exist?('metadata.yaml')
@@ -56,5 +56,5 @@ task :update do
   end
 end
 
-Dir.glob('lib/tasks/*.rake').each { |r| load r } if Dir.exist?('lib/tasks')
-Dir.glob('local/tasks/*.rake').each { |r| load r } if Dir.exist?('local/tasks')
+Dir.glob('lib/tasks/*.rake').each { |l| load l unless File.exist?("local/tasks/#{l[10..-1]}") } if Dir.exist?('lib/tasks')
+Dir.glob('local/tasks/*.rake').each { |l| load l } if Dir.exist?('local/tasks')
