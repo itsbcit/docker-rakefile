@@ -50,10 +50,9 @@ Inside ERB templated files, these parameters are available as eg. `metadata['var
 ### Normal usage workflow
 
 1. Make `Dockerfile` changes in `Dockerfile.erb`
-2. `rake template` to update or create `Dockerfile`s, version and variant directories, templated files, etc.
-3. `rake build`
-4. `rake tag`
-5. `rake push` to push to Docker Hub (or other repos defined in [`metadata.yaml`](#create-metadatayaml))
+1. `rake update` to pull down Rakefile and library updates
+1. `rake` (runs [template](#template), [build](#build), [tag](#tag), and [test](#test))
+1. `rake push` to push to Docker Hub (or other repos defined in [`metadata.yaml`](#create-metadatayaml))
 
 ## Rake tasks
 ### install
@@ -65,6 +64,8 @@ Install the Rakefile support files from the [latest release](https://github.com/
 `Rakefile` self-update. Download and overwrite the `Rakefile` with the [latest release](https://github.com/itsbcit/docker-rakefile/releases/latest/download/Rakefile)
 
 `rake update`
+
+Side-effect: also calls [install](#install)
 
 ### template
 Create or overwrite Dockerfile(s) from ERB templates and copy any files listed for the versions and variants into their build directories.
