@@ -62,7 +62,7 @@ Install the Rakefile support files from the [latest release](https://github.com/
 `rake install`
 
 ### update
-`Rakefile` self-update. This downloads and overwrites `Rakefile` with (the latest release)[https://github.com/itsbcit/docker-rakefile/releases/latest/download/Rakefile]
+`Rakefile` self-update. This downloads and overwrites `Rakefile` with [the latest release](https://github.com/itsbcit/docker-rakefile/releases/latest/download/Rakefile)
 
 `rake update`
 
