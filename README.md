@@ -5,7 +5,7 @@ Rakefile and libraries for managing Docker images
 
 ## How to use
 ### New Docker image repositories
-Click the button "Use this template" in [the docker-template GitHub repository](https://github.com/itsbcit/docker-template) to create a new templated GitHub repository.
+Click "Use this template" (green button) in [the docker-template GitHub repository](https://github.com/itsbcit/docker-template) to create a new templated GitHub repository. You must be logged-in to GitHub to see this option.
 
 ### Existing Docker image repositories
 Download and overwrite the Rakefile in the existing code with [the latest release Rakefile](https://github.com/itsbcit/docker-rakefile/releases/latest/download/Rakefile).
