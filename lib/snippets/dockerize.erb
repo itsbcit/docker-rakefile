@@ -5,3 +5,5 @@ RUN [ -d /usr/local/bin ] || mkdir -p /usr/local/bin \
  && chown 0:0 /usr/local/bin/dockerize \
  && chmod 0555 /usr/local/bin/dockerize \
  && rm -f /dockerize.tar.gz
+
+ENV DOCKERIZE_ENV production
