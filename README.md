@@ -62,26 +62,33 @@ Install the Rakefile support files from the [latest release](https://github.com/
 `rake install`
 
 ### update
-`Rakefile` self-update. This downloads and overwrites `Rakefile` with [the latest release](https://github.com/itsbcit/docker-rakefile/releases/latest/download/Rakefile)
+`Rakefile` self-update. Download and overwrites `Rakefile` with [the latest release](https://github.com/itsbcit/docker-rakefile/releases/latest/download/Rakefile)
 
 `rake update`
 
 ### template
+Create or overwrite Dockerfile(s) from ERB templates and copy any files listed for the versions and variants into their build directories.
 
-`rake template` will create or overwrite Dockerfile(s) from ERB templates and copy any files listed for the versions and variants into their build directories.
+`rake template`
 
 ### build
-Builds the Docker image(s).
+Build the Docker image(s).
+
+`rake build`
 
 ### tag
-Adds standard and `metadata.yaml` configured tags to the image(s).
+Add standard and `metadata.yaml` configured tags to the image(s).
+
+`rake tag`
 
 Standard tags:
 * image_name:b(`build id`) eg. `mybusybox:b1567100182`
 * image_name:latest
 
 ### push
-Pushes all images and tags to Docker Hub and/or the repositores configured in `metadata.yaml`.
+Push all images and tags to Docker Hub and/or the repositores configured in `metadata.yaml`.
+
+`rake push`
 
 ## metadata.yaml
 Sample metadata.yaml with all options:
