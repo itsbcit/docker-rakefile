@@ -13,7 +13,7 @@ Download and overwrite the Rakefile in the existing code with [the latest releas
 ### Exclude support files
 Update `.gitignore` to exclude the Rakefile library and `.build_id` marker file.
 
-`.build_id`:
+`.gitignore`:
 ```
 .build_id
 lib
