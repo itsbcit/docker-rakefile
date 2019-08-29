@@ -1,0 +1,7 @@
+---
+org_name: bcit
+labels: {}
+vars:
+  tini_version: '0.18.0'
+  de_version: '1.5'
+  dockerize_version: '0.6.0'

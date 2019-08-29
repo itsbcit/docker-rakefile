@@ -9,11 +9,23 @@ require 'open-uri'
 Dir.glob('lib/*.rb').each { |l| load l } if Dir.exist?('lib')
 Dir.glob('lib/*.rb').each { |l| load l } if Dir.exist?('local')
 
-puts('WARNING: metadata.yaml not found.') unless File.exist?('metadata.yaml')
-puts('WARNING: Rakefile library not found.') unless File.exist?('lib')
+if File.exist?('metadata.yaml')
+  local_metadata = YAML.safe_load(File.read('metadata.yaml'))
+else
+  puts('WARNING: metadata.yaml not found.') unless File.exist?('metadata.yaml')
+  local_metadata = {}
+end
+
+if File.exist?('lib')
+  default_metadata = YAML.safe_load(File.read('lib/metadata-defaults.yaml'))
+else
+  puts('WARNING: Rakefile library not found.') unless File.exist?('lib')
+  default_metadata = {}
+end
+
+$metadata = default_metadata.merge(local_metadata)
 
 if File.exist?('metadata.yaml') && File.exist?('lib')
-  $metadata = YAML.safe_load(File.read('metadata.yaml'))
   $images = build_objects_array(
     metadata: $metadata,
     build_id: build_timestamp
