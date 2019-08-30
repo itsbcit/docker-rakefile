@@ -36,7 +36,7 @@ def build_objects_array(options = {})
         registries: registries,
         suffixes: suffixes + version_suffixes + variant_suffixes,
         variant: variant,
-        vars: vars.merge(version_vars).merge(variant_vars),
+        vars: vars.deep_merge(version_vars).deep_merge(variant_vars),
         version_tags: version_tags,
         version: version
       )
