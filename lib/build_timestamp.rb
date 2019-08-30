@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 def build_timestamp
-  timestamp = if ENV['timestamp'].nil?
+  timestamp = if ENV['BUILD_ID'].nil?
                 Time.now.getutc.to_i
               else
-                ENV['timestamp']
+                ENV['BUILD_ID']
               end
 
   timestamp
