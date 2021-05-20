@@ -13,6 +13,7 @@ task :push do
     image.registries.each do |registry|
       ron = image.registry_org_name(registry['url'], registry['org_name'])
       separator = ron.empty? ? '' : '/'
+      sh "docker push #{ron}#{separator}#{image.name_tag}"
       image.tags.each do |tag|
         next if ron.empty?
 

@@ -13,6 +13,7 @@ task :tag do
     image.registries.each do |registry|
       ron = image.registry_org_name(registry['url'], registry['org_name'])
       separator = ron.empty? ? '' : '/'
+      sh "docker tag #{image.build_tag} #{ron}#{separator}#{image.base_tag}"
       image.tags.each do |tag|
         sh "docker tag #{image.build_tag} #{ron}#{separator}#{image.name_tag(tag)}"
       end
