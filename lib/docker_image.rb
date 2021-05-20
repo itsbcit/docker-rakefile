@@ -33,6 +33,10 @@ class DockerImage
     @registries += [{ 'url' => '', 'org_name' => org_name }] unless org_name.to_s.empty?
   end
 
+  def build_tag()
+    base_tag('', 'local')
+  end
+
   def base_tag(registry = '', org_name = self.org_name)
     ron = registry_org_name(registry, org_name)
     separator = ron.to_s.empty? ? '' : '/'
