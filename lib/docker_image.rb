@@ -30,58 +30,58 @@ class DockerImage
     @vars         = vars
     @files        = files
 
-    @registries += [{ 'url' => '', 'org_name' => org_name }] unless org_name.empty?
+    @registries += [{ 'url' => '', 'org_name' => org_name }] unless org_name.to_s.empty?
   end
 
   def base_tag(registry = '', org_name = self.org_name)
     ron = registry_org_name(registry, org_name)
-    separator = ron.empty? ? '' : '/'
+    separator = ron.to_s.empty? ? '' : '/'
 
     "#{ron}#{separator}#{name_tag}"
   end
 
   def registry_org_name(registry = '', org_name = self.org_name)
-    separator = if registry.empty?
+    separator = if registry.to_s.empty?
                   ''
                 else
-                  org_name.empty? ? '' : '/'
+                  org_name.to_s.empty? ? '' : '/'
                 end
 
     "#{registry}#{separator}#{org_name}"
   end
 
   def version_variant(version = self.version)
-    separator = if version.empty?
+    separator = if version.to_s.empty?
                   ''
                 else
-                  variant.empty? ? '' : '-'
+                  variant.to_s.empty? ? '' : '-'
                 end
 
     "#{version}#{separator}#{variant}"
   end
 
   def name_tag(tag = version_variant())
-    separator = tag.empty? ? '' : ':'
+    separator = tag.to_s.empty? ? '' : ':'
 
     "#{image_name}#{separator}#{tag}"
   end
 
   def version_variant_build(version = self.version)
     vv = version_variant(version)
-    prefix = vv.empty? ? '' : '-'
+    prefix = vv.to_s.empty? ? '' : '-'
 
     "#{vv}#{prefix}b#{build_id}"
   end
 
   def version_variant_latest(version = self.version)
     vv = version_variant(version)
-    prefix = vv.empty? ? '' : '-'
+    prefix = vv.to_s.empty? ? '' : '-'
 
     "#{vv}#{prefix}latest"
   end
 
   def dir
-    version_variant.empty? ? '.' : version_variant
+    version_variant.to_s.empty? ? '.' : version_variant
   end
 
   def suffixes=(suffixes)
@@ -95,7 +95,7 @@ class DockerImage
     tags << version_variant_latest
 
     suffixes.each do |suffix|
-      suffix = version_variant.empty? ? suffix : "-#{suffix}"
+      suffix = version_variant.to_s.empty? ? suffix : "-#{suffix}"
       tags << "#{version_variant}#{suffix}"
     end
 
