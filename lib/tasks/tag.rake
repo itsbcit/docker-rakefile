@@ -8,6 +8,9 @@ task :tag do
     image.build_id = File.read('.build_id') if File.exist? '.build_id'
     File.open('.build_id', 'w') { |f| f.write(image.build_id) } unless File.exist? '.build_id'
     image.registries.each do |registry|
+      if registry['url'].contains_public_registry? && registry['org_name'].to_s.empty?
+        puts "Not tagging to public registry \"#{registry['url']}\": set org_name #{registry['org_name']} for registry in metadata.yaml".red
+      end
       ron = image.registry_org_name(registry['url'], registry['org_name'])
       separator = ron.empty? ? '' : '/'
       sh "docker tag #{image.build_tag} #{ron}#{separator}#{image.base_tag}"

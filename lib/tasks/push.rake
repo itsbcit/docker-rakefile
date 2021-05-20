@@ -11,6 +11,10 @@ task :push do
     puts "Image: #{image.build_tag}"
     image.build_id = build_id
     image.registries.each do |registry|
+      if registry['url'].contains_public_registry? && registry['org_name'].to_s.empty?
+        puts "Not pushing to public registry \"#{registry['url']}\": set org_name for registry in metadata.yaml".red
+        next
+      end
       ron = image.registry_org_name(registry['url'], registry['org_name'])
       separator = ron.empty? ? '' : '/'
       sh "docker push #{ron}#{separator}#{image.name_tag}"
