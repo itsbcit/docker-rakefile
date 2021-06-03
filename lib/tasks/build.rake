@@ -2,6 +2,13 @@
 
 desc 'Build Docker images'
 task :build do
+  # check that the build system is available
+  build_system = Docker.new()
+  unless build_system.running?
+    puts "#{build_system.name} is not running!".red
+    exit 1
+  end
+
   puts '*** Building images ***'.green
   File.unlink('.build_id') if File.exist?('.build_id') && ENV['KEEP_BUILD'].nil?
   $images.each do |image|

@@ -2,6 +2,13 @@
 
 desc 'Push to Registry'
 task :push do
+  # check that the build system is available
+  build_system = Docker.new()
+  unless build_system.running?
+    puts "#{build_system.name} is not running!".red
+    exit 1
+  end
+
   unless File.exist? '.build_id'
     puts 'Build and tag images first'.red
     exit(1)

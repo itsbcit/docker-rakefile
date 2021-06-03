@@ -2,6 +2,13 @@
 
 desc 'Tag docker images'
 task :tag do
+  # check that the build system is available
+  build_system = Docker.new()
+  unless build_system.running?
+    puts "#{build_system.name} is not running!".red
+    exit 1
+  end
+
   puts '*** Tagging images ***'.green
   $images.each do |image|
     puts "Image: #{image.build_tag}"
