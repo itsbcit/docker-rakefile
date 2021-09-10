@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+###
+# These tests assume that the container has a defined command that stays running indefinitely.
+# If the container runs a command without a wait loop, you'll have to redefine the whole testing procedure.
+
 desc 'Test docker images'
 task :test do
   # check that the build system is available
@@ -13,7 +17,7 @@ task :test do
   $images.each do |image|
     # basic container test
     begin
-      puts "Running tests on #{image.build_tag}"
+      puts "Running tests on #{image.build_tag}".green
       container = `docker run --rm --health-interval=2s -d #{image.build_tag}`.strip
 
       # wait for container state "running"
@@ -31,7 +35,7 @@ task :test do
         exit 1
       end
 
-      # if the container has a health check, wait for it to
+      # if the container has a health check, wait up to 20 seconds for it to be successful
       container_health = `docker inspect --format='{{.State.Health}}' #{container}`.strip
       hashealth = container_health == "<nil>" ? false : true
       if hashealth
@@ -59,5 +63,6 @@ task :test do
     ensure
       sh "docker kill #{container}"
     end
+    puts "Testing image #{image.build_tag} successful.".green
   end
 end
