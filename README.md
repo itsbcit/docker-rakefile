@@ -112,8 +112,6 @@ variants:
   supervisord:
     vars:
       bar: qux
-    files:
-      - supervisor.conf
 suffixes:
 registries:
   - url: 'localhost:5000'
@@ -122,5 +120,4 @@ vars:
   tini_version: '0.18.0'
   de_version: '1.5'
   dockerize_version: '0.6.0'
-files:
 ```
