@@ -14,8 +14,6 @@ task :build do
   $images.each do |image|
     puts "Image: #{image.build_tag} (build_id: #{image.build_id})".green
     File.open('.build_id', 'w') { |f| f.write(image.build_id) } unless File.exist?('.build_id')
-    Dir.chdir(image.dir) do
-      sh "docker build -t #{image.build_tag} . --no-cache --pull"
-    end
+    sh "docker build -f #{image.dir}/Dockerfile -t #{image.build_tag} . --no-cache --pull"
   end
 end

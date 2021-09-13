@@ -19,12 +19,14 @@ task :test do
     begin
       puts "Running tests on #{image.build_tag}".green
       container = `docker run --rm --health-interval=2s -d #{image.build_tag}`.strip
+      exit 1 unless $?.success?
 
       # wait for container state "running"
       state = ''
       printf 'Waiting for container startup'
       10.times do
         state = `docker inspect --format='{{.State.Status}}' #{container}`.strip
+        exit 1 unless $?.success?
         break if state == 'running'
         printf "."
         sleep 1
@@ -43,6 +45,7 @@ task :test do
         health_status = ''
         20.times do
           health_status = `docker inspect --format='{{.State.Health.Status}}' #{container}`.strip
+          exit 1 unless $?.success?
           break if health_status == 'healthy'
           printf "."
           sleep 1

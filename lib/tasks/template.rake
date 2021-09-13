@@ -23,7 +23,7 @@ task :template do
       else
         next if dir == '.'
 
-        puts "\tCopying #{dir}/#{file}"
+        puts "\tWARNING: #{file} is not a templated file".yellow
         FileUtils.cp(file, dir)
       end
     end
