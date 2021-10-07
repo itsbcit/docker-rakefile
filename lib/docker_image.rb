@@ -2,35 +2,39 @@
 
 # Object classDockerImage
 class DockerImage
-  attr_reader   :suffixes
-  attr_accessor :image_name, :variant, :version, :version_tags, :build_id,
-                :registries, :org_name, :maintainer, :labels, :vars, :files
+  # TODO: sort out this mess. Most things are probably read-only.
+  attr_reader   :image_name, :suffixes, :build_name_tag, :tags, :files, :registries
+  attr_accessor :build_id, :variant, :version, :labels,
+                :maintainer, :vars
+
+  # TODO: is files still needed?
+  # TODO: replace files with "templated_files"?
+  # TODO: move functionality from build_objects_array to here
+
   def initialize(
-    image_name:,
-    org_name:     '',
+    image_name:     ,
     build_id:     '',
-    suffixes:     [''],
-    version:      '',
-    version_tags: [],
     variant:      '',
+    version:      '',
+    files:        {},
+    suffixes:     [''],
     registries:   [],
     labels:       {},
-    vars:         {},
-    files:        {}
+    maintainer:   '',
+    vars:         {}
   )
-    @image_name   = image_name
-    @org_name     = org_name
-    @build_id     = build_id
-    @suffixes     = suffixes
-    @version      = version
-    @version_tags = version_tags
-    @variant      = variant
-    @registries   = registries
-    @labels       = labels.merge('build_id' => build_id)
-    @vars         = vars
-    @files        = files
+    @image_name         = image_name
+    @build_id           = build_id
+    @variant            = variant
+    @version            = version
+    @files              = files
+    @suffixes           = suffixes
+    @registries         = registries
+    @labels             = labels
+    @maintainer         = maintainer
+    @vars               = vars
 
-    @registries += [{ 'url' => '', 'org_name' => org_name }] unless org_name.to_s.empty?
+    @labels['build_id'] = build_id
   end
 
   # TODO: replace all incorrect use of "tag" with "suffix"
@@ -44,7 +48,7 @@ class DockerImage
     "b#{build}"
   end
 
-  def base_tag(registry = '', org_name = self.org_name)
+  def registry_name_tag(registry = '', org_name = '')
     ron = registry_org_name(registry, org_name)
     separator = ron.to_s.empty? ? '' : '/'
 
@@ -100,6 +104,7 @@ class DockerImage
     @suffixes  = @suffixes.uniq
   end
 
+  # TODO: this should calculate all image tags. Bring that here out of the tag and push tasks
   def tags
     tags = []
     tags << version_variant_build
@@ -108,12 +113,6 @@ class DockerImage
     suffixes.each do |suffix|
       suffix = version_variant.to_s.empty? ? suffix : "-#{suffix}"
       tags << "#{version_variant}#{suffix}"
-    end
-
-    version_tags.each do |version_tag|
-      tags << version_variant(version_tag)
-      tags << version_variant_build(version_tag)
-      tags << version_variant_latest(version_tag)
     end
 
     tags.uniq
