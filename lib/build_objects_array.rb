@@ -6,6 +6,7 @@ def build_objects_array(options = {})
 
   objects_array = []
 
+  image_name  = metadata['image_name']
   files       = metadata['files'].nil?       ? []           : metadata['files']
   labels      = metadata['labels'].nil?      ? []           : metadata['labels']
   registries  = metadata['registries'].nil?  ? []           : metadata['registries']
@@ -15,30 +16,34 @@ def build_objects_array(options = {})
   versions    = metadata['versions'].nil?    ? { '' => {} } : metadata['versions']
 
   versions.each do |version, version_params|
-    version_params     = version_params.nil?                 ? {} : version_params
-    version_files      = version_params['files'].nil?        ? [] : version_params['files']
-    version_labels     = version_params['labels'].nil?       ? {} : version_params['labels']
-    version_suffixes   = version_params['suffixes'].nil?     ? [] : version_params['suffixes']
-    version_tags       = version_params['version_tags'].nil? ? [] : version_params['version_tags']
-    version_vars       = version_params['vars'].nil?         ? {} : version_params['vars']
+    version_params     = version_params.nil?               ? {} : version_params
+    version_files      = version_params['files'].nil?      ? [] : version_params['files']
+    version_labels     = version_params['labels'].nil?     ? [] : version_params['labels']
+    version_registries = version_params['registries'].nil? ? [] : version_params['registries']
+    version_suffixes   = version_params['suffixes'].nil?   ? [] : version_params['suffixes']
+    version_variants   = version_params['variants'].nil?   ? [] : version_params['variants']
+    version_vars       = version_params['vars'].nil?       ? {} : version_params['vars']
+
+    variants = variants.deep_merge(version_variants)
+
     variants.each do |variant, variant_params|
-      variant_params   = variant_params.nil?             ? {} : variant_params
-      variant_files    = variant_params['files'].nil?    ? [] : variant_params['files']
-      variant_labels   = variant_params['labels'].nil?   ? {} : variant_params['labels']
-      variant_suffixes = variant_params['suffixes'].nil? ? [] : variant_params['suffixes']
-      variant_vars     = variant_params['vars'].nil?     ? {} : variant_params['vars']
+      variant_params     = variant_params.nil?               ? {} : variant_params
+      variant_files      = variant_params['files'].nil?      ? [] : variant_params['files']
+      variant_labels     = variant_params['labels'].nil?     ? {} : variant_params['labels']
+      variant_registries = variant_params['registries'].nil? ? [] : variant_params['registries']
+      variant_suffixes   = variant_params['suffixes'].nil?   ? [] : variant_params['suffixes']
+      variant_vars       = variant_params['vars'].nil?       ? {} : variant_params['vars']
+
       objects_array << DockerImage.new(
-        build_id: build_id,
-        files: files + version_files + variant_files,
-        image_name: metadata['image_name'],
-        labels: labels.merge(version_labels).merge(variant_labels),
-        org_name: metadata['org_name'],
-        registries: registries,
-        suffixes: suffixes + version_suffixes + variant_suffixes,
-        variant: variant,
-        vars: vars.deep_merge(version_vars).deep_merge(variant_vars),
-        version_tags: version_tags,
-        version: version
+        image_name: image_name,
+        build_id:   build_id,
+        variant:    variant,
+        version:    version,
+        files:      (files + version_files + variant_files).uniq,
+        suffixes:   (suffixes + version_suffixes + variant_suffixes).uniq,
+        registries: merge_registries(registries, version_registries, variant_registries),
+        labels:     labels.deep_merge(version_labels).deep_merge(variant_labels),
+        vars:       vars.deep_merge(version_vars).deep_merge(variant_vars),
       )
     end
   end
