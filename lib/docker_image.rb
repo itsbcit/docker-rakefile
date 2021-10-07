@@ -33,8 +33,15 @@ class DockerImage
     @registries += [{ 'url' => '', 'org_name' => org_name }] unless org_name.to_s.empty?
   end
 
-  def build_tag()
-    base_tag('', 'local')
+  # TODO: replace all incorrect use of "tag" with "suffix"
+  def build_name_tag()
+    vvb = version_variant_build()
+
+    "local/#{image_name}:#{vvb}"
+  end
+
+  def build_tag(build = build_id)
+    "b#{build}"
   end
 
   def base_tag(registry = '', org_name = self.org_name)
@@ -74,7 +81,7 @@ class DockerImage
     vv = version_variant(version)
     prefix = vv.to_s.empty? ? '' : '-'
 
-    "#{vv}#{prefix}b#{build_id}"
+    "#{vv}#{prefix}#{build_tag}"
   end
 
   def version_variant_latest(version = self.version)
