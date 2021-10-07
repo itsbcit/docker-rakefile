@@ -34,28 +34,31 @@ if File.exist?('metadata.yaml') && File.exist?('lib')
   )
 end
 
-desc 'Install Rakefile support files'
-task :install do
-  URI.open('https://github.com/itsbcit/docker-rakefile/releases/latest/download/lib.zip') do |archive|
-    FileUtils.remove_entry('lib') if File.exist?('lib')
-    tempfile = Tempfile.new(['lib', '.zip'])
-    File.open(tempfile.path, 'wb') do |f|
-      f.write(archive.read)
-    end
-    system('unzip', tempfile.path)
-    tempfile.unlink
-  end
-end
+############
+# Disabled while I work on improvements to rakefile innards
+############
+# desc 'Install Rakefile support files'
+# task :install do
+#   URI.open('https://github.com/itsbcit/docker-rakefile/releases/latest/download/lib.zip') do |archive|
+#     FileUtils.remove_entry('lib') if File.exist?('lib')
+#     tempfile = Tempfile.new(['lib', '.zip'])
+#     File.open(tempfile.path, 'wb') do |f|
+#       f.write(archive.read)
+#     end
+#     system('unzip', tempfile.path)
+#     tempfile.unlink
+#   end
+# end
 
-desc 'Update Rakefile to latest release version'
-task :update do
-  Rake::Task[:install].invoke
-  URI.open('https://github.com/itsbcit/docker-rakefile/releases/latest/download/Rakefile') do |rakefile|
-    File.open('Rakefile', 'wb') do |f|
-      f.write(rakefile.read)
-    end
-  end
-end
+# desc 'Update Rakefile to latest release version'
+# task :update do
+#   Rake::Task[:install].invoke
+#   URI.open('https://github.com/itsbcit/docker-rakefile/releases/latest/download/Rakefile') do |rakefile|
+#     File.open('Rakefile', 'wb') do |f|
+#       f.write(rakefile.read)
+#     end
+#   end
+# end
 
 Dir.glob('lib/tasks/*.rake').each { |l| load l unless File.exist?("local/tasks/#{l[10..-1]}") } if Dir.exist?('lib/tasks')
 Dir.glob('local/tasks/*.rake').each { |l| load l } if Dir.exist?('local/tasks')
