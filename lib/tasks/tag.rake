@@ -11,7 +11,7 @@ task :tag do
 
   puts '*** Tagging images ***'.green
   $images.each do |image|
-    puts "Image: #{image.build_tag}"
+    puts "Image: #{image.build_name_tag}"
     image.build_id = File.read('.build_id') if File.exist? '.build_id'
     File.open('.build_id', 'w') { |f| f.write(image.build_id) } unless File.exist? '.build_id'
     image.registries.each do |registry|
@@ -24,9 +24,9 @@ task :tag do
       end
       ron = image.registry_org_name(registry['url'], registry['org_name'])
       separator = ron.empty? ? '' : '/'
-      sh "docker tag #{image.build_tag} #{ron}#{separator}#{image.base_tag}"
+      sh "docker tag #{image.build_name_tag} #{ron}#{separator}#{image.name_tag}"
       image.tags.each do |tag|
-        sh "docker tag #{image.build_tag} #{ron}#{separator}#{image.name_tag(tag)}"
+        sh "docker tag #{image.build_name_tag} #{ron}#{separator}#{image.name_tag(tag)}"
       end
     end
   end
