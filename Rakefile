@@ -29,8 +29,7 @@ $metadata = default_metadata.merge(local_metadata)
 
 if File.exist?('metadata.yaml') && File.exist?('lib')
   $images = build_objects_array(
-    metadata: $metadata,
-    build_id: build_timestamp
+    metadata: $metadata
   )
 end
 
