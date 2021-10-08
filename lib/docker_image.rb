@@ -50,7 +50,7 @@ class DockerImage
 
   def read_build_id()
     return 0 unless File.exist?('.build_id')
-    File.read('.build_id')
+    File.read('.build_id').to_i
   end
 
   private :read_build_id
