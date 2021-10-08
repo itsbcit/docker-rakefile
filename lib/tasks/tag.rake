@@ -12,8 +12,6 @@ task :tag do
   puts '*** Tagging images ***'.green
   $images.each do |image|
     puts "Image: #{image.build_name_tag}"
-    image.build_id = File.read('.build_id') if File.exist? '.build_id'
-    File.open('.build_id', 'w') { |f| f.write(image.build_id) } unless File.exist? '.build_id'
     image.registries.each do |registry|
       unless registry['url'].respond_to?(:contains_public_registry?)
         puts "Skipping registry with invalid url: check metadata.yaml".red
