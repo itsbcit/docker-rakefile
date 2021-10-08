@@ -28,6 +28,18 @@ class DockerImage
     @maintainer         = maintainer
     @vars               = vars
 
+    # check for a forced build id in ENV
+    if ENV['BUILD_ID'] != nil
+      @build_id = ENV['BUILD_ID']
+    # set build_id
+    else
+      @build_id = read_build_id()
+    end
+
+    # create a new build id if zero
+    if @build_id.nil? || @build_id == 0
+      new_build_id()
+    end
   end
 
   def new_build_id
