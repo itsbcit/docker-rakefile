@@ -92,11 +92,6 @@ class DockerImage
     version_variant.to_s.empty? ? '.' : version_variant
   end
 
-  def suffixes=(suffixes)
-    @suffixes += suffixes
-    @suffixes  = @suffixes.uniq
-  end
-
   # TODO: this should calculate all image tags. Bring that here out of the tag and push tasks
   def tags
     tags = []
