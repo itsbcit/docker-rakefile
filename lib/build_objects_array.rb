@@ -35,15 +35,15 @@ def build_objects_array(options = {})
       variant_vars           = variant_params['vars'].nil?           ? {} : variant_params['vars']
 
       objects_array << DockerImage.new(
-        image_name: image_name,
-        build_id:   build_id,
-        variant:    variant,
-        version:    version,
+        image_name:     image_name,
+        build_id:       build_id,
+        variant:        variant,
+        version:        version,
         template_files: (template_files + version_template_files + variant_template_files).uniq,
-        suffixes:   (suffixes + version_suffixes + variant_suffixes).uniq,
-        registries: merge_registries(registries, version_registries, variant_registries),
-        labels:     labels.deep_merge(version_labels).deep_merge(variant_labels),
-        vars:       vars.deep_merge(version_vars).deep_merge(variant_vars),
+        suffixes:       (suffixes + version_suffixes + variant_suffixes).uniq,
+        registries:     merge_registries(registries, version_registries, variant_registries),
+        labels:         labels.deep_merge(version_labels).deep_merge(variant_labels),
+        vars:           vars.deep_merge(version_vars).deep_merge(variant_vars),
       )
     end
   end
