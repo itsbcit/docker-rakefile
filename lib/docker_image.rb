@@ -8,7 +8,7 @@ class DockerImage
 
 
   def initialize(
-    image_name:     ,
+    image_name:   ,
     build_id:     0,
     variant:      '',
     version:      '',
