@@ -31,6 +31,11 @@ task :template do
     if File.exist?('Dockerfile.erb') && (! File.exist?("#{dir}/Dockerfile.erb"))
       puts "\tRendering #{dir}/Dockerfile from Dockerfile.erb"
       render_template('Dockerfile.erb', "#{dir}/Dockerfile", binding)
+    elsif File.exist?("#{dir}/Dockerfile.erb")
+      puts "\tRendering #{dir}/Dockerfile from #{dir}/Dockerfile.erb"
+      render_template("#{dir}/Dockerfile.erb", "#{dir}/Dockerfile", binding)
+    else
+      puts "\tNo Dockerfile template to render".yellow
     end
   end
 end
