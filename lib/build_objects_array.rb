@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 def build_objects_array(options = {})
-  build_id = options.fetch(:build_id)
   metadata = options.fetch(:metadata)
 
   objects_array = []
