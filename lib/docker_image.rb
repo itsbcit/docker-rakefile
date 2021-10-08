@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Object classDockerImage
+# Object class DockerImage
 class DockerImage
   # TODO: sort out this mess. Most things are probably read-only.
   attr_reader   :image_name, :suffixes, :build_name_tag, :tags, :template_files, :registries
