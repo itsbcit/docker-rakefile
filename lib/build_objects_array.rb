@@ -19,22 +19,23 @@ def build_objects_array(options = {})
     version_params         = version_params.nil?                   ? {} : version_params
     version_template_files = version_params['template_files'].nil? ? [] : version_params['template_files']
     version_labels         = version_params['labels'].nil?         ? [] : version_params['labels']
-    version_maintainer     = version_params['maintainer'].nil?     ? maintainer : version_params['maintainer']
     version_registries     = version_params['registries'].nil?     ? [] : version_params['registries']
     version_suffixes       = version_params['suffixes'].nil?       ? [] : version_params['suffixes']
     version_variants       = version_params['variants'].nil?       ? [] : version_params['variants']
     version_vars           = version_params['vars'].nil?           ? {} : version_params['vars']
 
-    variants = variants.deep_merge(version_variants)
+    maintainer = version_params['maintainer'].nil? ? maintainer : version_params['maintainer'].nil?
+    variants   = variants.deep_merge(version_variants)
 
     variants.each do |variant, variant_params|
       variant_params         = variant_params.nil?                   ? {} : variant_params
       variant_template_files = variant_params['template_files'].nil? ? [] : variant_params['template_files']
       variant_labels         = variant_params['labels'].nil?         ? {} : variant_params['labels']
-      variant_maintainer     = variant_params['maintainer'].nil?     ? maintainer : variant_params['maintainer']
       variant_registries     = variant_params['registries'].nil?     ? [] : variant_params['registries']
       variant_suffixes       = variant_params['suffixes'].nil?       ? [] : variant_params['suffixes']
       variant_vars           = variant_params['vars'].nil?           ? {} : variant_params['vars']
+
+      maintainer = variant_params['maintainer'].nil? ? maintainer : variant_params['maintainer'].nil?
 
       objects_array << DockerImage.new(
         image_name:     image_name,
