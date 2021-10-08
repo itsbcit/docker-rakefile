@@ -10,10 +10,8 @@ task :build do
   end
 
   puts '*** Building images ***'.green
-  File.unlink('.build_id') if File.exist?('.build_id') && ENV['KEEP_BUILD'].nil?
   $images.each do |image|
     puts "Image: #{image.build_tag} (build_id: #{image.build_id})".green
-    File.open('.build_id', 'w') { |f| f.write(image.build_id) } unless File.exist?('.build_id')
     sh "docker build -f #{image.dir}/Dockerfile -t #{image.build_tag} ."
     # sh "docker build -f #{image.dir}/Dockerfile -t #{image.build_tag} . --no-cache --pull"
   end
