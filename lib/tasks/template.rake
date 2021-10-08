@@ -9,7 +9,7 @@ task :template do
     dir = image.dir
     FileUtils.mkdir_p(dir) unless Dir.exist?(dir)
 
-    image.files.each do |file|
+    image.template_files.each do |file|
       unless File.exist?(file)
         puts "WARNING: file not found: #{file}".red
         next

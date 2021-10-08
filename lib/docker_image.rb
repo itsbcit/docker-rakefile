@@ -3,12 +3,10 @@
 # Object classDockerImage
 class DockerImage
   # TODO: sort out this mess. Most things are probably read-only.
-  attr_reader   :image_name, :suffixes, :build_name_tag, :tags, :files, :registries
+  attr_reader   :image_name, :suffixes, :build_name_tag, :tags, :template_files, :registries
   attr_accessor :build_id, :variant, :version, :labels,
                 :maintainer, :vars
 
-  # TODO: is files still needed?
-  # TODO: replace files with "templated_files"?
   # TODO: move functionality from build_objects_array to here
 
   def initialize(
@@ -16,7 +14,7 @@ class DockerImage
     build_id:     '',
     variant:      '',
     version:      '',
-    files:        {},
+    template_files: {},
     suffixes:     [''],
     registries:   [],
     labels:       {},
@@ -27,7 +25,7 @@ class DockerImage
     @build_id           = build_id
     @variant            = variant
     @version            = version
-    @files              = files
+    @template_files     = template_files
     @suffixes           = suffixes
     @registries         = registries
     @labels             = labels
