@@ -78,7 +78,7 @@ class DockerImage
     vv = version_variant(version)
     prefix = vv.to_s.empty? ? '' : '-'
 
-    "#{vv}#{prefix}#{build_tag}"
+    "#{vv}#{prefix}#{build_suffix}"
   end
 
   def version_variant_latest(version = self.version)
