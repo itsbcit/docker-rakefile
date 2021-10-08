@@ -28,7 +28,6 @@ class DockerImage
     @maintainer         = maintainer
     @vars               = vars
 
-    @labels['build_id'] = build_id
   end
 
   def new_build_id
