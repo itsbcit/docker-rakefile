@@ -23,7 +23,8 @@ task :template do
       else
         next if dir == '.'
 
-        puts "\tWARNING: #{file} is not a templated file".yellow
+        # Deprecation warning
+        puts "\tWARNING: #{file} is not a templated file: not copying!".yellow
       end
     end
 
