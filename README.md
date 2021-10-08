@@ -67,7 +67,7 @@ Install the Rakefile support files from the [latest release](https://github.com/
 Side-effect: also calls [install](#install)
 
 ### template
-Create or overwrite Dockerfile(s) from ERB templates and copy any files listed for the versions and variants into their build directories.
+Create or overwrite Dockerfile(s) from ERB templates and render any templated files listed for the versions and variants into their build directories.
 
 `rake template`
 
