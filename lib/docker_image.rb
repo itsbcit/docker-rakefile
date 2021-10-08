@@ -31,6 +31,26 @@ class DockerImage
     @labels['build_id'] = build_id
   end
 
+  def new_build_id
+    timestamp = Time.now.getutc.to_i
+    write_build_id(timestamp)
+    @build_id = timestamp
+  end
+
+  def read_build_id()
+    return 0 unless File.exist?('.build_id')
+    File.read('.build_id')
+  end
+
+  private :read_build_id
+
+  def write_build_id(build_id)
+    File.unlink('.build_id') if File.exist?('.build_id') && ENV['KEEP_BUILD'].nil?
+    File.open('.build_id', 'w') { |f| f.write(build_id) } unless File.exist?('.build_id')
+  end
+
+  private :write_build_id
+
   def build_name_tag()
     vvb = version_variant_build()
 
