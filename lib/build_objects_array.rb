@@ -38,7 +38,6 @@ def build_objects_array(options = {})
 
       objects_array << DockerImage.new(
         image_name:     image_name,
-        build_id:       build_id,
         variant:        variant,
         version:        version,
         template_files: (template_files + version_template_files + variant_template_files).uniq,
