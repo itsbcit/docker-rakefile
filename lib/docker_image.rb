@@ -2,12 +2,10 @@
 
 # Object class DockerImage
 class DockerImage
-  # TODO: sort out this mess. Most things are probably read-only.
   attr_reader   :image_name, :suffixes, :build_name_tag, :tags, :template_files, :registries
   attr_accessor :build_id, :variant, :version, :labels,
                 :maintainer, :vars
 
-  # TODO: move functionality from build_objects_array to here
 
   def initialize(
     image_name:     ,
@@ -35,7 +33,6 @@ class DockerImage
     @labels['build_id'] = build_id
   end
 
-  # TODO: replace all incorrect use of "tag" with "suffix"
   def build_name_tag()
     vvb = version_variant_build()
 
