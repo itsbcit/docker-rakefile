@@ -37,8 +37,8 @@ class DockerImage
     "local/#{image_name}:#{vvb}"
   end
 
-  def build_tag(build = build_id)
-    "b#{build}"
+  def build_suffix()
+    "b#{@build_id}"
   end
 
   def registry_name_tag(registry = '', org_name = '')
