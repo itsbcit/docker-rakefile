@@ -28,8 +28,8 @@ task :template do
       end
     end
 
-    if File.exist?('Dockerfile.erb')
-      puts "\tRendering #{dir}/Dockerfile"
+    if File.exist?('Dockerfile.erb') && (! File.exist?("#{dir}/Dockerfile.erb"))
+      puts "\tRendering #{dir}/Dockerfile from Dockerfile.erb"
       render_template('Dockerfile.erb', "#{dir}/Dockerfile", binding)
     end
   end
