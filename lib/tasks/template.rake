@@ -10,6 +10,7 @@ task :template do
     dir = image.dir
     FileUtils.mkdir_p(dir) unless Dir.exist?(dir)
 
+    # TODO: implement per-"version-variant" rendered files
     image.template_files.each do |file|
       unless File.exist?(file)
         puts "WARNING: file not found: #{file}".red
