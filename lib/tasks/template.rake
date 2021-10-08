@@ -24,7 +24,6 @@ task :template do
         next if dir == '.'
 
         puts "\tWARNING: #{file} is not a templated file".yellow
-        FileUtils.cp(file, dir)
       end
     end
 
