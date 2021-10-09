@@ -123,15 +123,17 @@ class DockerImage
     version_variant.to_s.empty? ? '.' : version_variant
   end
 
+  # TODO: are suffixes really needed? We do need a way to declare whole tags. Maybe extra_tags?
+  #       Put tags back? There needs to be these generated standard tags, and also whole tags.
   def tags
     tags = []
     tags << version_variant
     tags << version_variant_build
 
-    suffixes.each do |suffix|
-      suffix = version_variant.to_s.empty? ? suffix : "-#{suffix}"
-      tags << "#{version_variant}#{suffix}"
-    end
+    # suffixes.each do |suffix|
+    #   suffix = version_variant.to_s.empty? ? suffix : "-#{suffix}"
+    #   tags << "#{version_variant}#{suffix}"
+    # end
 
     tags.uniq
   end
