@@ -12,7 +12,8 @@ task :build do
   puts '*** Building images ***'.green
   $images.each do |image|
     puts "Image: #{image.build_tag} (build_id: #{image.build_id})".green
-    sh "docker build -f #{image.dir}/Dockerfile -t #{image.build_tag} ."
+    puts "docker build -f #{image.dir}/Dockerfile -t #{image.build_tag} ."
+    # sh "docker build -f #{image.dir}/Dockerfile -t #{image.build_tag} ."
     # sh "docker build -f #{image.dir}/Dockerfile -t #{image.build_tag} . --no-cache --pull"
   end
 end
