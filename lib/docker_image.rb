@@ -135,4 +135,8 @@ class DockerImage
 
     tags.uniq
   end
+
+  def suffixes
+    (@suffixes << build_suffix).uniq
+  end
 end
