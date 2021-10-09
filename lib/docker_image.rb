@@ -127,7 +127,6 @@ class DockerImage
     tags = []
     tags << version_variant
     tags << version_variant_build
-    tags << version_variant_latest
 
     suffixes.each do |suffix|
       suffix = version_variant.to_s.empty? ? suffix : "-#{suffix}"
