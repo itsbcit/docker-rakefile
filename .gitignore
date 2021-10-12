@@ -1,1 +1,8 @@
 /lib.zip
+/metadata.yaml
+/local
+/Dockerfile.erb
+/7.4
+/7.4-builder
+/7.4-oci
+/.build_id
