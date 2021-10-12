@@ -16,9 +16,6 @@ task :debug do
         puts "Not tagging to public registry \"#{registry['url']}\": set org_name #{registry['org_name']} for registry in metadata.yaml".red
       end
     end
-    puts "Suffixes:"
-    puts image.suffixes
-    puts "Tags:"
-    puts image.tags
+    puts image.to_yaml
   end
 end
