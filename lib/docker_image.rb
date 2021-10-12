@@ -29,17 +29,10 @@ class DockerImage
     @vars               = vars
 
     # check for a forced build id in ENV
-    if ENV['BUILD_ID'] != nil
-      @build_id = ENV['BUILD_ID']
-    # set build_id
-    else
-      @build_id = read_build_id()
-    end
+    @build_id = ENV['BUILD_ID'].nil? ? read_build_id : ENV['BUILD_ID']
 
     # create a new build id if zero
-    if @build_id.nil? || @build_id == 0
-      new_build_id()
-    end
+    new_build_id if @build_id.nil? || @build_id.zero?
   end
 
   def new_build_id
@@ -50,6 +43,7 @@ class DockerImage
 
   def read_build_id()
     return 0 unless File.exist?('.build_id')
+
     File.read('.build_id').to_i
   end
 
@@ -62,13 +56,13 @@ class DockerImage
 
   private :write_build_id
 
-  def build_name_tag()
-    vvb = version_variant_build()
+  def build_name_tag
+    vvb = version_variant_build
 
     "local/#{image_name}:#{vvb}"
   end
 
-  def build_suffix()
+  def build_suffix
     "b#{@build_id}"
   end
 
