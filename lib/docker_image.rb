@@ -2,8 +2,8 @@
 
 # Object class DockerImage
 class DockerImage
-  attr_reader   :image_name, :suffixes, :build_name_tag, :template_files, :registries,
                 :variant, :version, :labels, :maintainer, :vars
+  attr_reader   :image_name, :build_id, :build_name_tag, :template_files, :registries,
 
   def initialize(
     image_name:   ,
