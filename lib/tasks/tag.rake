@@ -20,11 +20,11 @@ task :tag do
       if registry['url'].contains_public_registry? && registry['org_name'].to_s.empty?
         puts "Not tagging to public registry \"#{registry['url']}\": set org_name #{registry['org_name']} for registry in metadata.yaml".red
       end
-      ron = image.registry_org_name(registry['url'], registry['org_name'])
-      separator = ron.empty? ? '' : '/'
-      sh "docker tag #{image.build_name_tag} #{ron}#{separator}#{image.name_tag}"
+      ron_name_tag = image.ron_name_tag(registry['url'], registry['org_name'])
+      sh "docker tag #{image.build_name_tag} #{ron_name_tag}"
       image.tags.each do |tag|
-        sh "docker tag #{image.build_name_tag} #{ron}#{separator}#{image.name_tag(tag)}"
+        ron_name_tag = image.ron_name_tag(registry['url'], registry['org_name'], tag)
+        sh "docker tag #{image.build_name_tag} #{ron_name_tag}"
       end
     end
   end

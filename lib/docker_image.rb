@@ -2,8 +2,8 @@
 
 # Object class DockerImage
 class DockerImage
-                :variant, :version, :labels, :maintainer, :vars
-  attr_reader   :image_name, :build_id, :build_name_tag, :template_files, :registries,
+  attr_reader   :image_name, :build_id, :template_files, :registries,
+                :variant, :version, :labels, :maintainer, :vars, :tags
 
   def initialize(
     image_name:   ,
@@ -11,10 +11,10 @@ class DockerImage
     variant:      '',
     version:      '',
     template_files: {},
-    suffixes:     [''],
     registries:   [],
     labels:       {},
     maintainer:   '',
+    tags:         [],
     vars:         {}
   )
     @image_name         = image_name
@@ -22,10 +22,10 @@ class DockerImage
     @variant            = variant
     @version            = version
     @template_files     = template_files
-    @suffixes           = suffixes
     @registries         = registries
     @labels             = labels
     @maintainer         = maintainer
+    @tags               = tags
     @vars               = vars
 
     # check for a forced build id in ENV
@@ -33,6 +33,11 @@ class DockerImage
 
     # create a new build id if zero
     new_build_id if @build_id.nil? || @build_id.zero?
+
+    @tags << version_variant unless version_variant.empty?
+
+    @tags << version_variant_build
+    @tags = @tags.uniq
   end
 
   def new_build_id
@@ -117,23 +122,6 @@ class DockerImage
     version_variant.to_s.empty? ? '.' : version_variant
   end
 
-  # TODO: are suffixes really needed? We do need a way to declare whole tags. Maybe extra_tags?
-  #       Put tags back? There needs to be these generated standard tags, and also whole tags.
-  def tags
-    tags = []
-    tags << version_variant
-    tags << version_variant_build
-
-    # suffixes.each do |suffix|
-    #   suffix = version_variant.to_s.empty? ? suffix : "-#{suffix}"
-    #   tags << "#{version_variant}#{suffix}"
-    # end
-
-    tags.uniq
-  end
-
-  def suffixes
-    (@suffixes << build_suffix).uniq
   def ron_name_tag(registry_url = '', registry_org_name = '')
     ron = registry_org_name(registry_url, registry_org_name)
     separator = ron.empty? ? '' : '/'
