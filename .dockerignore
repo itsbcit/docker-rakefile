@@ -1,2 +1,7 @@
+.build_id
 .git
+.gitignore
 *.erb
+lib
+local
+Rakefile
