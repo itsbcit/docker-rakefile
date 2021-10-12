@@ -14,7 +14,7 @@ task :tag do
     puts "Image: #{image.build_name_tag}"
     image.registries.each do |registry|
       unless registry['url'].respond_to?(:contains_public_registry?)
-        puts "Skipping registry with invalid url: check metadata.yaml".red
+        puts 'Skipping registry with invalid url: check metadata.yaml'.red
         next
       end
       if registry['url'].contains_public_registry? && registry['org_name'].to_s.empty?
