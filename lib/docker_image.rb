@@ -106,16 +106,16 @@ class DockerImage
 
   def version_variant_build(version = self.version)
     vv = version_variant(version)
-    prefix = vv.to_s.empty? ? '' : '-'
+    separator = vv.to_s.empty? ? '' : '-'
 
-    "#{vv}#{prefix}#{build_suffix}"
+    "#{vv}#{separator}#{build_suffix}"
   end
 
   def version_variant_latest(version = self.version)
     vv = version_variant(version)
-    prefix = vv.to_s.empty? ? '' : '-'
+    separator = vv.to_s.empty? ? '' : '-'
 
-    "#{vv}#{prefix}latest"
+    "#{vv}#{separator}latest"
   end
 
   def dir
