@@ -140,5 +140,9 @@ class DockerImage
 
   def suffixes
     (@suffixes << build_suffix).uniq
+  def ron_name_tag(registry_url = '', registry_org_name = '')
+    ron = registry_org_name(registry_url, registry_org_name)
+    separator = ron.empty? ? '' : '/'
+    "#{ron}#{separator}#{@name_tag}"
   end
 end
