@@ -6,7 +6,7 @@ class DockerImage
                 :variant, :version, :labels, :maintainer, :vars, :tags
 
   def initialize(
-    image_name:   ,
+    image_name:,
     build_id:     0,
     variant:      '',
     version:      '',
@@ -46,7 +46,7 @@ class DockerImage
     @build_id = timestamp
   end
 
-  def read_build_id()
+  def read_build_id
     return 0 unless File.exist?('.build_id')
 
     File.read('.build_id').to_i

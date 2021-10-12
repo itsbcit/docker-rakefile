@@ -3,7 +3,7 @@
 desc 'Push to Registry'
 task :push do
   # check that the build system is available
-  build_system = Docker.new()
+  build_system = Docker.new
   unless build_system.running?
     puts "#{build_system.name} sanity check failed.".red
     exit 1
