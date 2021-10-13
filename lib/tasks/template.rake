@@ -6,7 +6,7 @@ task :template do
 
   $images.each do |image|
     image.new_build_id() if ENV['KEEP_BUILD'].nil?
-    puts "Image: #{image.name_tag}"
+    puts "Image: #{image.build_name_tag}"
     dir = image.dir
     FileUtils.mkdir_p(dir) unless Dir.exist?(dir)
 
