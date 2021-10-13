@@ -122,9 +122,9 @@ class DockerImage
     version_variant.to_s.empty? ? '.' : version_variant
   end
 
-  def ron_name_tag(registry_url = '', registry_org_name = '')
+  def ron_name_tag(registry_url = '', registry_org_name = '', tag = name_tag)
     ron = registry_org_name(registry_url, registry_org_name)
     separator = ron.empty? ? '' : '/'
-    "#{ron}#{separator}#{@name_tag}"
+    "#{ron}#{separator}#{tag}"
   end
 end
