@@ -6,3 +6,5 @@
 /7.4-builder
 /7.4-oci
 /.build_id
+
+Dockerfile
