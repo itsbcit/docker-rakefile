@@ -5,11 +5,11 @@ class Docker
   attr_reader :name
 
   def initialize()
-    @name = "Docker"
+    @name = 'Docker'
   end
 
   def running?
     system('docker ps -q') or return false
-    return true
+    true
   end
 end
