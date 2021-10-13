@@ -17,6 +17,7 @@ task :template do
         next
       end
       # if this is an ERB template...
+      # TODO: rewrite this using ruby File methods basename, extname, etc
       if (file.size > 4) && (file[-4..-1] == '.erb')
         # render the file without .erb extension
         outfile = file[0..-5]
