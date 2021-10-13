@@ -1,0 +1,8 @@
+AllCops:
+  NewCops: enable
+Layout/LineLength:
+  Enabled: false
+Style/GlobalVars:
+  AllowedVariables:
+    - $metadata
+    - $images
