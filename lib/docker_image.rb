@@ -69,61 +69,8 @@ class DockerImage
     "b#{@build_id}"
   end
 
-  def registry_name_tag(registry = '', org_name = '')
-    ron = registry_org_name(registry, org_name)
-    separator = ron.to_s.empty? ? '' : '/'
-
-    "#{ron}#{separator}#{name_tag}"
-  end
-
-  def registry_org_name(registry = '', org_name = self.org_name)
-    separator = if registry.to_s.empty?
-                  ''
-                else
-                  org_name.to_s.empty? ? '' : '/'
-                end
-
-    "#{registry}#{separator}#{org_name}"
-  end
-
-  def version_variant(version = self.version)
-    separator = if version.to_s.empty?
-                  ''
-                else
-                  variant.to_s.empty? ? '' : '-'
-                end
-
-    "#{version}#{separator}#{variant}"
-  end
-
-  def name_tag(tag = version_variant())
-    separator = tag.to_s.empty? ? '' : ':'
-
-    "#{image_name}#{separator}#{tag}"
-  end
-
-  def version_variant_build(version = @version)
-    vv = version_variant(version)
-    separator = vv.to_s.empty? ? '' : '-'
-
-    "#{vv}#{separator}#{build_suffix}"
-  end
-
-  def version_variant_latest(version = @version)
-    vv = version_variant(version)
-    separator = vv.to_s.empty? ? '' : '-'
-
-    "#{vv}#{separator}latest"
-  end
-
   def dir
     version_variant.to_s.empty? ? '.' : version_variant
-  end
-
-  def ron_name_tag(registry_url = '', registry_org_name = '', tag = name_tag)
-    ron = registry_org_name(registry_url, registry_org_name)
-    separator = ron.empty? ? '' : '/'
-    "#{ron}#{separator}#{tag}"
   end
 
   def tags
