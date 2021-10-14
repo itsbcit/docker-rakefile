@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 def build_objects_array(options = {})
-  metadata = options.fetch(:metadata)
+  metadata         = options.fetch(:metadata, {})
+  default_metadata = options.fetch(:default_metadata, {})
 
   objects_array = []
 
