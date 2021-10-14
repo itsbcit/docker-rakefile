@@ -133,7 +133,8 @@ class DockerImage
     @tags.each do |tag|
       rendered_tags << render_inline_template(tag, binding)
     end
-    rendered_tags
+    rendered_tags.uniq
+  end
 
   def parts_join(glue, *parts)
     parts.reject! { |t| t.nil? || t.empty? }
