@@ -6,35 +6,35 @@ def build_objects_array(options = {})
 
   objects_array = []
 
-  image_name     = metadata['image_name']
-  template_files = metadata['template_files'].nil? ? []           : metadata['template_files']
-  labels         = metadata['labels'].nil?         ? []           : metadata['labels']
-  maintainer     = metadata['maintainer'].nil?     ? ''           : metadata['maintainer']
-  registries     = metadata['registries'].nil?     ? []           : metadata['registries']
-  tags           = metadata['tags'].nil?           ? []           : metadata['tags']
-  variants       = metadata['variants'].nil?       ? { '' => {} } : metadata['variants']
-  vars           = metadata['vars'].nil?           ? {}           : metadata['vars']
-  versions       = metadata['versions'].nil?       ? { '' => {} } : metadata['versions']
+  image_name     = metadata.fetch('image_name',     default_metadata['image_name'])
+  labels         = metadata.fetch('labels',         default_metadata['labels'])
+  maintainer     = metadata.fetch('maintainer',     default_metadata['maintainer'])
+  registries     = metadata.fetch('registries',     default_metadata['registries'])
+  tags           = metadata.fetch('tags',           default_metadata['tags'])
+  template_files = metadata.fetch('template_files', default_metadata['template_files'])
+  variants       = metadata.fetch('variants',       default_metadata['variants'])
+  vars           = metadata.fetch('vars',           default_metadata['vars'])
+  versions       = metadata.fetch('versions',       default_metadata['versions'])
 
   versions.each do |version, version_params|
-    version_params         = version_params.nil?                   ? {} : version_params
-    version_template_files = version_params['template_files'].nil? ? [] : version_params['template_files']
-    version_labels         = version_params['labels'].nil?         ? [] : version_params['labels']
-    version_registries     = version_params['registries'].nil?     ? [] : version_params['registries']
-    version_tags           = version_params['tags'].nil?           ? [] : version_params['tags']
-    version_variants       = version_params['variants'].nil?       ? [] : version_params['variants']
-    version_vars           = version_params['vars'].nil?           ? {} : version_params['vars']
+    version_params         = version_params.nil? ? {} : version_params
+    version_template_files = version_params.fetch('template_files', [])
+    version_labels         = version_params.fetch('labels',         {})
+    version_registries     = version_params.fetch('registries',     [])
+    version_tags           = version_params.fetch('tags',           [])
+    version_variants       = version_params.fetch('variants',       {})
+    version_vars           = version_params.fetch('vars',           {})
 
     maintainer = version_params['maintainer'].nil? ? maintainer : version_params['maintainer'].nil?
     variants   = variants.deep_merge(version_variants)
 
     variants.each do |variant, variant_params|
-      variant_params         = variant_params.nil?                   ? {} : variant_params
-      variant_template_files = variant_params['template_files'].nil? ? [] : variant_params['template_files']
-      variant_labels         = variant_params['labels'].nil?         ? {} : variant_params['labels']
-      variant_registries     = variant_params['registries'].nil?     ? [] : variant_params['registries']
-      variant_tags           = variant_params['tags'].nil?           ? [] : variant_params['tags']
-      variant_vars           = variant_params['vars'].nil?           ? {} : variant_params['vars']
+      variant_params         = variant_params.nil?                  ? {} : variant_params
+      variant_template_files = variant_params.fetch('template_files', [])
+      variant_labels         = variant_params.fetch('labels',         {})
+      variant_registries     = variant_params.fetch('registries',     [])
+      variant_tags           = variant_params.fetch('tags',           [])
+      variant_vars           = variant_params.fetch('vars',           {})
 
       merged_registries = merge_registries(registries, version_registries, variant_registries)
       merged_registries = merged_registries.empty? ? [{ url: '', org_name: '' }] : merged_registries
