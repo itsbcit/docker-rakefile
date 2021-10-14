@@ -104,14 +104,14 @@ class DockerImage
     "#{image_name}#{separator}#{tag}"
   end
 
-  def version_variant_build(version = self.version)
+  def version_variant_build(version = @version)
     vv = version_variant(version)
     separator = vv.to_s.empty? ? '' : '-'
 
     "#{vv}#{separator}#{build_suffix}"
   end
 
-  def version_variant_latest(version = self.version)
+  def version_variant_latest(version = @version)
     vv = version_variant(version)
     separator = vv.to_s.empty? ? '' : '-'
 
