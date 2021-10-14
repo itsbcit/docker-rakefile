@@ -134,6 +134,10 @@ class DockerImage
       rendered_tags << render_inline_template(tag, binding)
     end
     rendered_tags
+
+  def parts_join(glue, *parts)
+    parts.reject! { |t| t.nil? || t.empty? }
+    parts.join(glue).to_s
   end
 
   def tag_join(*parts)
