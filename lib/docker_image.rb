@@ -136,8 +136,8 @@ class DockerImage
     rendered_tags
   end
 
-  def tag_concat(tag_parts)
-    tag_parts.reject! { |t| t.nil? || t.empty? }
-    tag_parts.join('-')
+  def tag_join(*parts)
+    parts.reject! { |t| t.nil? || t.empty? }
+    parts.join('-').to_s
   end
 end
