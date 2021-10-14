@@ -36,7 +36,7 @@ def build_objects_array(options = {})
       variant_tags           = variant_params['tags'].nil?           ? [] : variant_params['tags']
       variant_vars           = variant_params['vars'].nil?           ? {} : variant_params['vars']
 
-      maintainer = variant_params['maintainer'].nil? ? maintainer : variant_params['maintainer'].nil?
+      merged_registries = merge_registries(registries, version_registries, variant_registries)
 
       objects_array << DockerImage.new(
         image_name:     image_name,
