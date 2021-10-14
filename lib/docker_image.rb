@@ -127,4 +127,10 @@ class DockerImage
     separator = ron.empty? ? '' : '/'
     "#{ron}#{separator}#{tag}"
   end
+
+
+  def tag_concat(tag_parts)
+    tag_parts.reject! { |t| t.nil? || t.empty? }
+    tag_parts.join('-')
+  end
 end
