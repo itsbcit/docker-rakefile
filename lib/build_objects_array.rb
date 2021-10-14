@@ -37,6 +37,7 @@ def build_objects_array(options = {})
       variant_vars           = variant_params['vars'].nil?           ? {} : variant_params['vars']
 
       merged_registries = merge_registries(registries, version_registries, variant_registries)
+      merged_registries = merged_registries.empty? ? [{ url: '', org_name: '' }] : merged_registries
 
       objects_array << DockerImage.new(
         image_name:     image_name,
@@ -44,7 +45,7 @@ def build_objects_array(options = {})
         version:        version,
         template_files: (template_files + version_template_files + variant_template_files).uniq,
         tags:           (tags + version_tags + variant_tags).uniq,
-        registries:     merge_registries(registries, version_registries, variant_registries),
+        registries:     merged_registries,
         labels:         labels.deep_merge(version_labels).deep_merge(variant_labels),
         maintainer:     maintainer,
         vars:           vars.deep_merge(version_vars).deep_merge(variant_vars),
