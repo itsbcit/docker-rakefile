@@ -9,3 +9,7 @@ def render_template(template, output, scope)
     f.puts erb.result(scope)
   end
 end
+
+def render_inline_template(string, scope)
+  ERB.new(string, 0, '<>-').result(scope)
+end

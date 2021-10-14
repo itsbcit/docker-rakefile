@@ -3,7 +3,7 @@
 # Object class DockerImage
 class DockerImage
   attr_reader   :image_name, :build_id, :template_files, :registries,
-                :variant, :version, :labels, :maintainer, :vars, :tags
+                :variant, :version, :labels, :maintainer, :vars
 
   def initialize(
     image_name:,
@@ -128,6 +128,13 @@ class DockerImage
     "#{ron}#{separator}#{tag}"
   end
 
+  def tags
+    rendered_tags = []
+    @tags.each do |tag|
+      rendered_tags << render_inline_template(tag, binding)
+    end
+    rendered_tags
+  end
 
   def tag_concat(tag_parts)
     tag_parts.reject! { |t| t.nil? || t.empty? }
