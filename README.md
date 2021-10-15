@@ -58,6 +58,10 @@ labels:
   foo_version: '<%= vars['foo_version'] %>'
 ```
 
+### Custom image handling
+
+Any file in `lib` can be overridden by the same file name in `local/`. For example, if you need a custom (#test) task, copy `lib/tasks/test.rb` to `local/tasks/test.rb` and modify it.
+
 ### Normal usage workflow
 
 1. Make `Dockerfile` changes in `Dockerfile.erb`
