@@ -76,7 +76,10 @@ class DockerImage
   def tags
     rendered_tags = []
     @tags.each do |tag|
-      rendered_tags << render_inline_template(tag, binding)
+      rendered_tag = render_inline_template(tag, binding)
+      next if rendered_tag.to_s == ''
+
+      rendered_tags << rendered_tag
     end
     rendered_tags.uniq
   end
