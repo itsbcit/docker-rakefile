@@ -18,7 +18,7 @@ Update `.gitignore` to exclude the Rakefile library and `.build_id` marker file.
 
 `.gitignore` contents:
 
-```
+```text
 .build_id
 lib
 ```
@@ -127,6 +127,7 @@ Removes all tags, images, "FROM images" and build context layers from Docker
 Shows rendered tags, vars, labels, etc. Use to preview what your metadata will produce.
 
 ## metadata.yaml
+
 Sample metadata.yaml with most options used:
 
 ```yaml
