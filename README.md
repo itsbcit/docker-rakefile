@@ -10,7 +10,7 @@ Click "Use this template" (green button) in the [docker-template](https://github
 
 ### Existing Docker image repositories
 
-Download and overwrite the Rakefile in the existing code with the [latest release Rakefile](https://github.com/itsbcit/docker-rakefile/releases/latest/download/Rakefile).
+Update the Rakefile and support library in the existing code with [rake update](#update).
 
 ### Exclude support files
 
@@ -75,7 +75,7 @@ Install the Rakefile support files from the [latest release](https://github.com/
 
 ### update
 
-`Rakefile` self-update. Download and overwrite the `Rakefile` with the [latest release](https://github.com/itsbcit/docker-rakefile/releases/latest/download/Rakefile)
+`Rakefile` self-update. Download and overwrite the `Rakefile` and `libs` directory with the [latest release](https://github.com/itsbcit/docker-rakefile/releases/latest)
 
 `rake update`
 
