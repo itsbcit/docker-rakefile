@@ -9,20 +9,32 @@ task :push do
     exit 1
   end
 
-  # TODO: check docker for the build image instead of this kludge
-  unless File.exist? '.build_id'
-    puts 'Build and tag images first'.red
-    exit 1
-  end
-
   $images.each do |image|
     puts "Image: #{image.build_name_tag}".pink
+
+    # abort if image has not been built
+    image_id = `docker image ls -q #{image.build_name_tag}`
+    if image_id.empty?
+      puts "Image #{image.build_name_tag} has not been built.".red
+      exit 1
+    else
+      puts "Image ID: #{image_id}"
+    end
+
     image.registries.each do |registry|
       sh "docker login #{registry['url']}" unless registry['url'].to_s.empty?
       image.tags.each do |tag|
         ron          = image.parts_join('/', registry['url'], registry['org_name'])
         ron_name     = image.parts_join('/', ron, image.image_name)
         ron_name_tag = image.parts_join(':', ron_name, tag)
+
+        # abort if tag doesn't exist or tag is pointing to a different image
+        image_tag_id = `docker image ls -q #{ron_name_tag}`
+        if image_tag_id.empty? || (image_tag_id != image_id)
+          puts "Image #{image.build_name_tag} has not been tagged with #{ron_name_tag}.".red
+          exit 1
+        end
+
         sh "docker push #{ron_name_tag}"
       end
     end
