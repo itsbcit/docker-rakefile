@@ -118,33 +118,39 @@ Removes all tags, images, "FROM images" and build context layers from Docker
 Shows rendered tags, vars, labels, etc. Use to preview what your metadata will produce.
 
 ## metadata.yaml
-Sample metadata.yaml with all options:
+Sample metadata.yaml with most options used:
 
 ```yaml
 ---
-image_name: weebly
-org_name: barbaz
+image_name: php-fpm
+maintainer: 'jesse@weisner.ca, chriswood.ca@gmail.com'
 labels:
-  maintainer: jesse@weisner.ca
-versions:
-  '':
-  '1.2.3':
-    suffixes:
-      - 'production'
-    version_tags:
-      - '1.2'
-variants:
-  '':
-  bar:
-  supervisord:
-    vars:
-      bar: qux
-suffixes:
-registries:
-  - url: 'localhost:5000'
-    org_name: barbaz
+  php_version: '<%= vars["php_version"] %>'
 vars:
-  tini_version: '0.18.0'
-  de_version: '1.5'
-  dockerize_version: '0.6.0'
+  pecl_oci8_version: '2.2.0'
+  pecl_xdebug_version: '3.1.0'
+  pecl_igbinary_version: '3.2.6'
+  oracle_version: '18.3.0.0.0'
+  oracle_major: '18.3'
+variants:
+  'builder':
+    registries:
+      - url: docker.io
+        org_name: bcit
+  '':
+    registries:
+      - url: docker.io
+        org_name: bcit
+  'oci':
+    registries:
+      - url: registry.example.com:5000
+    labels:
+      oracle_version: '<%= vars["oracle_major"] %>'
+versions:
+  '7.3':
+    vars:
+      php_version: '7.3.30'
+  '7.4':
+    vars:
+      php_version: '7.4.24'
 ```
