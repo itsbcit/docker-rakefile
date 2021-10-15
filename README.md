@@ -109,6 +109,14 @@ Push all images and tags to Docker Hub and/or the repositores configured in `met
 
 `rake push`
 
+### clean
+
+Removes all tags, images, "FROM images" and build context layers from Docker
+
+### debug
+
+Shows rendered tags, vars, labels, etc. Use to preview what your metadata will produce.
+
 ## metadata.yaml
 Sample metadata.yaml with all options:
 
