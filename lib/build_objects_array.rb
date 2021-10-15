@@ -40,15 +40,15 @@ def build_objects_array(options = {})
       merged_registries = merged_registries.empty? ? [{ url: '', org_name: '' }] : merged_registries
 
       objects_array << DockerImage.new(
-        image_name:     image_name,
-        variant:        variant,
-        version:        version,
+        image_name: image_name,
+        variant: variant,
+        version: version,
         template_files: (template_files + version_template_files + variant_template_files).uniq,
-        tags:           (tags + version_tags + variant_tags).uniq,
-        registries:     merged_registries,
-        labels:         labels.deep_merge(version_labels).deep_merge(variant_labels),
-        maintainer:     maintainer,
-        vars:           vars.deep_merge(version_vars).deep_merge(variant_vars),
+        tags: (tags + version_tags + variant_tags).uniq,
+        registries: merged_registries,
+        labels: labels.deep_merge(version_labels).deep_merge(variant_labels),
+        maintainer: maintainer,
+        vars: vars.deep_merge(version_vars).deep_merge(variant_vars)
       )
     end
   end
