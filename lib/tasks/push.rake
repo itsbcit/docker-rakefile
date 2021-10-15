@@ -13,7 +13,6 @@ task :push do
     puts 'Build and tag images first'.red
     exit 1
   end
-  build_id = File.read('.build_id')
   $images.each do |image|
     puts "Image: #{image.build_name_tag}".pink
     image.registries.each do |registry|
