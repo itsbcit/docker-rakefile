@@ -1,6 +1,6 @@
 # docker-rakefile
 
-Rakefile and libraries for managing Docker images
+Rakefile and libraries for managing Docker image builds
 
 ## How to use
 
