@@ -60,7 +60,7 @@ labels:
 
 ### Custom image handling
 
-Any file in `lib` can be overridden by the same file name in `local/`. For example, if you need a custom (#test) task, copy `lib/tasks/test.rb` to `local/tasks/test.rb` and modify it.
+Any file in `lib` can be overridden by the same file name in `local/`. For example, if you need a custom [test](#test) task, copy `lib/tasks/test.rb` to `local/tasks/test.rb` and modify it.
 
 ### Normal usage workflow
 
