@@ -2,8 +2,7 @@
 
 # Object class DockerImage
 class DockerImage
-  attr_reader   :image_name, :build_id, :template_files, :registries,
-                :variant, :version, :labels, :maintainer, :vars
+  attr_reader   :image_name, :build_id, :template_files, :registries, :variant, :version, :maintainer
 
   def initialize(
     image_name:,
@@ -69,17 +68,19 @@ class DockerImage
     version_variant.empty? ? '.' : version_variant
   end
 
-  # TODO: render ERB vars and labels
+  def labels
+    render_hash_values(@labels, binding)
+  end
 
   def tags
-    rendered_tags = []
-    @tags.each do |tag|
-      rendered_tag = render_inline_template(tag, binding)
-      next if rendered_tag.to_s == ''
-
-      rendered_tags << rendered_tag
-    end
+    rendered_tags = render_array_values(@tags, binding)
+    rendered_tags.reject! { |v| v.to_s.empty? }
     rendered_tags.uniq
+  end
+
+  # TODO: render ERB vars and labels
+  def vars
+    render_hash_values(@vars, binding)
   end
 
   def parts_join(glue, *parts)

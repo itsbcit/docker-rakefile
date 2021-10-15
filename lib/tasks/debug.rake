@@ -5,6 +5,13 @@ task :debug do
   puts '*** Debug image objects ***'.green
   $images.each do |image|
     puts "Image: #{image.build_name_tag}".pink
+
+    puts 'Rendered Vars:'.yellow
+    puts image.vars
+
+    puts 'Rendered Labels:'.yellow
+    puts image.labels
+
     puts 'Rendered Tags:'.yellow
     puts image.tags
 
