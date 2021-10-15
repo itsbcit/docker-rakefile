@@ -105,6 +105,7 @@ Standard tags:
 * image_name:latest
 
 ### push
+
 Push all images and tags to Docker Hub and/or the repositores configured in `metadata.yaml`.
 
 `rake push`
