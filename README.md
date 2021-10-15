@@ -44,17 +44,19 @@ A simple example for an image without versions or variants:
 ```yaml
 ---
 image_name: template_test
-org_name: bcit
-labels:
-  maintainer: "jesse@weisner.ca, chriswood.ca@gmail.com"
+registries:
+  - url: docker.io
+    org_name: bcit
 vars:
-  tini_version: '0.18.0'
-  de_version: '1.5'
-  dockerize_version: '0.6.0'
+  foo_version: '1.2.3'
 ```
 
-Inside ERB templated files, these parameters are available as eg. `metadata['vars']['dockerize_version']` for global parameters or eg. `image.vars['dockerize_version']` for the image-specific version of the same parameter. It is usually safer to use the image-specific nomenclature.
+Inside ERB templated files, these parameters are available as eg. `image.vars['foo_version']`. Labels, vars, and tags can all be ERB-templated with inline values, but note that the context is the image, so no `image.` prefix. This example will add a label `foo_version = 1.2.3`:
 
+```yaml
+labels:
+  foo_version: '<%= vars['foo_version'] %>'
+```
 
 ### Normal usage workflow
 
