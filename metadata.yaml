@@ -1,6 +1,0 @@
-image_name: foo
-maintainer: jesse@weisner.ca
-vars:
-  php_version: '7.4.24'
-labels:
-  php_version: '<%= vars["php_version"] %>'
