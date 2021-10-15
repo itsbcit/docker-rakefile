@@ -51,12 +51,25 @@ vars:
   foo_version: '1.2.3'
 ```
 
-Inside ERB templated files, these parameters are available as eg. `image.vars['foo_version']`. Labels, vars, and tags can all be ERB-templated with inline values, but note that the context is the image, so no `image.` prefix. This example will add a label `foo_version = 1.2.3` using the value of `foo_version` from the image vars:
+Inside ERB templated files, these parameters are available as eg. `image.vars['foo_version']`. Eg in a Dockerfile.erb:
+
+```erb
+RUN yum install \
+      foo-<%= image.vars['foo_version'] %>
+```
+
+Labels, vars, and tags can all be ERB-templated with inline values, but note that the context is the image, so no `image.` prefix. This example will add a label `foo_version = 1.2.3` using the value of `foo_version` from the image vars:
 
 ```yaml
 labels:
   foo_version: '<%= vars['foo_version'] %>'
 ```
+
+Important: parameters are rendered in the order: vars -> labels -> tags.
+
+* vars can only include replacements from the image top-level, and other non-templatable image properties
+* labels can include vars
+* tags can include vars and labels
 
 ### Custom image handling
 
