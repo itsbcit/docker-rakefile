@@ -33,11 +33,6 @@ class DockerImage
 
     # create a new build id if zero
     new_build_id if @build_id.nil? || @build_id.zero?
-
-    @tags << version_variant unless version_variant.empty?
-
-    @tags << version_variant_build
-    @tags = @tags.uniq
   end
 
   def new_build_id
