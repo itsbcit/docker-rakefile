@@ -69,6 +69,8 @@ class DockerImage
     version_variant.empty? ? '.' : version_variant
   end
 
+  # TODO: render ERB vars and labels
+
   def tags
     rendered_tags = []
     @tags.each do |tag|
