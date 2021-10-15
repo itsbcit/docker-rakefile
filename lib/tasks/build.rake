@@ -14,5 +14,7 @@ task :build do
     build_tag = image.build_name_tag
     puts "Image: #{build_tag} (build_id: #{image.build_id})".pink
     sh "docker build -f #{image.dir}/Dockerfile -t #{build_tag} ."
+    image_id = `docker image ls -q #{build_tag}`
+    puts "Image ID: #{image_id}"
   end
 end
