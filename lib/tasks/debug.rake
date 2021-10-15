@@ -8,12 +8,12 @@ task :debug do
     puts "Image: #{image.build_name_tag}".yellow
 
     image.registries.each do |registry|
-      unless registry['url'].respond_to?(:contains_public_registry?)
-        puts "Skipping registry with invalid url: check metadata.yaml".red
-        next
-      end
-      if registry['url'].contains_public_registry? && registry['org_name'].to_s.empty?
-        puts "Not tagging to public registry \"#{registry['url']}\": set org_name #{registry['org_name']} for registry in metadata.yaml".red
+      image.tags.each do |tag|
+        ron          = image.parts_join('/', registry['url'], registry['org_name'])
+        ron_name     = image.parts_join('/', ron, image.image_name)
+    end
+
+    # show predicted push task commands:
       end
     end
     puts image.to_yaml
