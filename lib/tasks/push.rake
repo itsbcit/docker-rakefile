@@ -18,6 +18,7 @@ task :push do
   $images.each do |image|
     puts "Image: #{image.build_name_tag}".pink
     image.registries.each do |registry|
+      sh "docker login #{registry['url']}" unless registry['url'].to_s.empty?
       image.tags.each do |tag|
         ron          = image.parts_join('/', registry['url'], registry['org_name'])
         ron_name     = image.parts_join('/', ron, image.image_name)
