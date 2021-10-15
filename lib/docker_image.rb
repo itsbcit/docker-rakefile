@@ -65,7 +65,8 @@ class DockerImage
   end
 
   def dir
-    tag_join(version, variant).empty? ? '.' : version_variant
+    version_variant = tag_join(version, variant)
+    version_variant.empty? ? '.' : version_variant
   end
 
   def tags
