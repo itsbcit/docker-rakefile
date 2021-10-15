@@ -65,7 +65,7 @@ class DockerImage
   end
 
   def dir
-    version_variant.to_s.empty? ? '.' : version_variant
+    tag_join(version, variant).empty? ? '.' : version_variant
   end
 
   def tags
