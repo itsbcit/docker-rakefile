@@ -38,6 +38,7 @@ task :clean do
       end
     end
   end
+
   puts 'Clearing Docker build artifacts:'.pink
   sh 'docker builder prune -f'
 end
