@@ -104,6 +104,10 @@ Standard tags:
 * image_name:b(`build id`) eg. `mybusybox:b1567100182`
 * image_name:latest
 
+### test
+
+Run automated tests against the image(s).
+
 ### push
 
 Push all images and tags to Docker Hub and/or the repositores configured in `metadata.yaml`.
