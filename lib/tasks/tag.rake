@@ -14,8 +14,10 @@ task :tag do
     puts "Image: #{image.build_name_tag}".pink
     image.registries.each do |registry|
       image.tags.each do |tag|
-        ron_name_tag = image.ron_name_tag(registry['url'], registry['org_name'], tag)
-        sh "docker tag #{image.build_name_tag} #{ron_name_tag}"
+        ron          = image.parts_join('/', registry['url'], registry['org_name'])
+        ron_name     = image.parts_join('/', ron, image.image_name)
+        ron_name_tag = image.parts_join(':', ron_name, tag)
+        sh "docker push #{ron_name_tag}"
       end
     end
   end
