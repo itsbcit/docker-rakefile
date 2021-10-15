@@ -9,6 +9,7 @@ task :push do
     exit 1
   end
 
+  # TODO: check docker for the build image instead of this kludge
   unless File.exist? '.build_id'
     puts 'Build and tag images first'.red
     exit 1

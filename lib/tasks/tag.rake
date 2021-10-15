@@ -9,6 +9,8 @@ task :tag do
     exit 1
   end
 
+  # TODO: check that the images have been built
+
   puts '*** Tagging images ***'.green
   $images.each do |image|
     puts "Image: #{image.build_name_tag}".pink
