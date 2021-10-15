@@ -3,23 +3,30 @@
 Rakefile and libraries for managing Docker images
 
 ## How to use
+
 ### New Docker image repositories
+
 Click "Use this template" (green button) in the [docker-template](https://github.com/itsbcit/docker-template) GitHub repository to create a new templated GitHub repository. You must be logged-in to GitHub to see this option.
 
 ### Existing Docker image repositories
+
 Download and overwrite the Rakefile in the existing code with the [latest release Rakefile](https://github.com/itsbcit/docker-rakefile/releases/latest/download/Rakefile).
 
 ### Exclude support files
+
 Update `.gitignore` to exclude the Rakefile library and `.build_id` marker file.
 
 `.gitignore` contents:
+
 ```
 .build_id
 lib
 ```
+
 Or download from the [docker-template](https://github.com/itsbcit/docker-template/raw/master/.gitignore) git repository.
 
 ### Install Rakefile support files
+
 `Rakefile` can be updated to the latest release version with [`rake update`](#update).
 
 The majority of the Rakefile support code is contained in the `lib` directory, which should be excluded from individual Git repositories using this system. This way, the latest release code is always used.
@@ -29,9 +36,11 @@ See [`rake install`](#install)
 This will pull the latest release of the `lib` support files from GitHub.
 
 ### Create metadata.yaml
+
 `metadata.yaml` defines the layout and handling of the Docker image(s) in this repository.
 
 A simple example for an image without versions or variants:
+
 ```yaml
 ---
 image_name: template_test
@@ -46,6 +55,7 @@ vars:
 
 Inside ERB templated files, these parameters are available as eg. `metadata['vars']['dockerize_version']` for global parameters or eg. `image.vars['dockerize_version']` for the image-specific version of the same parameter. It is usually safer to use the image-specific nomenclature.
 
+
 ### Normal usage workflow
 
 1. Make `Dockerfile` changes in `Dockerfile.erb`
@@ -54,12 +64,15 @@ Inside ERB templated files, these parameters are available as eg. `metadata['var
 1. `rake push` to push to Docker Hub (or other repos defined in [`metadata.yaml`](#create-metadatayaml))
 
 ## Rake tasks
+
 ### install
+
 Install the Rakefile support files from the [latest release](https://github.com/itsbcit/docker-rakefile/releases/latest).
 
 `rake install`
 
 ### update
+
 `Rakefile` self-update. Download and overwrite the `Rakefile` with the [latest release](https://github.com/itsbcit/docker-rakefile/releases/latest/download/Rakefile)
 
 `rake update`
@@ -72,16 +85,19 @@ Create or overwrite Dockerfile(s) from ERB templates and render any templated fi
 `rake template`
 
 ### build
+
 Build the Docker image(s).
 
 `rake build`
 
 ### tag
+
 Add standard and `metadata.yaml` configured tags to the image(s).
 
 `rake tag`
 
 Standard tags:
+
 * image_name:b(`build id`) eg. `mybusybox:b1567100182`
 * image_name:latest
 
