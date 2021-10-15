@@ -51,7 +51,7 @@ vars:
   foo_version: '1.2.3'
 ```
 
-Inside ERB templated files, these parameters are available as eg. `image.vars['foo_version']`. Labels, vars, and tags can all be ERB-templated with inline values, but note that the context is the image, so no `image.` prefix. This example will add a label `foo_version = 1.2.3`:
+Inside ERB templated files, these parameters are available as eg. `image.vars['foo_version']`. Labels, vars, and tags can all be ERB-templated with inline values, but note that the context is the image, so no `image.` prefix. This example will add a label `foo_version = 1.2.3` using the value of `foo_version` from the image vars:
 
 ```yaml
 labels:
