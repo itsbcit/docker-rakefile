@@ -4,8 +4,8 @@ desc 'Debug rakefile objects'
 task :debug do
   puts '*** Debug image objects ***'.green
   $images.each do |image|
-    #next unless image.variant == ""
-    puts "Image: #{image.build_name_tag}".yellow
+    puts "Image: #{image.build_name_tag}".pink
+    puts 'Rendered Tags:'.yellow
 
     image.registries.each do |registry|
       image.tags.each do |tag|
