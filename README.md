@@ -110,7 +110,7 @@ Push all images and tags to Docker Hub and/or the repositores configured in `met
 ## metadata.yaml
 Sample metadata.yaml with all options:
 
-```
+```yaml
 ---
 image_name: weebly
 org_name: barbaz
