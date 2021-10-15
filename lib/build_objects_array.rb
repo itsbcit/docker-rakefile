@@ -17,6 +17,8 @@ def build_objects_array(options = {})
   vars           = metadata.fetch('vars',           default_metadata['vars'])
   versions       = metadata.fetch('versions',       default_metadata['versions'])
 
+  raise('Can\'t proceed with empty image name (hint: metadata.yaml >> image_name)') if image_name.nil? || image_name.empty?
+
   versions.each do |version, version_params|
     version_params         = version_params.nil? ? {} : version_params
     version_template_files = version_params.fetch('template_files', [])
