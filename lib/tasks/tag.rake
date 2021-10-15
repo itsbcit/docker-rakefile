@@ -9,11 +9,19 @@ task :tag do
     exit 1
   end
 
-  # TODO: check that the images have been built
-
   puts '*** Tagging images ***'.green
   $images.each do |image|
     puts "Image: #{image.build_name_tag}".pink
+
+    # abort if image has not been built
+    image_id = `docker image ls -q #{image.build_name_tag}`
+    if image_id.empty?
+      puts "Image #{image.build_name_tag} has not been built.".red
+      exit 1
+    else
+      puts "Image ID: #{image_id}"
+    end
+
     image.registries.each do |registry|
       image.tags.each do |tag|
         ron          = image.parts_join('/', registry['url'], registry['org_name'])
