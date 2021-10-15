@@ -6,6 +6,7 @@ task :debug do
   $images.each do |image|
     puts "Image: #{image.build_name_tag}".pink
     puts 'Rendered Tags:'.yellow
+    puts image.tags
 
     image.registries.each do |registry|
       image.tags.each do |tag|
