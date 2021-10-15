@@ -13,6 +13,7 @@ task :push do
     puts 'Build and tag images first'.red
     exit 1
   end
+
   $images.each do |image|
     puts "Image: #{image.build_name_tag}".pink
     image.registries.each do |registry|
