@@ -15,7 +15,7 @@ task :push do
   end
   build_id = File.read('.build_id')
   $images.each do |image|
-    puts "Image: #{image.build_tag}"
+    puts "Image: #{image.build_name_tag}".pink
     image.build_id = build_id
     image.registries.each do |registry|
       if registry['url'].contains_public_registry? && registry['org_name'].to_s.empty?

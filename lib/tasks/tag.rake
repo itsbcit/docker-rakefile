@@ -11,7 +11,7 @@ task :tag do
 
   puts '*** Tagging images ***'.green
   $images.each do |image|
-    puts "Image: #{image.build_name_tag}"
+    puts "Image: #{image.build_name_tag}".pink
     image.registries.each do |registry|
       image.tags.each do |tag|
         ron_name_tag = image.ron_name_tag(registry['url'], registry['org_name'], tag)
