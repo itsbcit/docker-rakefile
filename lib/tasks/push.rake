@@ -26,9 +26,10 @@ task :push do
       separator = ron.empty? ? '' : '/'
       sh "docker push #{ron}#{separator}#{image.name_tag}"
       image.tags.each do |tag|
-        next if ron.empty?
-
-        sh "docker push #{ron}#{separator}#{image.name_tag(tag)}"
+        ron          = image.parts_join('/', registry['url'], registry['org_name'])
+        ron_name     = image.parts_join('/', ron, image.image_name)
+        ron_name_tag = image.parts_join(':', ron_name, tag)
+        sh "docker push #{ron_name_tag}"
       end
     end
   end
