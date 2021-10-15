@@ -6,7 +6,9 @@ def build_objects_array(options = {})
 
   objects_array = []
 
+  base_labels    = metadata.fetch('base_labels',    default_metadata['base_labels'])
   base_tags      = metadata.fetch('base_tags',      default_metadata['base_tags'])
+  base_vars      = metadata.fetch('base_vars',      default_metadata['base_vars'])
   image_name     = metadata.fetch('image_name',     default_metadata['image_name'])
   labels         = metadata.fetch('labels',         default_metadata['labels'])
   maintainer     = metadata.fetch('maintainer',     default_metadata['maintainer'])
@@ -49,9 +51,9 @@ def build_objects_array(options = {})
         template_files: (template_files + version_template_files + variant_template_files).uniq,
         tags: (tags + version_tags + variant_tags).uniq,
         registries: merged_registries,
-        labels: labels.deep_merge(version_labels).deep_merge(variant_labels),
+        labels: base_labels.deep_merge(labels).deep_merge(version_labels).deep_merge(variant_labels),
         maintainer: maintainer,
-        vars: vars.deep_merge(version_vars).deep_merge(variant_vars)
+        vars: base_vars.deep_merge(vars).deep_merge(version_vars).deep_merge(variant_vars)
       )
     end
   end
