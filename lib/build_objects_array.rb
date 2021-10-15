@@ -6,11 +6,12 @@ def build_objects_array(options = {})
 
   objects_array = []
 
+  base_tags      = metadata.fetch('base_tags',      default_metadata['base_tags'])
   image_name     = metadata.fetch('image_name',     default_metadata['image_name'])
   labels         = metadata.fetch('labels',         default_metadata['labels'])
   maintainer     = metadata.fetch('maintainer',     default_metadata['maintainer'])
   registries     = metadata.fetch('registries',     default_metadata['registries'])
-  tags           = metadata.fetch('tags',           default_metadata['tags'])
+  tags           = metadata.fetch('tags',           default_metadata['tags']) + base_tags
   template_files = metadata.fetch('template_files', default_metadata['template_files'])
   variants       = metadata.fetch('variants',       default_metadata['variants'])
   vars           = metadata.fetch('vars',           default_metadata['vars'])
