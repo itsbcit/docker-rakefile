@@ -29,7 +29,7 @@ def build_objects_array(options = {})
     variants   = variants.deep_merge(version_variants)
 
     variants.each do |variant, variant_params|
-      variant_params         = variant_params.nil?                  ? {} : variant_params
+      variant_params         = variant_params.nil? ? {} : variant_params
       variant_template_files = variant_params.fetch('template_files', [])
       variant_labels         = variant_params.fetch('labels',         {})
       variant_registries     = variant_params.fetch('registries',     [])
