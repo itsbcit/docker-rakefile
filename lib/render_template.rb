@@ -13,3 +13,24 @@ end
 def render_inline_template(string, scope)
   ERB.new(string, 0, '<>-').result(scope)
 end
+
+def render_hash_values(data, scope)
+  raise 'render_hash_values expects hash data' unless data.is_a?(Hash)
+
+  rendered_data = {}
+  data.each do |k,v|
+    rendered_data[k] = render_inline_template(v, scope)
+  end
+
+  rendered_data
+end
+
+def render_array_values(data, scope)
+  raise 'render_hash_values expects array data' unless data.is_a?(Array)
+
+  rendered_data = []
+  data.each do |v|
+    rendered_data << render_inline_template(v, scope)
+  end
+  rendered_data
+end
