@@ -89,4 +89,17 @@ class DockerImage
     parts.reject! { |t| t.nil? || t.empty? }
     parts.join('-').to_s
   end
+
+  def dockerfile
+    "#{dir}/Dockerfile"
+  end
+
+  def from
+    return unless File.exist?(dockerfile)
+
+    # find the first FROM and return the Docker image reference
+    File.readlines(dockerfile).each do |line|
+      return line[5..-1] if line.start_with?('FROM ')
+    end
+  end
 end
