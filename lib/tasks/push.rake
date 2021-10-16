@@ -13,7 +13,7 @@ task :push do
     puts "Image: #{image.build_name_tag}".pink
 
     # abort if image has not been built
-    image_id = `docker image ls -q #{image.build_name_tag}`
+    image_id = `docker image ls -q #{image.build_name_tag}`.strip
     if image_id.empty?
       puts "Image #{image.build_name_tag} has not been built.".red
       exit 1
@@ -29,7 +29,7 @@ task :push do
         ron_name_tag = image.parts_join(':', ron_name, tag)
 
         # abort if tag doesn't exist or tag is pointing to a different image
-        image_tag_id = `docker image ls -q #{ron_name_tag}`
+        image_tag_id = `docker image ls -q #{ron_name_tag}`.strip
         if image_tag_id.empty? || (image_tag_id != image_id)
           puts "Image #{image.build_name_tag} has not been tagged with #{ron_name_tag}.".red
           exit 1

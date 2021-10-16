@@ -14,7 +14,7 @@ task :tag do
     puts "Image: #{image.build_name_tag}".pink
 
     # abort if image has not been built
-    image_id = `docker image ls -q #{image.build_name_tag}`
+    image_id = `docker image ls -q #{image.build_name_tag}`.strip
     if image_id.empty?
       puts "Image #{image.build_name_tag} has not been built.".red
       exit 1

@@ -13,7 +13,7 @@ task :clean do
     puts "Image: #{image.build_name_tag}".pink
 
     # delete image if it exists
-    image_id = `docker image ls -q #{image.build_name_tag}`
+    image_id = `docker image ls -q #{image.build_name_tag}`.strip
     sh "docker image rm -f #{image_id}" unless image_id.empty?
 
     # delete FROM image if it exists
