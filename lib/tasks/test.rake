@@ -7,7 +7,7 @@
 desc 'Test docker images'
 task :test do
   # check that the build system is available
-  build_system = Docker.new()
+  build_system = Docker.new
   unless build_system.running?
     puts "#{build_system.name} sanity check failed.".red
     exit 1
@@ -29,7 +29,8 @@ task :test do
         state = `docker inspect --format='{{.State.Status}}' #{container}`.strip
         exit 1 unless $?.success?
         break if state == 'running'
-        printf "."
+
+        printf '.'
         sleep 1
       end
       puts
@@ -48,7 +49,8 @@ task :test do
           health_status = `docker inspect --format='{{.State.Health.Status}}' #{container}`.strip
           exit 1 unless $?.success?
           break if health_status == 'healthy'
-          printf "."
+
+          printf '.'
           sleep 1
         end
         puts
