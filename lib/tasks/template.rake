@@ -34,6 +34,12 @@ task :template do
     if File.exist?("#{dir}/Dockerfile.erb")
       puts "\tRendering #{dir}/Dockerfile from #{dir}/Dockerfile.erb"
       render_template("#{dir}/Dockerfile.erb", "#{dir}/Dockerfile", binding)
+    elsif image.variant != '' && File.exist?("#{image.variant}/Dockerfile.erb")
+      puts "\tRendering #{dir}/Dockerfile from #{image.variant}/Dockerfile.erb"
+      render_template("#{image.variant}/Dockerfile.erb", "#{dir}/Dockerfile", binding)
+    elsif image.version != '' && File.exist?("#{image.version}/Dockerfile.erb")
+      puts "\tRendering #{dir}/Dockerfile from #{image.version}/Dockerfile.erb"
+      render_template("#{image.version}/Dockerfile.erb", "#{dir}/Dockerfile", binding)
     elsif File.exist?('Dockerfile.erb')
       puts "\tRendering #{dir}/Dockerfile from Dockerfile.erb"
       render_template('Dockerfile.erb', "#{dir}/Dockerfile", binding)
