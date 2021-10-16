@@ -19,7 +19,7 @@ task :clean do
     # delete FROM image if it exists
     image_from = image.from
     unless image_from.nil?
-      from_id = `docker image ls -q #{image_from}`
+      from_id = `docker image ls -q #{image_from}`.strip
       unless from_id.empty?
         puts "Deleting FROM image #{image_from}:".pink
         sh "docker image rm #{image_id}"
@@ -33,7 +33,7 @@ task :clean do
         ron_name_tag = image.parts_join(':', ron_name, tag)
 
         # abort if tag doesn't exist or tag is pointing to a different image
-        image_tag_id = `docker image ls -q #{ron_name_tag}`
+        image_tag_id = `docker image ls -q #{ron_name_tag}`.strip
         sh "docker image rm #{ron_name_tag}" unless image_tag_id.empty?
       end
     end
