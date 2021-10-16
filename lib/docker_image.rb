@@ -56,7 +56,7 @@ class DockerImage
   private :write_build_id
 
   def build_name_tag
-    "local/#{parts_join('-', image_name, version, variant, build_suffix)}"
+    "local/#{parts_join(':', image_name, parts_join('-', version, variant, build_suffix))}"
   end
 
   def build_suffix
