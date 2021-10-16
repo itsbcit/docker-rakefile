@@ -17,8 +17,9 @@ task :test do
   $images.each do |image|
     # basic container test
     begin
-      puts "Running tests on #{image.build_tag}".green
-      container = `docker run --rm --health-interval=2s -d #{image.build_tag}`.strip
+      build_tag = image.build_name_tag
+      puts "Image: #{build_tag}".pink
+      container = `docker run --rm --health-interval=2s -d #{build_tag}`.strip
       exit 1 unless $?.success?
 
       # wait for container state "running"
