@@ -41,7 +41,7 @@ task :test do
 
       # if the container has a health check, wait up to 20 seconds for it to be successful
       container_health = `docker inspect --format='{{.State.Health}}' #{container}`.strip
-      hashealth = container_health == "<nil>" ? false : true
+      hashealth = container_health != '<nil>'
       if hashealth
         printf 'Waiting for container healthy'
         health_status = ''
