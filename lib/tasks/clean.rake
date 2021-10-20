@@ -22,7 +22,7 @@ task :clean do
       from_id = `docker image ls -q #{image_from}`.strip
       unless from_id.empty?
         puts "Deleting FROM image #{image_from}:".pink
-        sh "docker image rm #{image_id}"
+        sh "docker image rm #{from_id}"
       end
     end
 
