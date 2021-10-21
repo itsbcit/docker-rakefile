@@ -21,7 +21,10 @@ def render_hash_values(data, scope)
 
   rendered_data = {}
   data.each do |k,v|
-    rendered_data[k] = render_inline_template(v, scope)
+    rendered_data[k] = render_array_values(v, scope) if v.is_a?(Array)
+    rendered_data[k] = render_hash_values(v, scope) if v.is_a?(Hash)
+    rendered_data[k] = render_inline_template(v, scope) if v.is_a?(String)
+    rendered_data[k] = v unless v.is_a?(Array) || v.is_a?(Hash) || v.is_a?(String)
   end
 
   rendered_data
@@ -32,7 +35,10 @@ def render_array_values(data, scope)
 
   rendered_data = []
   data.each do |v|
-    rendered_data << render_inline_template(v, scope)
+    rendered_data << render_array_values(v, scope) if v.is_a?(Array)
+    rendered_data << render_hash_values(v, scope) if v.is_a?(Hash)
+    rendered_data << render_inline_template(v, scope) if v.is_a?(String)
+    rendered_data << v unless v.is_a?(Array) || v.is_a?(Hash) || v.is_a?(String)
   end
   rendered_data
 end
