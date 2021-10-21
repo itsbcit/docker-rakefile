@@ -59,6 +59,8 @@ class DockerImage
     "local/#{parts_join(':', image_name, parts_join('-', version, variant, build_suffix))}"
   end
 
+  alias build_tag build_name_tag
+
   def build_suffix
     "b#{@build_id}"
   end
