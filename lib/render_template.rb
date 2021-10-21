@@ -11,6 +11,8 @@ def render_template(template, output, scope)
 end
 
 def render_inline_template(string, scope)
+  raise "render_inline_template expects String, got #{string.class}" unless string.is_a?(String)
+
   ERB.new(string, 0, '<>-').result(scope)
 end
 
