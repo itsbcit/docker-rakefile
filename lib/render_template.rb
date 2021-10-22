@@ -4,7 +4,7 @@
 # Brilliant.
 def render_template(template, output, scope)
   tmpl = File.read(template)
-  erb = ERB.new(tmpl, 0, '<>-')
+  erb = ERB.new(tmpl, trim_mode: '<>-')
   File.open(output, 'w') do |f|
     f.puts erb.result(scope)
   end
@@ -13,7 +13,7 @@ end
 def render_inline_template(string, scope)
   raise "render_inline_template expects String, got #{string.class}" unless string.is_a?(String)
 
-  ERB.new(string, 0, '<>-').result(scope)
+  ERB.new(string, trim_mode: '<>-').result(scope)
 end
 
 def render_hash_values(data, scope)
