@@ -2,10 +2,16 @@
 
 desc 'Update Dockerfile templates'
 task :template do
+  # dummy DockerImage for managing build_id
+  dummy = DockerImage.new(image_name: 'dummy')
+  dummy.new_build_id if ENV['KEEP_BUILD'].nil?
+  build_id = dummy.build_id
+  dummy = nil
+  puts "*** New Build ID: #{build_id} ***".green
   puts '*** Rendering templates ***'.green
 
   $images.each do |image|
-    image.new_build_id if ENV['KEEP_BUILD'].nil?
+    image.build_id = build_id
     puts "Image: #{image.build_name_tag}"
     dir = image.dir
     FileUtils.mkdir_p(dir) unless Dir.exist?(dir)
