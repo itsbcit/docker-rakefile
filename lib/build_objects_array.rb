@@ -5,6 +5,13 @@ def build_objects_array(options = {})
   default_metadata = options.fetch(:default_metadata, {})
 
   def metadata.fetch(key, default)
+    return default unless key?(key)
+
+    return self[key] unless self[key].nil?
+
+    # return an empty instance of the default if metadata value is nil
+    default.class.new
+  end
 
   base_labels    = metadata.fetch('base_labels',    default_metadata['base_labels'])
   base_tags      = metadata.fetch('base_tags',      default_metadata['base_tags'])
