@@ -4,7 +4,7 @@ def build_objects_array(options = {})
   metadata         = options.fetch(:metadata, {})
   default_metadata = options.fetch(:default_metadata, {})
 
-  base_labels    = metadata.key?('base_labels') ? metadata['base_labels'] : default_metadata['base_labels']
+  def metadata.fetch(key, default)
 
   base_labels    = metadata.fetch('base_labels',    default_metadata['base_labels'])
   base_tags      = metadata.fetch('base_tags',      default_metadata['base_tags'])
