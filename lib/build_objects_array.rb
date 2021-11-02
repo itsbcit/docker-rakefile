@@ -4,7 +4,7 @@ def build_objects_array(options = {})
   metadata         = options.fetch(:metadata, {})
   default_metadata = options.fetch(:default_metadata, {})
 
-  objects_array = []
+  base_labels    = metadata.key?('base_labels') ? metadata['base_labels'] : default_metadata['base_labels']
 
   base_labels    = metadata.fetch('base_labels',    default_metadata['base_labels'])
   base_tags      = metadata.fetch('base_tags',      default_metadata['base_tags'])
@@ -44,6 +44,7 @@ def build_objects_array(options = {})
       merged_registries = merge_registries(registries, version_registries, variant_registries)
       merged_registries = merged_registries.empty? ? [{ url: '', org_name: '' }] : merged_registries
 
+      objects_array = []
       objects_array << DockerImage.new(
         image_name: image_name,
         variant: variant,
