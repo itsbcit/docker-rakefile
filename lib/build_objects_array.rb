@@ -21,6 +21,8 @@ def build_objects_array(options = {})
 
   raise('Can\'t proceed with empty image name (hint: metadata.yaml >> image_name)') if image_name.nil? || image_name.empty?
 
+  objects_array = []
+
   versions.each do |version, version_params|
     version_params         = version_params.nil? ? {} : version_params
     version_template_files = version_params.fetch('template_files', [])
@@ -44,7 +46,6 @@ def build_objects_array(options = {})
       merged_registries = merge_registries(registries, version_registries, variant_registries)
       merged_registries = merged_registries.empty? ? [{ url: '', org_name: '' }] : merged_registries
 
-      objects_array = []
       objects_array << DockerImage.new(
         image_name: image_name,
         variant: variant,
