@@ -19,7 +19,7 @@ task :test do
     begin
       build_tag = image.build_name_tag
       puts "Image: #{build_tag}".pink
-      container = `docker run --rm --health-interval=2s -d #{build_tag} sleep 9999`.strip
+      container = `docker run --health-interval=2s -d #{build_tag}`.strip
       exit 1 unless $?.success?
 
       # wait for container state "running"
