@@ -9,7 +9,7 @@ task :test do
   # check that the build system is available
   build_system = Docker.new
   unless build_system.running?
-    puts "#{build_system.name} sanity check failed.".red
+    puts "#{build_system.name} is not running: sanity check failed.".red
     exit 1
   end
 
@@ -24,18 +24,36 @@ task :test do
 
       # wait for container state "running"
       state = ''
+      exitcode = nil
+      error = nil
+
       printf 'Waiting for container startup'
       10.times do
         state = `docker inspect --format='{{.State.Status}}' #{container}`.strip
+        exitcode = `docker inspect --format='{{.State.ExitCode}}' #{container}`.strip
+        error = `docker inspect --format='{{.State.Error}}' #{container}`.strip
         exit 1 unless $?.success?
         break if state == 'running'
+
+        # if the docker container exited cleanly, it can't be tested, but that may be expected
+        if state == 'exited' && exitcode == '0'
+          puts "\nContainer entrypoint or command exited cleanly. This container doesn't stay running without arguments, so it needs a custom test.".yellow
+          break
+        end
+
+        break if state == 'exited'
 
         printf '.'
         sleep 1
       end
       puts
-      if state != 'running'
+      unless state == 'exited' && exitcode == '0'
         puts "Container failed to reach \"running\" state. Got \"#{state}\"".red
+        puts "Container exit code: #{exitcode}".yellow
+        puts "Container error message: #{error}".yellow
+        puts '--- begin container logs ---'.yellow
+        puts `docker logs #{container}`
+        puts '--- end container logs ---'.yellow
         exit 1
       end
 
@@ -67,7 +85,8 @@ task :test do
 
       # end of container tests
     ensure
-      sh "docker kill #{container}"
+      sh "docker kill #{container}" if `docker inspect --format='{{.State.Status}}' #{container}`.strip == 'running'
+      sh "docker rm #{container}"
     end
     puts "Testing image #{image.build_tag} successful.".green
   end
