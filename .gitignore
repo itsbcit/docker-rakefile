@@ -1,3 +1,4 @@
 .build_id
 **/Dockerfile
 /lib.zip
+/metadata.yaml
