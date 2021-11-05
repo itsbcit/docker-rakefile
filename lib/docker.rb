@@ -4,7 +4,7 @@
 class Docker
   attr_reader :name
 
-  def initialize()
+  def initialize
     @name = 'Docker'
   end
 
