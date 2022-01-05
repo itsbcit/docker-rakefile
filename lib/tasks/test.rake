@@ -39,23 +39,20 @@ task :test do
         if state == 'exited' && exitcode == '0'
           puts "\nContainer entrypoint or command exited cleanly. This container doesn't stay running without arguments, so it needs a custom test.".yellow
           break
+        elsif state == 'exited'
+          puts "Container failed to reach \"running\" state. Got \"#{state}\"".red
+          puts "Container exit code: #{exitcode}".yellow
+          puts "Container error message: #{error}".yellow
+          puts '--- begin container logs ---'.yellow
+          puts `docker logs #{container}`
+          puts '--- end container logs ---'.yellow
+          exit 1
         end
-
-        break if state == 'exited'
 
         printf '.'
         sleep 1
       end
-      puts
-      unless state == 'exited' && exitcode == '0'
-        puts "Container failed to reach \"running\" state. Got \"#{state}\"".red
-        puts "Container exit code: #{exitcode}".yellow
-        puts "Container error message: #{error}".yellow
-        puts '--- begin container logs ---'.yellow
-        puts `docker logs #{container}`
-        puts '--- end container logs ---'.yellow
-        exit 1
-      end
+      puts # end of progress dots
 
       # if the container has a health check, wait up to 20 seconds for it to be successful
       container_health = `docker inspect --format='{{.State.Health}}' #{container}`.strip
