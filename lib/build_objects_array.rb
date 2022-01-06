@@ -40,7 +40,7 @@ def build_objects_array(options = {})
     version_variants       = version_params.fetch('variants',       {})
     version_vars           = version_params.fetch('vars',           {})
 
-    maintainer = version_params['maintainer'].nil? ? maintainer : version_params['maintainer'].nil?
+    maintainer   = version_params['maintainer'].nil? ? maintainer : version_params['maintainer'].nil?
     test_command = version_params['test_command'].nil? ? test_command : version_params['test_command']
     
     variants   = variants.deep_merge(version_variants)

@@ -12,7 +12,7 @@ task :test do
     puts "#{build_system.name} is not running: sanity check failed.".red
     exit 1
   end
-
+  
   puts '*** Testing images ***'.green
   $images.each do |image|
     # basic container test
