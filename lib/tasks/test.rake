@@ -19,7 +19,8 @@ task :test do
     begin
       build_tag = image.build_name_tag
       puts "Image: #{build_tag}".pink
-      container = `docker run --health-interval=2s -d #{build_tag}`.strip
+
+      container = `docker run --health-interval=2s -d #{build_tag} #{image.test_command}`.strip
 
       # abort if container didn't get created
       unless $?.success?
@@ -42,7 +43,7 @@ task :test do
 
         # if the docker container exited cleanly, it can't be tested, but that may be expected
         if state == 'exited' && exitcode == '0'
-          puts "\nContainer entrypoint or command exited cleanly. This container doesn't stay running without arguments, so it needs a custom test.".yellow
+          puts "\nContainer entrypoint or command exited cleanly. This container doesn't stay running without arguments, so it needs a custom test, or set test_command to \"sleep infinity\" for an infinite sleep.".yellow
           break
         elsif state == 'exited'
           puts "Container failed to reach \"running\" state. Got \"#{state}\"".red

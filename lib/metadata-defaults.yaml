@@ -6,6 +6,7 @@ base_labels:
 labels: {}
 maintainer:
 registries: []
+test_command:
 base_tags:
   - '<%= tag_join(version, variant) %>'
   - '<%= tag_join(version, variant, build_suffix) %>'

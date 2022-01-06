@@ -2,12 +2,13 @@
 
 # Object class DockerImage
 class DockerImage
-  attr_reader :image_name, :template_files, :registries, :variant, :version, :maintainer
+  attr_reader :image_name, :template_files, :registries, :variant, :version, :maintainer, :test_command
   attr_accessor :build_id
 
   def initialize(
     image_name:,
     build_id:     0,
+    test_command: '',
     variant:      '',
     version:      '',
     template_files: {},
@@ -19,6 +20,7 @@ class DockerImage
   )
     @image_name         = image_name
     @build_id           = build_id
+    @test_command       = test_command
     @variant            = variant
     @version            = version
     @template_files     = template_files

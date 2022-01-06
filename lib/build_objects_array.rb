@@ -25,6 +25,7 @@ def build_objects_array(options = {})
   variants       = metadata.fetch('variants',       default_metadata['variants'])
   vars           = metadata.fetch('vars',           default_metadata['vars'])
   versions       = metadata.fetch('versions',       default_metadata['versions'])
+  test_command   = metadata.fetch('test_command',   default_metadata['test_command'])
 
   raise('Can\'t proceed with empty image name (hint: metadata.yaml >> image_name)') if image_name.nil? || image_name.empty?
 
@@ -40,6 +41,8 @@ def build_objects_array(options = {})
     version_vars           = version_params.fetch('vars',           {})
 
     maintainer = version_params['maintainer'].nil? ? maintainer : version_params['maintainer'].nil?
+    test_command = version_params['test_command'].nil? ? test_command : version_params['test_command']
+    
     variants   = variants.deep_merge(version_variants)
 
     variants.each do |variant, variant_params|
@@ -53,6 +56,11 @@ def build_objects_array(options = {})
       merged_registries = merge_registries(registries, version_registries, variant_registries)
       merged_registries = merged_registries.empty? ? [{ url: '', org_name: '' }] : merged_registries
 
+      test_command     = variant_params['test_command'].nil? ? test_command : variant_params['test_command']
+
+      # make sure test_command isn't nil
+      test_command = test_command.nil? ? '' : test_command
+
       objects_array << DockerImage.new(
         image_name: image_name,
         variant: variant,
@@ -62,6 +70,7 @@ def build_objects_array(options = {})
         registries: merged_registries,
         labels: base_labels.deep_merge(labels).deep_merge(version_labels).deep_merge(variant_labels),
         maintainer: maintainer,
+        test_command: test_command,
         vars: base_vars.deep_merge(vars).deep_merge(version_vars).deep_merge(variant_vars)
       )
     end
