@@ -32,9 +32,9 @@ def build_objects_array(options = {})
   versions       = metadata.fetch('versions',       default_metadata['versions'])
 
   raise('Can\'t proceed with empty image name (hint: metadata.yaml >> image_name)') if image_name.nil? || image_name.empty?
-
+  
   objects_array = []
-
+  
   versions.each do |version, version_params|
     version_params         = version_params.nil? ? {} : version_params
     version_template_files = version_params.fetch('template_files', [])
@@ -49,6 +49,7 @@ def build_objects_array(options = {})
     version_push_image     = version_params['push'].nil?           ? push_image   : version_params['push']
     version_tag_image      = version_params['tag'].nil?            ? tag_image    : version_params['tag']
     version_test_image     = version_params['test'].nil?           ? test_image   : version_params['test']
+
     variants   = variants.deep_merge(version_variants)
 
     variants.each do |variant, variant_params|
