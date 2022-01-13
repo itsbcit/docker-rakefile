@@ -8,16 +8,20 @@ class DockerImage
   def initialize(
     image_name:,
     build_id:     0,
-    test_command: '',
+    build_image:  true,
     variant:      '',
     version:      '',
     template_files: {},
     registries:   [],
     labels:       {},
     maintainer:   '',
+    push_image:   true,
+    tag_image:    true,
     tags:         [],
     vars:         {}
+    test_image:   true,
   )
+    @build_image        = build_image
     @image_name         = image_name
     @build_id           = build_id
     @test_command       = test_command
@@ -27,7 +31,10 @@ class DockerImage
     @registries         = registries
     @labels             = labels
     @maintainer         = maintainer
+    @push_image         = push_image
+    @tag_image          = tag_image
     @tags               = tags
+    @test_image         = test_image
     @vars               = vars
 
     # check for a forced build id in ENV
@@ -109,5 +116,21 @@ class DockerImage
     File.readlines(dockerfile).each do |line|
       return line[5..-1] if line.start_with?('FROM ')
     end
+  end
+
+  def build_image?
+    return @build_image ? true : false
+  end
+
+  def push_image?
+    return @push_image ? true : false
+  end
+
+  def test_image?
+    return @test_image ? true : false
+  end
+
+  def tag_image?
+    return @tag_image ? true : false
   end
 end

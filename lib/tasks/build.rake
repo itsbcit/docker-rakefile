@@ -11,6 +11,8 @@ task :build do
 
   puts '*** Building images ***'.green
   $images.each do |image|
+    next unless image.build_image?
+    
     build_tag = image.build_name_tag
     puts "Image: #{build_tag}".pink
     sh "docker build -f #{image.dir}/Dockerfile -t #{build_tag} ."

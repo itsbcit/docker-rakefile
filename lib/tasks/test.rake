@@ -15,6 +15,8 @@ task :test do
   
   puts '*** Testing images ***'.green
   $images.each do |image|
+    next unless image.test_image?
+    
     # basic container test
     begin
       build_tag = image.build_name_tag

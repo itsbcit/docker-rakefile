@@ -13,6 +13,8 @@ task :push do
   seen_images = {}
 
   $images.each do |image|
+    next unless image.push_image?
+
     puts "Image: #{image.build_name_tag}".pink
 
     # abort if image has not been built
