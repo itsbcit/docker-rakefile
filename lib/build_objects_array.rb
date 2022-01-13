@@ -72,10 +72,8 @@ def build_objects_array(options = {})
       merged_registries = merge_registries(registries, version_registries, variant_registries)
       merged_registries = merged_registries.empty? ? [{ url: '', org_name: '' }] : merged_registries
 
-      test_command     = variant_params['test_command'].nil? ? test_command : variant_params['test_command']
-
       # make sure test_command isn't nil
-      test_command = test_command.nil? ? '' : test_command
+      test_command = test_command.nil?                   ? ''           : test_command
 
       objects_array << DockerImage.new(
         image_name: image_name,
