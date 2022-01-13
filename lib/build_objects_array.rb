@@ -36,18 +36,19 @@ def build_objects_array(options = {})
   objects_array = []
   
   versions.each do |version, version_params|
-    version_params         = version_params.nil? ? {} : version_params
-    version_template_files = version_params.fetch('template_files', [])
-    version_labels         = version_params.fetch('labels',         {})
-    version_registries     = version_params.fetch('registries',     [])
-    version_tags           = version_params.fetch('tags',           [])
-    version_variants       = version_params.fetch('variants',       {})
-    version_vars           = version_params.fetch('vars',           {})
+    version_params         = version_params.nil?                   ? {} : version_params
+    version_labels         = version_params['labels'].nil?         ? {} : version_params['labels']
+    version_registries     = version_params['registries'].nil?     ? [] : version_params['registries']
+    version_tags           = version_params['tags'].nil?           ? [] : version_params['tags']
+    version_template_files = version_params['template_files'].nil? ? [] : version_params['template_files']
+    version_variants       = version_params['variants'].nil?       ? {} : version_params['variants']
+    version_vars           = version_params['vars'].nil?           ? {} : version_params['vars']
 
     version_build_image    = version_params['build'].nil?          ? build_image  : version_params['build']
-    test_command = version_params['test_command'].nil? ? test_command : version_params['test_command']
+    version_maintainer     = version_params['maintainer'].nil?     ? maintainer   : version_params['maintainer']
     version_push_image     = version_params['push'].nil?           ? push_image   : version_params['push']
     version_tag_image      = version_params['tag'].nil?            ? tag_image    : version_params['tag']
+    version_test_command   = version_params['test_command'].nil?   ? test_command : version_params['test_command']
     version_test_image     = version_params['test'].nil?           ? test_image   : version_params['test']
 
     variants   = variants.deep_merge(version_variants)
