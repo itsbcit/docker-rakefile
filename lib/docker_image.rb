@@ -6,36 +6,37 @@ class DockerImage
   attr_accessor :build_id
 
   def initialize(
-    image_name:,
     build_id:     0,
     build_image:  true,
-    variant:      '',
-    version:      '',
-    template_files: {},
-    registries:   [],
+    image_name:,
     labels:       {},
     maintainer:   '',
     push_image:   true,
+    registries:   [],
     tag_image:    true,
     tags:         [],
-    vars:         {}
+    template_files: {},
+    test_command: '',
     test_image:   true,
+    variant:      '',
+    vars:         {},
+    version:      ''
   )
+    @build_id           = build_id
     @build_image        = build_image
     @image_name         = image_name
-    @build_id           = build_id
-    @test_command       = test_command
-    @variant            = variant
-    @version            = version
-    @template_files     = template_files
-    @registries         = registries
     @labels             = labels
     @maintainer         = maintainer
     @push_image         = push_image
+    @registries         = registries
     @tag_image          = tag_image
     @tags               = tags
+    @template_files     = template_files
+    @test_command       = test_command
     @test_image         = test_image
+    @variant            = variant
     @vars               = vars
+    @version            = version
 
     # check for a forced build id in ENV
     @build_id = ENV['BUILD_ID'].nil? ? read_build_id : ENV['BUILD_ID']
