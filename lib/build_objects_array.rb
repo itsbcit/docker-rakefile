@@ -53,15 +53,19 @@ def build_objects_array(options = {})
     variants   = variants.deep_merge(version_variants)
 
     variants.each do |variant, variant_params|
-      variant_params         = variant_params.nil? ? {} : variant_params
-      variant_template_files = variant_params.fetch('template_files', [])
-      variant_labels         = variant_params.fetch('labels',         {})
-      variant_registries     = variant_params.fetch('registries',     [])
-      variant_tags           = variant_params.fetch('tags',           [])
-      variant_vars           = variant_params.fetch('vars',           {})
+      variant_params         = variant_params.nil?                   ? {} : variant_params
+      variant_labels         = variant_params['labels'].nil?         ? {} : variant_params['labels']
+      variant_registries     = variant_params['registries'].nil?     ? [] : variant_params['registries']
+      variant_tags           = variant_params['tags'].nil?           ? [] : variant_params['tags']
+      variant_template_files = variant_params['template_files'].nil? ? [] : variant_params['template_files']
+      variant_variants       = variant_params['variants'].nil?       ? {} : variant_params['variants']
+      variant_vars           = variant_params['vars'].nil?           ? {} : variant_params['vars']
+
       variant_build_image    = variant_params['build'].nil?        ? version_build_image  : variant_params['build']
+      variant_maintainer     = variant_params['maintainer'].nil?   ? version_maintainer   : variant_params['maintainer']
       variant_push_image     = variant_params['push'].nil?         ? version_push_image   : variant_params['push']
       variant_tag_image      = variant_params['tag'].nil?          ? version_tag_image    : variant_params['tag']
+      variant_test_command   = variant_params['test_command'].nil? ? version_test_command : variant_params['test_command']
       variant_test_image     = variant_params['test'].nil?         ? version_test_image   : variant_params['test']
 
       merged_registries = merge_registries(registries, version_registries, variant_registries)
