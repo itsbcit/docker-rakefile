@@ -76,18 +76,20 @@ def build_objects_array(options = {})
       test_command = test_command.nil?                   ? ''           : test_command
 
       objects_array << DockerImage.new(
+        build_image: variant_build_image,
         image_name: image_name,
-        variant: variant,
-        version: version,
-        template_files: (template_files + version_template_files + variant_template_files).uniq,
-        tags: (tags + version_tags + variant_tags).uniq,
-        registries: merged_registries,
         labels: base_labels.deep_merge(labels).deep_merge(version_labels).deep_merge(variant_labels),
-        maintainer: maintainer,
+        maintainer: variant_maintainer,
         push_image: variant_push_image,
-        vars: base_vars.deep_merge(vars).deep_merge(version_vars).deep_merge(variant_vars)
+        registries: merged_registries,
         tag_image: variant_tag_image,
+        tags: (tags + version_tags + variant_tags).uniq,
+        template_files: (template_files + version_template_files + variant_template_files).uniq,
+        test_command: variant_test_command,
         test_image: variant_test_image,
+        variant: variant,
+        vars: base_vars.deep_merge(vars).deep_merge(version_vars).deep_merge(variant_vars),
+        version: version
       )
     end
   end
