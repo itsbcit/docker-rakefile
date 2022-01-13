@@ -25,11 +25,11 @@ def build_objects_array(options = {})
   tag_image      = metadata.fetch('tag',            default_metadata['tag'])
   tags           = metadata.fetch('tags',           default_metadata['tags']) + base_tags
   template_files = metadata.fetch('template_files', default_metadata['template_files'])
+  test_command   = metadata.fetch('test_command',   default_metadata['test_command'])
   test_image     = metadata.fetch('test',           default_metadata['test'])
   variants       = metadata.fetch('variants',       default_metadata['variants'])
   vars           = metadata.fetch('vars',           default_metadata['vars'])
   versions       = metadata.fetch('versions',       default_metadata['versions'])
-  test_command   = metadata.fetch('test_command',   default_metadata['test_command'])
 
   raise('Can\'t proceed with empty image name (hint: metadata.yaml >> image_name)') if image_name.nil? || image_name.empty?
 
