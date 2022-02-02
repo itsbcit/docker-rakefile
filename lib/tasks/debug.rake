@@ -23,6 +23,8 @@ task :debug do
     # show predicted tag task commands:
     puts 'Tag task:'.yellow
     image.registries.each do |registry|
+      next unless image.tag_image?
+      
       image.tags.each do |tag|
         ron          = image.parts_join('/', registry['url'], registry['org_name'])
         ron_name     = image.parts_join('/', ron, image.image_name)
@@ -34,6 +36,8 @@ task :debug do
     # show predicted push task commands:
     puts 'Push task:'.yellow
     image.registries.each do |registry|
+      next unless image.push_image?
+      
       image.tags.each do |tag|
         ron          = image.parts_join('/', registry['url'], registry['org_name'])
         ron_name     = image.parts_join('/', ron, image.image_name)
