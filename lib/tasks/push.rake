@@ -31,7 +31,7 @@ task :push do
       if registry['url'].nil? or registry['url'] == 'docker.io'
         registry_url = ''
       else
-        registry_url = registry_url
+        registry_url = registry['url']
       end
 
       sh "docker login #{registry['url']}"
