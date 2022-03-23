@@ -24,9 +24,15 @@ task :debug do
     puts 'Tag task:'.yellow
     image.registries.each do |registry|
       next unless image.tag_image?
+
+      if registry['url'].nil? or registry['url'] == 'docker.io'
+        registry_url = ''
+      else
+        registry_url = registry_url
+      end
       
       image.tags.each do |tag|
-        ron          = image.parts_join('/', registry['url'], registry['org_name'])
+        ron          = image.parts_join('/', registry_url, registry['org_name'])
         ron_name     = image.parts_join('/', ron, image.image_name)
         ron_name_tag = image.parts_join(':', ron_name, tag)
         puts "docker tag #{image.build_name_tag} #{ron_name_tag}"
@@ -38,8 +44,14 @@ task :debug do
     image.registries.each do |registry|
       next unless image.push_image?
       
+      if registry['url'].nil? or registry['url'] == 'docker.io'
+        registry_url = ''
+      else
+        registry_url = registry_url
+      end
+
       image.tags.each do |tag|
-        ron          = image.parts_join('/', registry['url'], registry['org_name'])
+        ron          = image.parts_join('/', registry_url, registry['org_name'])
         ron_name     = image.parts_join('/', ron, image.image_name)
         ron_name_tag = image.parts_join(':', ron_name, tag)
         puts "docker push #{ron_name_tag}"

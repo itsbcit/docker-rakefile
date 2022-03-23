@@ -29,8 +29,14 @@ task :tag do
     seen_images[image_id] = image.build_name_tag
 
     image.registries.each do |registry|
+      if registry['url'].nil? or registry['url'] == 'docker.io'
+        registry_url = ''
+      else
+        registry_url = registry_url
+      end
+
       image.tags.each do |tag|
-        ron          = image.parts_join('/', registry['url'], registry['org_name'])
+        ron          = image.parts_join('/', registry_url, registry['org_name'])
         ron_name     = image.parts_join('/', ron, image.image_name)
         ron_name_tag = image.parts_join(':', ron_name, tag)
 
