@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-desc 'Template, build, tag, test'
+desc 'Template, build, test, tag'
 task :default do
   Rake::Task[:template].invoke
   Rake::Task[:build].invoke
