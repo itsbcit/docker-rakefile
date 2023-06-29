@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-desc 'Clean Docker build environment'
+desc 'Clean Docker/Podman build environment'
 task :clean do
   # check that the build system is available
-  build_system = Docker.new
+  build_system = Builder.new.runtime?
   unless build_system.running?
     puts "#{build_system.name} sanity check failed.".red
     exit 1
@@ -13,16 +13,16 @@ task :clean do
     puts "Image: #{image.build_name_tag}".pink
 
     # delete image if it exists
-    image_id = `docker image ls -q #{image.build_name_tag}`.strip
-    sh "docker image rm -f #{image_id}" unless image_id.empty?
+    image_id = `#{build_system.name.downcase} image ls -q #{image.build_name_tag}`.strip
+    sh "#{build_system.name.downcase} image rm -f #{image_id}" unless image_id.empty?
 
     # delete FROM image if it exists
     image_from = image.from
     unless image_from.nil?
-      from_id = `docker image ls -q #{image_from}`.strip
+      from_id = `#{build_system.name.downcase} image ls -q #{image_from}`.strip
       unless from_id.empty?
         puts "Deleting FROM image #{image_from}:".pink
-        sh "docker image rm #{from_id}"
+        sh "#{build_system.name.downcase} image rm #{from_id}"
       end
     end
 
@@ -33,12 +33,12 @@ task :clean do
         ron_name_tag = image.parts_join(':', ron_name, tag)
 
         # abort if tag doesn't exist or tag is pointing to a different image
-        image_tag_id = `docker image ls -q #{ron_name_tag}`.strip
-        sh "docker image rm #{ron_name_tag}" unless image_tag_id.empty?
+        image_tag_id = `#{build_system.name.downcase} image ls -q #{ron_name_tag}`.strip
+        sh "#{build_system.name.downcase} image rm #{ron_name_tag}" unless image_tag_id.empty?
       end
     end
   end
 
-  puts 'Clearing Docker build artifacts:'.pink
-  sh 'docker builder prune -f'
+  puts 'Clearing Docker/podman build artifacts:'.pink
+  sh "#{build_system.name.downcase} builder prune -f"
 end

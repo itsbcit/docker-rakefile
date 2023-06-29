@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-desc 'Tag docker images'
+desc 'Tag docker/podman images'
 task :tag do
   # check that the build system is available
-  build_system = Docker.new
+  build_system = Builder.new.runtime?
   unless build_system.running?
     puts "#{build_system.name} sanity check failed.".red
     exit 1
@@ -19,7 +19,7 @@ task :tag do
     puts "Image: #{image.build_name_tag}".pink
 
     # abort if image has not been built
-    image_id = `docker image ls -q #{image.build_name_tag}`.strip
+    image_id = `#{build_system.name.downcase} image ls -q #{image.build_name_tag}`.strip
     if image_id.empty?
       puts "Image #{image.build_name_tag} has not been built.".red
       exit 1
@@ -42,14 +42,14 @@ task :tag do
 
         # abort if we're trying to overwite a tag already assigned to a different image in this run
         # try to look up an existing tag by the same name
-        image_tag_id = `docker image ls -q #{ron_name_tag}`.strip
+        image_tag_id = `#{build_system.name.downcase} image ls -q #{ron_name_tag}`.strip
         # if the image id matches one we've seen before, and it's not adding another tag to the same image, abort
         if !seen_images[image_tag_id].nil? && (image_tag_id != image_id)
           puts "#{ron_name_tag} already tagged to #{seen_images[image_tag_id]}\nTag conclict! Check tags in metadata.yaml or \"rake clean\".".red
           exit 1
         end
 
-        sh "docker tag #{image.build_name_tag} #{ron_name_tag}"
+        sh "#{build_system.name.downcase} tag #{image.build_name_tag} #{ron_name_tag}"
       end
     end
   end

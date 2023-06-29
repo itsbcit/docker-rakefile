@@ -4,10 +4,10 @@
 # These tests assume that the container has a defined command that stays running indefinitely.
 # If the container runs a command without a wait loop, you'll have to redefine the whole testing procedure.
 
-desc 'Test docker images'
+desc 'Test docker/podman images'
 task :test do
   # check that the build system is available
-  build_system = Docker.new
+  build_system = Builder.new.runtime?
   unless build_system.running?
     puts "#{build_system.name} is not running: sanity check failed.".red
     exit 1
@@ -22,7 +22,7 @@ task :test do
       build_tag = image.build_name_tag
       puts "Image: #{build_tag}".pink
 
-      container = `docker run --health-interval=2s -d #{build_tag} #{image.test_command}`.strip
+      container = `#{build_system.name.downcase} run --health-interval=2s -d #{build_tag} #{image.test_command}`.strip
 
       # abort if container didn't get created
       unless $?.success?
@@ -37,9 +37,9 @@ task :test do
 
       printf 'Waiting for container startup'
       10.times do
-        state = `docker inspect --format='{{.State.Status}}' #{container}`.strip
-        exitcode = `docker inspect --format='{{.State.ExitCode}}' #{container}`.strip
-        error = `docker inspect --format='{{.State.Error}}' #{container}`.strip
+        state = `#{build_system.name.downcase} inspect --format='{{.State.Status}}' #{container}`.strip
+        exitcode = `#{build_system.name.downcase} inspect --format='{{.State.ExitCode}}' #{container}`.strip
+        error = `#{build_system.name.downcase} inspect --format='{{.State.Error}}' #{container}`.strip
         exit 1 unless $?.success?
         break if state == 'running'
 
@@ -52,7 +52,7 @@ task :test do
           puts "Container exit code: #{exitcode}".yellow
           puts "Container error message: #{error}".yellow
           puts '--- begin container logs ---'.yellow
-          puts `docker logs #{container}`
+          puts `#{build_system.name.downcase} logs #{container}`
           puts '--- end container logs ---'.yellow
           exit 1
         end
@@ -63,13 +63,13 @@ task :test do
       puts # end of progress dots
 
       # if the container has a health check, wait up to 20 seconds for it to be successful
-      container_health = `docker inspect --format='{{.State.Health}}' #{container}`.strip
+      container_health = `#{build_system.name.downcase} inspect --format='{{.State.Health}}' #{container}`.strip
       hashealth = container_health != '<nil>'
       if hashealth
         printf 'Waiting for container healthy'
         health_status = ''
         20.times do
-          health_status = `docker inspect --format='{{.State.Health.Status}}' #{container}`.strip
+          health_status = `#{build_system.name.downcase} inspect --format='{{.State.Health.Status}}' #{container}`.strip
           exit 1 unless $?.success?
           break if health_status == 'healthy'
 
@@ -90,8 +90,8 @@ task :test do
 
       # end of container tests
     ensure
-      sh "docker kill #{container}" if `docker inspect --format='{{.State.Status}}' #{container}`.strip == 'running'
-      sh "docker rm #{container}"
+      sh "#{build_system.name.downcase} kill #{container}" if `#{build_system.name.downcase} inspect --format='{{.State.Status}}' #{container}`.strip == 'running'
+      sh "#{build_system.name.downcase} rm #{container}"
     end
     puts "Testing image #{image.build_tag} successful.".green
   end

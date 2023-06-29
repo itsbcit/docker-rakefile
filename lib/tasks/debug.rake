@@ -2,6 +2,13 @@
 
 desc 'Debug rakefile objects'
 task :debug do
+  # check that the build system is available
+  build_system = Builder.new.runtime?
+  unless build_system.running?
+    puts "#{build_system.name} sanity check failed.".red
+    exit 1
+  end
+
   puts '*** Debug image objects ***'.green
   $images.each do |image|
     puts "Image: #{image.build_name_tag}".pink
@@ -18,7 +25,7 @@ task :debug do
     # show predicted tag task commands:
     puts 'Build task'.yellow
     build_tag = image.build_name_tag
-    puts "docker build -f #{image.dir}/Dockerfile -t #{build_tag} ."
+    puts "#{build_system.name} build -f #{image.dir}/Dockerfile -t #{build_tag} ."
 
     # show predicted tag task commands:
     puts 'Tag task:'.yellow
@@ -35,7 +42,7 @@ task :debug do
         ron          = image.parts_join('/', registry_url, registry['org_name'])
         ron_name     = image.parts_join('/', ron, image.image_name)
         ron_name_tag = image.parts_join(':', ron_name, tag)
-        puts "docker tag #{image.build_name_tag} #{ron_name_tag}"
+        puts "#{build_system.name} tag #{image.build_name_tag} #{ron_name_tag}"
       end
     end
 
@@ -54,7 +61,7 @@ task :debug do
         ron          = image.parts_join('/', registry_url, registry['org_name'])
         ron_name     = image.parts_join('/', ron, image.image_name)
         ron_name_tag = image.parts_join(':', ron_name, tag)
-        puts "docker push #{ron_name_tag}"
+        puts "#{build_system.name} push #{ron_name_tag}"
       end
     end
   end

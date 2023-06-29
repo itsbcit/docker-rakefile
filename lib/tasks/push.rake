@@ -3,7 +3,7 @@
 desc 'Push to Registry'
 task :push do
   # check that the build system is available
-  build_system = Docker.new
+  build_system = Builder.new.runtime?
   unless build_system.running?
     puts "#{build_system.name} sanity check failed.".red
     exit 1
@@ -18,7 +18,7 @@ task :push do
     puts "Image: #{image.build_name_tag}".pink
 
     # abort if image has not been built
-    image_id = `docker image ls -q #{image.build_name_tag}`.strip
+    image_id = `#{build_system.name.downcase} image ls -q #{image.build_name_tag}`.strip
     if image_id.empty?
       puts "Image #{image.build_name_tag} has not been built.".red
       exit 1
@@ -34,14 +34,14 @@ task :push do
         registry_url = registry['url']
       end
 
-      sh "docker login #{registry['url']}"
+      sh "#{build_system.name.downcase} login #{registry['url']}"
       image.tags.each do |tag|
         ron          = image.parts_join('/', registry_url, registry['org_name'])
         ron_name     = image.parts_join('/', ron, image.image_name)
         ron_name_tag = image.parts_join(':', ron_name, tag)
 
         # abort if tag doesn't exist or tag is pointing to a different image
-        image_tag_id = `docker image ls -q #{ron_name_tag}`.strip
+        image_tag_id = `#{build_system.name.downcase} image ls -q #{ron_name_tag}`.strip
         if image_tag_id.empty?
           puts "Tag not found: Image #{image.build_name_tag} has not been tagged with #{ron_name_tag}".red
           exit 1
@@ -50,7 +50,7 @@ task :push do
           exit 1
         end
 
-        sh "docker push #{ron_name_tag}"
+        sh "#{build_system.name.downcase} push #{ron_name_tag}"
       end
     end
   end
