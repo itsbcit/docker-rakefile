@@ -7,7 +7,7 @@ def snippet(snippet_name, scope)
   template = "#{libdir}/#{snippets_file}"
 
   if File.exist?(template)
-    output = ERB.new(File.read(template), 0, '<>-', '_snippet').result(scope)
+    output = ERB.new(File.read(template), trim_mode: '<>-', eoutvar: '_snippet').result(scope)
   else
     output = ''
     puts "WARNING: snippet \"#{snippet_name}\" not found.".red
